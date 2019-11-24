@@ -1,0 +1,26 @@
+{
+  "name": "tintrack-frontend-app",
+  "version": "1.0.0",
+  "description": "free routine tracking app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ernestomedinam/tintrack-frontend-app.git"
+  },
+  "keywords": [
+    "routine",
+    "habits",
+    "track",
+    "stats",
+    "tasks"
+  ],
+  "author": "Ernesto Medina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ernestomedinam/tintrack-frontend-app/issues"
+  },
+  "homepage": "https://github.com/ernestomedinam/tintrack-frontend-app#readme"
+}
