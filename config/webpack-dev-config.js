@@ -70,15 +70,36 @@ module.exports = {
                     {
                         loader: "css-loader",
                         options: {
-                            importLoaders: 1,
-                            modules: true,
-                            localIdentName: "[local]"
+                            modules: {
+                                localIdentName: "[local]"
+                            },
+                            importLoaders: 1
                         }
                     },
                     {
                         loader: "sass-loader",
                         options: {
                             sourceMap: true
+                        }
+                    }
+                ]
+            },
+            {
+                // look for css, scss files
+                test: /\.(css|scss)$/,
+                // in the src directory
+                include: path.resolve(paths.bootstrapModule),
+                use: [
+                    {
+                        loader: "style-loader",
+                    },
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                localIdentName: "[local]"
+                            },
+                            importLoaders: 0
                         }
                     }
                 ]
@@ -98,12 +119,14 @@ module.exports = {
     },
     resolve: {
         // file extensions
-        extensions: [".js", ".jsx", ".scss"],
+        extensions: [".js", ".jsx"],
         modules: ["node_modules"],
         // aliases to shorten paths
         alias: {
             Components: path.resolve(paths.appSrcJs, "components"),
-            Utils: path.resolve(paths.appSrcJs, "utils")
+            Utils: path.resolve(paths.appSrcJs, "utils"),
+            Views: path.resolve(paths.appSrcJs, "views"),
+            Store: path.resolve(paths.appSrcJs, "store")
         }
     },
 };

@@ -71,8 +71,9 @@ module.exports = {
                         loader: "css-loader",
                         options: {
                             importLoaders: 1,
-                            modules: true,
-                            localIdentName: "[name]__[local]__[hash:base64:5]"
+                            modules: {
+                                localIdentName: "[name]__[local]__[hash:base64:5]"
+                            }
                         }
                     },
                     {
@@ -98,12 +99,14 @@ module.exports = {
     },
     resolve: {
         // file extensions
-        extensions: [".js", ".jsx", ".scss"],
+        extensions: [".js", ".jsx"],
         modules: ["node_modules"],
         // aliases to shorten paths
         alias: {
             Components: path.resolve(paths.appSrcJs, "components"),
-            Utils: path.resolve(paths.appSrcJs, "utils")
+            Utils: path.resolve(paths.appSrcJs, "utils"),
+            Views: path.resolve(paths.appSrcJs, "views"),
+            Store: path.resolve(paths.appSrcJs, "store")
         }
     },
 };

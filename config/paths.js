@@ -13,5 +13,6 @@ module.exports = {
     appAssets: resolveApp("src/assets"),
     appBuild: resolveApp("public"),
     appHtml: resolveApp("index.html"),
-    appIndexJs: resolveApp("src/js/index.js")
+    appIndexJs: resolveApp("src/js/index.js"),
+    bootstrapModule: resolveApp("node_modules/bootstrap/dist/css")
 }
