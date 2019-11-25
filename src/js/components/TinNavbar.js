@@ -14,13 +14,13 @@ const TinNavbar = props => {
 			expand="md"
 			sticky="top">
 			<Container className="justify-content-center">
-				<Navbar.Brand as={Link} exact="true" to="/" className="d-flex">
+				<Navbar.Brand className="d-flex">
 					<img src={tintrackIcon} height="48" alt="tintrack logo" />
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbar-pills" />
 				<Navbar.Collapse
 					id="navbar-pills"
-					className="justify-content-center">
+					className="justify-content-end">
 					<Nav variant="pills" defaultActiveKey={Location.pathname}>
 						<Nav.Link as={NavLink} exact to="/" eventKey="Home">
 							Home
