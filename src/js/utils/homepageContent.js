@@ -176,4 +176,4 @@ const homepageContent = {
 	}
 };
 
-export default websiteContent;
+export default hompageContent;
