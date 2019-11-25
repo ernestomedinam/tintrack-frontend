@@ -33,6 +33,9 @@ const Home = props => {
 						</Button>
 					</div>
 				</Jumbotron>
+				<h2 className="display-4 text-center">
+					Why are routines good for us?
+				</h2>
 
 				<h2>Hey, I'm Home.js</h2>
 			</Container>
