@@ -11,4 +11,9 @@
     background-position: center;
 }
 
+.home-jumbotron {
+    background-color: rgba($color: #FFF, $alpha: 0.4) !important;
+    border-radius: 1rem !important;
+}
+
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
