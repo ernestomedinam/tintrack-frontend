@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import injectAppContext from "./store/AppContext.js";
 import TinNavbar from "./components/TinNavbar.js";
 import Home from "./views/Home.js";
+import TinFooter from "./components/TinFooter.js";
+import footerContent from "./utils/footerContent.js";
 
 export const Layout = props => {
 	return (
@@ -16,6 +18,7 @@ export const Layout = props => {
 						<Route path="/routine" component={Routine} />
 						<TinFooter /> */}
 				</Switch>
+				<TinFooter content={footerContent} />
 			</BrowserRouter>
 		</div>
 	);

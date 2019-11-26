@@ -9,20 +9,9 @@ import HomeCard from "../components/HomeCard";
 import HomeContentBlock from "../components/HomeContentBlock";
 
 const Home = props => {
-	// content for homepage
-	// cards for content blocks.
-	let firstCardBatch = homepageContent.contentItems.filter(item => {
-		return item.belongsTo === 1;
-	});
-	let secondCardBatch = homepageContent.contentItems.filter(item => {
-		return item.belongsTo === 2;
-	});
-	let thirdCardBatch = homepageContent.contentItems.filter(item => {
-		return item.belongsTo === 3;
-	});
 	return (
 		<Container fluid="true" className="home-bg-image h-100">
-			<Container className="p-0">
+			<Container className="p-0 mb-5">
 				<Jumbotron className="mt-4 mt-lg-5 home-jumbotron px-4 px-md-5">
 					<h1 className="display-4 text-center text-md-left">
 						Routines made simple and fun!

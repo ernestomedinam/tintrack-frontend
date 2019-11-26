@@ -1,0 +1,16 @@
+.footer {
+    &-sn-row {
+        img {
+            width: 3rem;
+        }
+    } 
+    &-terms {
+        font-size: smaller;
+        h4 {
+            color: rgba($color: #FFF, $alpha: 0.6);
+        }
+        p {
+            color: rgba($color: #FFF, $alpha: 0.4);
+        }
+    }
+}
