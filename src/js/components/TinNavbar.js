@@ -16,6 +16,9 @@ const TinNavbar = props => {
 			<Container>
 				<Navbar.Brand className="d-flex">
 					<img src={tintrackIcon} height="48" alt="tintrack logo" />
+					<div className="brand-title d-none d-md-block">
+						Tintrack
+					</div>
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="navbar-pills" />
 				<Navbar.Collapse
