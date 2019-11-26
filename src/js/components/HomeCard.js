@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
+import PropTypes from "prop-types";
 
 const HomeCard = props => {
 	return (
@@ -20,3 +21,7 @@ const HomeCard = props => {
 };
 
 export default HomeCard;
+
+HomeCard.propTypes = {
+	card: PropTypes.object
+};

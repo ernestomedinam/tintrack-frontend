@@ -6,6 +6,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import HomeCard from "../components/HomeCard";
+import HomeContentBlock from "../components/HomeContentBlock";
 
 const Home = props => {
 	// content for homepage
@@ -52,57 +53,14 @@ const Home = props => {
 						item => item.belongsTo === block.id
 					);
 					return (
-						<React.Fragment>
-							<h2 className="display-4 text-center mt-5 mb-4">
-								{block.title}
-							</h2>
-							<div className="row">
-								{block.id === 3 && (
-									<Card className="p-0 px-md-3 m-2 home-card">
-										<Card.Body className="d-flex flex-column justify-content-center">
-											<h3 className="mb-4">
-												{
-													homepageContent.conceptsCard
-														.title
-												}
-											</h3>
-											{homepageContent.conceptsCard.concepts.map(
-												concept => {
-													return (
-														<React.Fragment>
-															<h4>
-																{
-																	concept.subtitle
-																}
-															</h4>
-															<p>
-																{
-																	concept
-																		.texts[0]
-																}
-															</p>
-															<p>
-																{
-																	concept
-																		.texts[1]
-																}
-															</p>
-														</React.Fragment>
-													);
-												}
-											)}
-										</Card.Body>
-									</Card>
-								)}
-								{batch.map(item => {
-									return <HomeCard card={item} />;
-								})}
-							</div>
-						</React.Fragment>
+						<HomeContentBlock
+							key={block.id}
+							block={block}
+							cards={batch}
+							conceptsCard={homepageContent.conceptsCard}
+						/>
 					);
 				})}
-
-				<h2>Hey, I'm Home.js</h2>
 			</Container>
 		</Container>
 	);
