@@ -22,7 +22,7 @@ const TinNavbar = props => {
 					id="navbar-pills"
 					className="justify-content-end py-2">
 					<Nav variant="pills" defaultActiveKey={Location.pathname}>
-						<Nav.Item className="mx-1-md">
+						<Nav.Item className="mx-md-1">
 							<Nav.Link
 								className="px-2 text-right"
 								as={NavLink}
@@ -32,7 +32,7 @@ const TinNavbar = props => {
 								Home
 							</Nav.Link>
 						</Nav.Item>
-						<Nav.Item className="mx-1-md">
+						<Nav.Item className="mx-md-1">
 							<Nav.Link
 								as={NavLink}
 								exact
@@ -42,7 +42,7 @@ const TinNavbar = props => {
 								Dashboard
 							</Nav.Link>
 						</Nav.Item>
-						<Nav.Item className="mx-1-md">
+						<Nav.Item className="mx-md-1">
 							<Nav.Link
 								as={NavLink}
 								exact

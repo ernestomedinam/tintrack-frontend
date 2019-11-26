@@ -18,6 +18,23 @@ import stats from "../../assets/icons/home-page/stats.svg";
 import improve from "../../assets/icons/home-page/improve.svg";
 
 const homepageContent = {
+	contentBlocks: [
+		{
+			id: 1,
+			title: "Why are routines good for us?",
+			kind: "card-gallery"
+		},
+		{
+			id: 2,
+			title: "Why should we care about our habits?",
+			kind: "card-gallery"
+		},
+		{
+			id: 3,
+			title: "How does routine tracking work?",
+			kind: "row-concepts"
+		}
+	],
 	contentItems: [
 		{
 			id: 1,
@@ -40,7 +57,7 @@ const homepageContent = {
 			belongsTo: 1,
 			title: "They make us content",
 			description:
-				"Build inner peace as you engage in household tasks routines; do your bed, water your plants, sweep your room or do your laundry.",
+				"Build inner peace as you engage in household tasks routines; do your bed, water your plants or sweep your room.",
 			icon: content
 		},
 		{
@@ -56,15 +73,15 @@ const homepageContent = {
 			belongsTo: 1,
 			title: "They make us sane",
 			description:
-				"Build spiritual sanity from scratch upon regular praying, meditation, therapy, reflexive thinking or any form of relieving activity.",
+				"Build spiritual sanity from scratch upon regular praying, meditation, therapy or reflexive thinking.",
 			icon: sanity
 		},
 		{
 			id: 6,
 			belongsTo: 1,
-			title: "They make us who we are",
+			title: "They make us",
 			description:
-				"Take control of yourself and overcome lack of willpower; structure your mind state and become who you want to be, one routine at a time.",
+				"Take control and overcome lack of willpower; structure your mind and own yourself, one routine at a time.",
 			icon: willpower
 		},
 		{
@@ -118,23 +135,23 @@ const homepageContent = {
 		{
 			id: 13,
 			belongsTo: 3,
-			title: "1. Identify habits",
+			title: "1: Identify habits",
 			description:
-				"Create them and add frequency and estimated amount of times you think they take place in your schedule.",
+				"Create them and add frequency and estimated amount of times you think they take place.",
 			icon: habit
 		},
 		{
 			id: 14,
 			belongsTo: 3,
-			title: "2. Create routine tasks",
+			title: "2: Create tasks",
 			description:
-				"Specify routine task goals, frequency and schedule part of day for them to take place.",
+				"Specify routine tasks, goals, frequency and schedule part of day for them to take place.",
 			icon: createTask
 		},
 		{
 			id: 15,
 			belongsTo: 3,
-			title: "3. Keep track",
+			title: "3: Keep track",
 			description:
 				"Update completed tasks and habit happening records as you go through your daily routines.",
 			icon: keepTrack
@@ -142,9 +159,9 @@ const homepageContent = {
 		{
 			id: 16,
 			belongsTo: 3,
-			title: "4. Act on your stats",
+			title: "4: Act on stats",
 			description:
-				"Use routine-tracker stats to determine exactly which habits you want to modify and redesign your routine to enforce changes.",
+				"Use your stats to determine which habits you want to modify; redesign your routine to enforce changes.",
 			icon: stats
 		},
 		{
@@ -156,7 +173,7 @@ const homepageContent = {
 		}
 	],
 	conceptsCard: {
-		title: "0. Concepts",
+		title: "0: Concepts",
 		concepts: [
 			{
 				subtitle: "Habits",
@@ -176,4 +193,4 @@ const homepageContent = {
 	}
 };
 
-export default hompageContent;
+export default homepageContent;

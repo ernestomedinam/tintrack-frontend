@@ -1,19 +1,23 @@
-.home-bg-image {
-    margin: 0;
-    padding: 0;
-    background-image: linear-gradient(
-        to right bottom,
-        rgba($color: #7B87CC, $alpha: 0.3),
-        rgba($color: #009AFF, $alpha: 0.3)),
-        url("../../assets/img/backgrounds/loginBg.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-}
+@import "../components/HomeCard";
 
-.home-jumbotron {
-    background-color: rgba($color: #FFF, $alpha: 0.4) !important;
-    border-radius: 1rem !important;
+.home {
+    &-bg-image {
+        margin: 0;
+        padding: 0;
+        background-image: linear-gradient(
+            to right bottom,
+            rgba($color: #7B87CC, $alpha: 0.3),
+            rgba($color: #009AFF, $alpha: 0.3)),
+            url("../../assets/img/backgrounds/loginBg.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    &-jumbotron {
+        background-color: rgba($color: #FFF, $alpha: 0.4) !important;
+        border-radius: 1rem !important;
+    }
+
 }
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
