@@ -97,7 +97,7 @@ const homepageContent = {
 			belongsTo: 2,
 			title: "They can be good for you",
 			description:
-				"Some habits have a positive impact on different aspects of your life; these are habits that we want to enforce through routine tracking.",
+				"Some habits have a positive impact on various aspects of our lives; these ones are to be enforced through routine tracking.",
 			icon: positive
 		},
 		{

@@ -13,7 +13,7 @@ const HomeContentBlock = props => {
 					<Card
 						className="p-0 px-md-3 m-2 home-card"
 						key={"concept-card-" + props.block.id}>
-						<h3 className="mb-4 text-center">
+						<h3 className="mb-3 mt-5 text-center">
 							{props.conceptsCard.title}
 						</h3>
 						<Card.Body className="d-flex flex-column justify-content-center">
