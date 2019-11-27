@@ -6,11 +6,22 @@
     } 
     &-terms {
         font-size: smaller;
-        h4 {
+        h5 {
             color: rgba($color: #FFF, $alpha: 0.6);
         }
         p {
             color: rgba($color: #FFF, $alpha: 0.4);
         }
     }
+    &-cpr {
+        @extend .footer-terms;
+        @extend .footer-sn-row;
+        p {
+            margin: 0;
+        }
+        img {
+            margin: 0.5rem 1rem;
+        }
+    }
+     
 }

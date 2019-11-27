@@ -1,7 +1,8 @@
 import twitterIcon from "../../assets/icons/twitter.svg";
 import facebookIcon from "../../assets/icons/fb.svg";
-import thcIcon from "../../assets/icons/logo-3hc-white.svg";
+import thcIcon from "../../assets/icons/3hc.svg";
 import githubIcon from "../../assets/icons/github.svg";
+import licenseIcon from "../../assets/icons/mitLicense.svg";
 
 const footerContent = {
 	ssnnItems: [
@@ -36,16 +37,11 @@ const footerContent = {
 		}
 	],
 	copyrights: {
-		title: "routine-tracker",
-		author: "Ernesto Medina"
-	},
-	authorship: {
+		texts: ["MIT License", "Copyright (c) 2019 Ernesto Medina"],
+		icon: licenseIcon,
 		createdBy: "Ernesto Medina",
 		builtBy: "Ernesto Medina",
-		poweredBy: {
-			name: "3hc",
-			icon: thcIcon
-		}
+		poweredBy: thcIcon
 	}
 };
 

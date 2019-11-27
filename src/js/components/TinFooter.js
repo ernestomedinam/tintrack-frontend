@@ -5,7 +5,7 @@ const TinFooter = props => {
 	return (
 		<Container fluid className="bg-dark">
 			<Container>
-				<div className="row footer-sn-row py-3 justify-content-center">
+				<div className="row footer-sn-row py-3 justify-content-center mt-3">
 					{props.content.ssnnItems.map(item => {
 						return (
 							<img
@@ -17,13 +17,13 @@ const TinFooter = props => {
 						);
 					})}
 				</div>
-				<div className="footer-terms">
+				<div className="footer-terms d-none d-md-block">
 					{props.content.terms.map(term => {
 						return (
 							<React.Fragment key={term.title}>
-								<h4 className="mt-3 mb-2 text-center text-md-left">
+								<h5 className="mt-3 mb-2 text-center text-md-left">
 									{term.title}
-								</h4>
+								</h5>
 								<React.Fragment>
 									{term.contents.map((content, index) => {
 										return (
@@ -38,6 +38,28 @@ const TinFooter = props => {
 							</React.Fragment>
 						);
 					})}
+				</div>
+				<div className="row footer-cpr mb-4">
+					<div className="my-2 col-md-6 justify-content-left">
+						<img
+							src={props.content.copyrights.icon}
+							className="ml-0"
+						/>
+						{props.content.copyrights.texts.map((text, index) => {
+							return <p key={index}>{text}</p>;
+						})}
+					</div>
+					<div className="my-2 col-md-6 text-right">
+						<p>
+							{"created by: " +
+								props.content.copyrights.createdBy}
+						</p>
+						<p>{"built by: " + props.content.copyrights.builtBy}</p>
+						<div className="row align-items-center justify-content-end">
+							<p>powered by:</p>
+							<img src={props.content.copyrights.poweredBy} />
+						</div>
+					</div>
 				</div>
 			</Container>
 		</Container>
