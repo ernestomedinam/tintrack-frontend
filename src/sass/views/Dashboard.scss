@@ -3,7 +3,7 @@
 @import "../components/TinFooter";
 
 .dashboard-wrapper {
-    @include build-flex("flex-column", "wrap");
+    @include build-flex(column, wrap);
     min-height: 100vh;
     background-color: rgba($color: $blue-tin, $alpha: 0.3);
 }
