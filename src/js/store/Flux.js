@@ -23,7 +23,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			changeColor: (index, color) => {
 				const store = getStore();
-				const demo = store.demo.map((element, index) => {
+				const demo = store.demo.map((element, i) => {
 					if (i === index) element.background = color;
 					return element;
 				});

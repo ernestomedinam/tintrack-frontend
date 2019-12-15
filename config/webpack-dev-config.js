@@ -13,7 +13,6 @@ module.exports = {
     devtool: "source-map",
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new webpack.NamedModulesPlugin(),
         new webpack.ProvidePlugin({
             $: 'jquery',
             Popper: 'popper.js',
@@ -23,8 +22,8 @@ module.exports = {
             Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
         }),
         new HtmlWebpackPlugin({
-            favicon: './src/assets/img/favicon.ico',
-            template: paths.appHtml
+            favicon: paths.appFavIcon,
+            template: paths.appTemplate
         }),
         new PrettierPlugin({
             parser: "babel",
@@ -33,7 +32,6 @@ module.exports = {
             useTabs: true,              // Indent lines with tabs instead of spaces.
             bracketSpacing: true,
             extensions: [ ".js", ".jsx" ],
-            jsxBracketSameLine: true,
             semi: true,                 // Print semicolons at the ends of statements.
             encoding: 'utf-8'
         })
@@ -44,25 +42,34 @@ module.exports = {
                 // look for js, jsx files
                 test: /\.(js|jsx)$/,
                 // in the src directory
-                include: path.resolve(paths.appSrcJs),
+                include: path.resolve(paths.appJavaScripSource),
                 // exclude node_modules
                 exclude: /(node_modules)/,
-                use: {
-                    // babel for transpiling js files
-                    loader: "babel-loader",
-                    options: {
-                        presets: [
-                            "@babel/preset-env",
-                            "@babel/preset-react"
-                        ]
+                use: [
+                    {
+                        // babel for transpiling js files
+                        loader: "babel-loader",
+                        options: {
+                            presets: [
+                                "@babel/preset-env",
+                                "@babel/preset-react"
+                            ]
+                        }
+                    },
+                    {
+                        // eslint for code linting
+                        loader: "eslint-loader",
+                        options: {
+                            enforce: "pre"
+                        }
                     }
-                }
+                ]
             },
             {
                 // look for css, scss files
                 test: /\.(css|scss)$/,
                 // in the src directory
-                include: path.resolve(paths.appStyles),
+                include: [paths.appStyles, /(node_modules)/],
                 use: [
                     {
                         loader: "style-loader",
@@ -85,48 +92,26 @@ module.exports = {
                 ]
             },
             {
-                // look for css, scss files
-                test: /\.(css|scss)$/,
-                // in the src directory
-                include: path.resolve(paths.bootstrapModule),
+                // handle image files
+                test: /\.(png|svg|jpeg|jpg|gif)$/,
                 use: [
                     {
-                        loader: "style-loader",
-                    },
-                    {
-                        loader: "css-loader",
+                        loader: "file-loader",
                         options: {
-                            modules: {
-                                localIdentName: "[local]"
-                            },
-                            importLoaders: 0
+                            name: "[path][name].[ext]"
                         }
                     }
                 ]
             },
             {
-                test: /\.(png|svg|jpg)$/,
+                // handle font files
+                test: /\.woff($|\?)|\.woff2($|\?)\.ttf($|\?)\.eot($|\?)/,
                 use: [
                     {
-                        loader: "file-loader",
-                        options: {
-                            name: '[path][name].[ext]'
-                        }
+                        loader: "file-loader"
                     }
-                ],
+                ]
             }
         ]
-    },
-    resolve: {
-        // file extensions
-        extensions: [".js", ".jsx"],
-        modules: ["node_modules"],
-        // aliases to shorten paths
-        alias: {
-            Components: path.resolve(paths.appSrcJs, "components"),
-            Utils: path.resolve(paths.appSrcJs, "utils"),
-            Views: path.resolve(paths.appSrcJs, "views"),
-            Store: path.resolve(paths.appSrcJs, "store")
-        }
     },
 };

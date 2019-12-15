@@ -1,6 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import HomeCard from "./HomeCard";
+import PropTypes from "prop-types";
 
 const HomeContentBlock = props => {
 	return (
@@ -12,7 +13,8 @@ const HomeContentBlock = props => {
 				{props.block.id === 3 && (
 					<Card
 						className="p-0 px-md-3 m-2 home-card"
-						key={"concept-card-" + props.block.id}>
+						key={"concept-card-" + props.block.id}
+					>
 						<h3 className="mb-3 mt-5 text-center">
 							{props.conceptsCard.title}
 						</h3>
@@ -40,3 +42,9 @@ const HomeContentBlock = props => {
 };
 
 export default HomeContentBlock;
+
+HomeContentBlock.propTypes = {
+	block: PropTypes.object,
+	conceptsCard: PropTypes.object,
+	cards: PropTypes.arrayOf(PropTypes.object)
+};

@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
+import PropTypes from "prop-types";
 
 const TinFooter = props => {
 	return (
@@ -29,7 +30,8 @@ const TinFooter = props => {
 										return (
 											<p
 												key={term.title + "-" + index}
-												className="text-justify">
+												className="text-justify"
+											>
 												{content}
 											</p>
 										);
@@ -67,3 +69,7 @@ const TinFooter = props => {
 };
 
 export default TinFooter;
+
+TinFooter.propTypes = {
+	content: PropTypes.object
+};

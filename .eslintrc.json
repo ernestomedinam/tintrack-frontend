@@ -4,28 +4,33 @@
         "react",
         "react-hooks"
     ],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
     "env": {
         "browser": true,
         "es6": true
     },
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "rules": {
         "strict":0,
         "no-unused-vars": 0,
         "no-mixed-spaces-and-tabs": 0,
         "no-debugger": 0,
-        "no-console": 1,
+        "no-console": 0,
         "semi": ["error", "always"],
-        "allowImportExportEverywhere": false,
+        "allowImportExportEverywhere": 0,
         "comma-dangle": [1, { //when to use the last comma
             "arrays": "never",
             "objects": "never",
             "imports": "never",
             "exports": "never",
-            "functions": "ignore",
+            "functions": "ignore"
         }],
         "react/prop-types": [2],
         "react-hooks/rules-of-hooks": "error",
-        "react-hooks/exhaustive-deps": "warns"
-    },
-    "extends": ["eslint:recommended", "plugin:react/recommended"]
+        "react-hooks/exhaustive-deps": "warn"
+    }
 }

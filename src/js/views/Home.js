@@ -1,5 +1,5 @@
 import React from "react";
-import "../../styles/views/Home.scss";
+import "../../sass/views/Home.scss";
 import homepageContent from "../utils/homepageContent.js";
 import Container from "react-bootstrap/Container";
 import Jumbotron from "react-bootstrap/Jumbotron";
@@ -26,13 +26,15 @@ const Home = props => {
 						<Button
 							size="lg"
 							className="m-md-2 my-2 mx-0"
-							variant="primary">
+							variant="primary"
+						>
 							Sign me up!
 						</Button>
 						<Button
 							size="lg"
 							className="m-md-2 my-2 mx-0"
-							variant="success">
+							variant="success"
+						>
 							Log me in!
 						</Button>
 					</div>
