@@ -7,10 +7,12 @@ import { AppContext } from "../store/AppContext";
 const Dashboard = props => {
 	const { store, actions } = useContext(AppContext);
 	return (
-		<Container className="dashboard-wrapper">
-			<h1>Hello, this is your dashboard</h1>
-			<DayTrack day={store.schedule.days[0]} />
-			{/* <DayTrack dayName={something.that.returns.dayName} />*/}
+		<Container fluid className="dashboard-bg-image">
+			<Container className="dashboard-wrapper">
+				<h1>Hello, this is your dashboard</h1>
+				<DayTrack day={store.schedule.days[0]} />
+				{/* <DayTrack dayName={something.that.returns.dayName} />*/}
+			</Container>
 		</Container>
 	);
 };

@@ -3,8 +3,13 @@
 @import "../components/TinFooter";
 @import "../components/DayTrack";
 
-.dashboard-wrapper {
-    @include build-flex(column, wrap);
-    min-height: 100vh;
-    background-color: rgba($color: $blue-tin, $alpha: 0.3);
+.dashboard {
+    &-bg-image {
+        @include tintrack-bg-image();
+    }
+    &-wrapper {
+        @include build-flex(column, wrap);
+        min-height: 100vh;
+        // background-color: rgba($color: $blue-tin, $alpha: 0.3);
+    }
 }

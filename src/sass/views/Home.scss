@@ -5,16 +5,7 @@
 
 .home {
     &-bg-image {
-        margin: 0;
-        padding: 0;
-        background-image: linear-gradient(
-            to right bottom,
-            rgba($color: $purple-tin, $alpha: 0.3),
-            rgba($color: $blue-tin, $alpha: 0.3)),
-            url("../../assets/img/backgrounds/loginBg.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
+        @include tintrack-bg-image();
     }
     &-jumbotron {
         background-color: rgba($color: #FFF, $alpha: 0.4) !important;

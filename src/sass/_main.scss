@@ -11,10 +11,24 @@ $purple-tin: rgba($color: #7B87CC, $alpha: 1);
 $blue-tin: rgba($color: #009AFF, $alpha: 1);
 
 // mixins
+// build flex containers
 @mixin build-flex($flow, $wrap) {
     display: flex;
     flex-flow: $flow;
     flex-wrap: $wrap;
+}
+// use background image
+@mixin tintrack-bg-image() {
+    margin: 0;
+    padding: 0;
+    background-image: linear-gradient(
+        to right bottom,
+        rgba($color: $purple-tin, $alpha: 0.3),
+        rgba($color: $blue-tin, $alpha: 0.3)),
+        url("../../assets/img/backgrounds/loginBg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 // declare animations and utility classes that will be

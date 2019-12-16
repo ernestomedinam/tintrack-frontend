@@ -46,6 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 								toBeEnforced: false,
 								count: 9,
 								name: "Cigarettes",
+								icon: "src/assets/icons/task-icons/smoking.svg",
 								reasonForHabit:
 									"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit."
 							}

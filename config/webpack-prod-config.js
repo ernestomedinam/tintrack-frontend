@@ -6,7 +6,7 @@ const webpack = require("webpack");
 const paths = require("./paths.js");
 
 module.exports = {
-    entry: [paths.appIndexJs],
+    entry: paths.appIndexJs,
     output: {
         filename: 'bundle.js',
         path: paths.appPublic,
@@ -23,8 +23,8 @@ module.exports = {
             Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
         }),
         new HtmlWebpackPlugin({
-            favicon: './src/assets/img/favicon.ico',
-            template: paths.appHtml
+            favicon: paths.appFavIcon,
+            template: paths.appTemplate
         }),
         new PrettierPlugin({
             parser: "babel",
