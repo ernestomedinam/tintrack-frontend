@@ -1,6 +1,7 @@
 @import "../main";
 @import "../components/TinNavbar";
 @import "../components/TinFooter";
+@import "../components/DayTrack";
 
 .dashboard-wrapper {
     @include build-flex(column, wrap);

@@ -18,6 +18,7 @@ const injectAppContext = PassedComponent => {
 		);
 		useEffect(() => {
 			// run effects on [variable] change
+			state.actions.getCurrentDateObj();
 			return () => {
 				// clean up before unmounting
 			};
