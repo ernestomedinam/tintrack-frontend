@@ -7,6 +7,9 @@
         box-shadow: 0 4px 8px 0 rgba($color: #000, $alpha: 0.2), 0 6px 20px 0 rgba($color: #000, $alpha: 0.2);
         color: #FFF;
         max-width: 360px;
+        &-icon {
+            max-width: 64px;
+        }
         .habit-title {
             color: rgba($color: #FFF, $alpha: 0.6);
         }

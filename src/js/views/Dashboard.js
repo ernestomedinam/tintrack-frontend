@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
+// import taskIcons from "../utils/taskIcons";
+import "../utils/taskIcons";
 import "../../sass/views/Dashboard.scss";
 import DayTrack from "../components/DayTrack";
 import { AppContext } from "../store/AppContext";
