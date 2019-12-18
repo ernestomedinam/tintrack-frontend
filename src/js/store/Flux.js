@@ -45,10 +45,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 								dailyTarget: 12,
 								toBeEnforced: false,
 								count: 9,
-								name: "Cigarettes",
+								name: "Smoke some cigarettes",
 								icon: "src/assets/icons/task-icons/smoking.svg",
 								reasonForHabit:
 									"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit."
+							},
+							{
+								id: 52,
+								dailyTarget: 8,
+								toBeEnforced: true,
+								count: 3,
+								name: "Drink water bitch!",
+								icon: "src/assets/icons/task-icons/smoking.svg",
+								reasonForHabit:
+									"I must remain hidrated. Or die."
 							}
 						]
 					}

@@ -6,9 +6,8 @@ const DayCard = ({ task, counter }) => {
 	return (
 		<div className="day-card m-2">
 			<div className="day-card-header">
-				<div className="card-header-title">
+				<div className="card-header-icon">
 					<img src={task.icon} />
-					<h5>{task.name}</h5>
 				</div>
 				<div className="card-header-kpi">
 					<KpiBoard
@@ -29,10 +28,13 @@ const DayCard = ({ task, counter }) => {
 					/>
 				</div>
 			</div>
+			<div className="day-card-title">
+				<h5>{task.name}</h5>
+			</div>
 			<div className="day-card-body">{task.reasonForHabit}</div>
-			<div className="card-actions">
+			<div className="day-card-actions">
 				<button type="button" className="btn btn-success btn-block">
-					{counter ? "update count" : "mark as done!"}
+					{counter ? "add +1 to count" : "mark as done!"}
 				</button>
 			</div>
 		</div>
