@@ -24,7 +24,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 								durationEstimate: 60,
 								status: "planned",
 								name: "Work out",
-								icon: "src/assets/icons/home-page/strength.svg",
+								icon: "src/assets/icons/task-icons/weights.svg",
 								personalMessage:
 									"Working out keeps my body stable, chemically and physically; steady body, steady mind",
 								prevActivity: "",
@@ -40,15 +40,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 								kpiValues: [
 									{
 										legend: "streak",
-										numbers: [0, 5]
-									},
-									{
-										legend: "longest",
 										numbers: [0, 2]
 									},
 									{
+										legend: "longest",
+										numbers: [0, 5]
+									},
+									{
 										legend: "% mean",
-										numbers: [0, 8]
+										numbers: [6, 2]
 									}
 								]
 							}
@@ -58,6 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 								id: 23,
 								toBeEnforced: false,
 								name: "Smoke some cigarettes",
+								status: "under", // others are "around" and "over"
 								icon: "src/assets/icons/task-icons/smoking.svg",
 								personalMessage:
 									"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit.",
@@ -80,21 +81,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 								id: 52,
 								toBeEnforced: true,
 								name: "Make my bed",
-								icon: "src/assets/icons/task-icons/smoking.svg",
+								status: "around",
+								icon:
+									"src/assets/icons/task-icons/bed-making.svg",
 								personalMessage:
 									"Keeping my bed neat means it's always ready to provide me with a great laying down experience. It also ensures uniform temperature distribution for adequate sleeping.",
 								kpiValues: [
 									{
 										legend: "today",
-										numbers: [0, 5]
+										numbers: [0, 1]
 									},
 									{
 										legend: "lately",
-										numbers: [0, 7]
+										numbers: [0, 1]
 									},
 									{
 										legend: "target",
-										numbers: [0, 8]
+										numbers: [0, 1]
 									}
 								]
 							},
@@ -102,7 +105,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 								id: 12,
 								toBeEnforced: true,
 								name: "Drink water bitch!",
-								icon: "src/assets/icons/task-icons/smoking.svg",
+								status: "under",
+								icon:
+									"src/assets/icons/task-icons/water-glass.svg",
 								personalMessage:
 									"I must remain hidrated. Or die.",
 								kpiValues: [

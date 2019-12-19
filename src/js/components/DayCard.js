@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import KpiBoard from "./KpiBoard";
+import Button from "react-bootstrap/Button";
 
 const DayCard = ({ task, counter }) => {
 	return (
@@ -24,9 +25,54 @@ const DayCard = ({ task, counter }) => {
 				</div>
 				<div className="day-card-body">{task.personalMessage}</div>
 				<div className="day-card-actions">
-					<button type="button" className="btn btn-success btn-block">
-						{counter ? "add +1 to count" : "mark as done!"}
-					</button>
+					{task.startTime ? (
+						// its planned task
+						task.status === "done" ? (
+							// task is done
+							<Button
+								type="button"
+								block
+								disabled
+								variant="success"
+							>
+								{"done!"}
+							</Button>
+						) : task.status === "planned" ? (
+							// task is planned
+							<Button type="button" block variant="primary">
+								{"mark as done"}
+							</Button>
+						) : (
+							// task was missed?
+							<Button type="button" block variant="warning">
+								{"did you do this?"}
+							</Button>
+						)
+					) : task.toBeEnforced ? (
+						// its a habit to be enforced
+						task.status === "over" || task.status === "around" ? (
+							// habit to be enforced is over target
+							<Button type="button" block variant="info">
+								{"ok, add one more"}
+							</Button>
+						) : (
+							// habit to be enforced is under target
+							<Button type="button" block variant="success">
+								{"come one! again!"}
+							</Button>
+						)
+					) : // its a habit not to be enforced
+					task.status === "under" ? (
+						// habit not to be enforced is far from target
+						<Button type="button" block variant="warning">
+							{"well... ok, add one"}
+						</Button>
+					) : (
+						// habit not to be enforced is not far from target
+						<Button type="button" block variant="danger">
+							{"add one, but please stop!"}
+						</Button>
+					)}
 				</div>
 			</div>
 		</div>
