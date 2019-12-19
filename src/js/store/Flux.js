@@ -20,13 +20,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						plannedTasks: [
 							{
 								id: 125,
-								start_time: "0800",
-								durationEstimate: 180,
+								startTime: "09:00",
+								durationEstimate: 60,
 								status: "planned",
-								name: "Do some yoga",
-								description:
-									"Velit ut tempor in est. Tempor quis minim occaecat enim excepteur nulla labore voluptate nostrud voluptate. Fugiat veniam enim duis veniam sit laboris dolore et in sunt ea nostrud ad adipisicing. Est cillum consequat sint et tempor ullamco pariatur labore deserunt dolor ea eiusmod sint. Ipsum esse officia tempor cupidatat. Sint aute fugiat laboris ullamco proident. Lorem consectetur consequat veniam Lorem ipsum magna dolore mollit elit laborum.",
-								reasonForTask: "Keep anxiety down",
+								name: "Work out",
+								icon: "src/assets/icons/home-page/strength.svg",
+								personalMessage:
+									"Working out keeps my body stable, chemically and physically; steady body, steady mind",
 								prevActivity: "",
 								nextActivity: "",
 								duration: 0,
@@ -36,29 +36,89 @@ const getState = ({ getStore, getActions, setStore }) => {
 										status: "sent",
 										minutesBefore: 15
 									}
+								],
+								kpiValues: [
+									{
+										legend: "streak",
+										numbers: [0, 5]
+									},
+									{
+										legend: "longest",
+										numbers: [0, 2]
+									},
+									{
+										legend: "% mean",
+										numbers: [0, 8]
+									}
 								]
 							}
 						],
 						habitCounters: [
 							{
 								id: 23,
-								dailyTarget: 12,
 								toBeEnforced: false,
-								count: 9,
 								name: "Smoke some cigarettes",
 								icon: "src/assets/icons/task-icons/smoking.svg",
-								reasonForHabit:
-									"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit."
+								personalMessage:
+									"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit.",
+								kpiValues: [
+									{
+										legend: "today",
+										numbers: [0, 5]
+									},
+									{
+										legend: "lately",
+										numbers: [0, 9]
+									},
+									{
+										legend: "target",
+										numbers: [0, 8]
+									}
+								]
 							},
 							{
 								id: 52,
-								dailyTarget: 8,
 								toBeEnforced: true,
-								count: 3,
+								name: "Make my bed",
+								icon: "src/assets/icons/task-icons/smoking.svg",
+								personalMessage:
+									"Keeping my bed neat means it's always ready to provide me with a great laying down experience. It also ensures uniform temperature distribution for adequate sleeping.",
+								kpiValues: [
+									{
+										legend: "today",
+										numbers: [0, 5]
+									},
+									{
+										legend: "lately",
+										numbers: [0, 7]
+									},
+									{
+										legend: "target",
+										numbers: [0, 8]
+									}
+								]
+							},
+							{
+								id: 12,
+								toBeEnforced: true,
 								name: "Drink water bitch!",
 								icon: "src/assets/icons/task-icons/smoking.svg",
-								reasonForHabit:
-									"I must remain hidrated. Or die."
+								personalMessage:
+									"I must remain hidrated. Or die.",
+								kpiValues: [
+									{
+										legend: "today",
+										numbers: [0, 5]
+									},
+									{
+										legend: "lately",
+										numbers: [0, 7]
+									},
+									{
+										legend: "target",
+										numbers: [0, 8]
+									}
+								]
 							}
 						]
 					}

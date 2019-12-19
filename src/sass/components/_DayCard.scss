@@ -7,8 +7,11 @@
     border-radius: 0.5rem;
     color: rgba($color: #FFF, $alpha: 0.6);
     box-shadow: 0 4px 8px 0 rgba($color: #000, $alpha: 0.2), 0 6px 20px 0 rgba($color: #000, $alpha: 0.2);
+    @include media-breakpoint-up(md) {
+        height: 100%;
+    }
     &-title {
-        @include build-flex(row, nowrap);
+        @include build-flex(column, nowrap);
         width: 100%;
         padding: 1rem 1rem 1rem 1rem;
         background-color: rgba($color: #222, $alpha: 1.0);
@@ -16,6 +19,10 @@
         h5 {
             margin: 0;
             color: #FFF;
+        }
+        .card-start-time {
+            display: block;
+            margin: 0;
         }
     }
     &-header {

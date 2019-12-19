@@ -2,7 +2,7 @@
     @include build-flex(row, wrap);
     background-color: rgba($color: $purple-tin, $alpha: 0.5);
     padding: 1rem;
-    align-content: stretch;
+    // align-content: stretch;
     justify-content: center;
     .sched-task {
         border: 4px solid #FFF;
