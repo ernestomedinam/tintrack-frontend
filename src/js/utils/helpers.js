@@ -30,3 +30,17 @@ export const ordinalInteger = number => {
 	}
 	return number + "th";
 };
+
+export const addDaysToDate = (objWithDate, daysToAdd) => {
+	let modifiedDate = new Date(
+		objWithDate.year,
+		objWithDate.month,
+		objWithDate.day
+	);
+	modifiedDate.setDate(modifiedDate.getDate() + daysToAdd);
+	return {
+		year: modifiedDate.getFullYear(),
+		month: modifiedDate.getMonth(),
+		day: modifiedDate.getDate()
+	};
+};

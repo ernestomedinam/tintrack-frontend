@@ -147,6 +147,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 					currentDate: currentDateObj
 				});
 			},
+			getScheduleForDate: objWithDate => {
+				const store = getStore();
+				console.log("taking call to get schedule day", objWithDate);
+				setStore({
+					dashboardDay: {
+						...store.dashboardDay,
+						year: objWithDate.year,
+						month: objWithDate.month,
+						day: objWithDate.day
+					}
+				});
+			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},

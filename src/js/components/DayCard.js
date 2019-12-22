@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 
 const DayCard = ({ task, counter }) => {
 	return (
-		<div className="col-md-4 p-0 p-md-2 m-2 m-md-0">
+		<div className="col-lg-4 col-md-6 p-0 p-md-2 m-2 m-md-0 d-flex justify-content-center">
 			<div className="day-card m-0 p-0">
 				<div className="day-card-header">
 					<div className="card-header-icon">

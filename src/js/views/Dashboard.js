@@ -1,6 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
-import { returnMonthName, ordinalInteger } from "../utils/helpers.js";
+import {
+	returnMonthName,
+	ordinalInteger,
+	addDaysToDate
+} from "../utils/helpers.js";
 import "../utils/taskIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../sass/views/Dashboard.scss";
@@ -11,6 +15,7 @@ const Dashboard = props => {
 	const { store, actions } = useContext(AppContext);
 	const [viewedDay, setViewedDay] = useState();
 	useEffect(() => {
+		console.log("running dashboardDay effect");
 		if (store.dashboardDay) {
 			setViewedDay(
 				store.dashboardDay.dayName +
@@ -31,18 +36,50 @@ const Dashboard = props => {
 					<div className="title">
 						<h4>{viewedDay}</h4>
 					</div>
-					<div className="prev text-center">
+					<div
+						className="prev text-center"
+						onClick={() =>
+							actions.getScheduleForDate(
+								addDaysToDate(
+									{
+										year: store.dashboardDay.year,
+										month: store.dashboardDay.month,
+										day: store.dashboardDay.day
+									},
+									-1
+								)
+							)
+						}
+					>
 						<FontAwesomeIcon
 							icon={["far", "arrow-alt-circle-left"]}
 						/>
+						<span className="legend">{"yesterday"}</span>
 					</div>
 					<div className="search text-center">
 						<FontAwesomeIcon icon={["far", "calendar-alt"]} />
+						<span className="legend">{"search for date"}</span>
 					</div>
 					<div className="add text-center">
+						<span className="legend">{"add new task"}</span>
 						<FontAwesomeIcon icon={["far", "plus-square"]} />
 					</div>
-					<div className="next text-center">
+					<div
+						className="next text-center"
+						onClick={() =>
+							actions.getScheduleForDate(
+								addDaysToDate(
+									{
+										year: store.dashboardDay.year,
+										month: store.dashboardDay.month,
+										day: store.dashboardDay.day
+									},
+									1
+								)
+							)
+						}
+					>
+						<span className="legend">{"tomorrow"}</span>
 						<FontAwesomeIcon
 							icon={["far", "arrow-alt-circle-right"]}
 						/>

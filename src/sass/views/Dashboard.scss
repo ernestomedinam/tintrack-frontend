@@ -30,10 +30,25 @@
             padding: 0.5rem 1rem 0 1rem;
         }
         .prev, .next, .search, .add {
+            cursor: pointer;
+            @include build-flex(row, nowrap);
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+            // margin: auto;
             padding: 0.5rem 0.5rem 1rem 0.5rem;
             svg {
                 width: 24px;
                 height: 24px;
+            }
+            &:hover {
+                color: #FFF;
+            }
+        }
+        .prev, .next {
+            svg {
+                width: 26px;
+                height: 26px;
             }
         }
         .prev {
@@ -47,6 +62,24 @@
         }
         .next {
             grid-area: next;
+        }
+        .legend {
+            display: none;
+        }
+        @include media-breakpoint-up(lg) {
+            grid-template-areas:
+            "prev title title next"
+            "search search add-task add-task";
+            grid-template-rows: auto auto;
+            grid-template-columns: 1fr 2fr 2fr 1fr;
+            .prev, .next {
+                padding: 0.5rem 1rem 0 1rem;
+                // margin: auto;
+            }
+            .legend {
+                display: inline-block;
+                margin: auto 0.5rem;
+            }
         }
     }
 }
