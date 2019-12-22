@@ -12,6 +12,11 @@
     &-wrapper {
         @include build-flex(column, wrap);
         min-height: 100vh;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
         // background-color: rgba($color: $blue-tin, $alpha: 0.3);
+    }
+    &-tools {
+        color: white;
     }
 }

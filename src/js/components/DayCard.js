@@ -58,7 +58,7 @@ const DayCard = ({ task, counter }) => {
 						) : (
 							// habit to be enforced is under target
 							<Button type="button" block variant="success">
-								{"come one! again!"}
+								{"come on! add more!"}
 							</Button>
 						)
 					) : // its a habit not to be enforced
