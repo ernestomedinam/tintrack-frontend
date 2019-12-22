@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import Container from "react-bootstrap/Container";
 import { returnMonthName, ordinalInteger } from "../utils/helpers.js";
 import "../utils/taskIcons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../sass/views/Dashboard.scss";
 import DayTrack from "../components/DayTrack";
 import { AppContext } from "../store/AppContext";
@@ -27,8 +28,25 @@ const Dashboard = props => {
 		<Container fluid className="dashboard-bg-image">
 			<Container className="dashboard-wrapper">
 				<Container className="dashboard-tools bg-dark">
-					<h1>Hello, this is your dashboard</h1>
-					<p>{viewedDay}</p>
+					<div className="title">
+						<h4>{viewedDay}</h4>
+					</div>
+					<div className="prev text-center">
+						<FontAwesomeIcon
+							icon={["far", "arrow-alt-circle-left"]}
+						/>
+					</div>
+					<div className="search text-center">
+						<FontAwesomeIcon icon={["far", "calendar-alt"]} />
+					</div>
+					<div className="add text-center">
+						<FontAwesomeIcon icon={["far", "plus-square"]} />
+					</div>
+					<div className="next text-center">
+						<FontAwesomeIcon
+							icon={["far", "arrow-alt-circle-right"]}
+						/>
+					</div>
 				</Container>
 				<DayTrack day={store.dashboardDay} />
 				{/* <DayTrack dayName={something.that.returns.dayName} />*/}

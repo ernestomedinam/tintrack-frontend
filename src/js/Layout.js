@@ -6,6 +6,7 @@ import Home from "./views/Home.js";
 import TinFooter from "./components/TinFooter.js";
 import Dashboard from "./views/Dashboard";
 import footerContent from "./utils/footerContent.js";
+import "./utils/fontAwesomeLibrary";
 
 export const Layout = props => {
 	return (

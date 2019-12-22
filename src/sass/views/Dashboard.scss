@@ -17,6 +17,36 @@
         // background-color: rgba($color: $blue-tin, $alpha: 0.3);
     }
     &-tools {
-        color: white;
+        color: rgba($color: #FFF, $alpha: 0.6);
+        display: grid;
+        grid-template-areas:
+            "title title title title"
+            "prev search add-task next";
+        grid-template-rows: auto auto;
+        grid-template-columns: repeat(4, 1fr);
+        .title {
+            grid-area: title;
+            text-align: center;
+            padding: 0.5rem 1rem 0 1rem;
+        }
+        .prev, .next, .search, .add {
+            padding: 0.5rem 0.5rem 1rem 0.5rem;
+            svg {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        .prev {
+            grid-area: prev;
+        }
+        .search {
+            grid-area: search;
+        }
+        .add {
+            grid-area: add-task;
+        }
+        .next {
+            grid-area: next;
+        }
     }
 }
