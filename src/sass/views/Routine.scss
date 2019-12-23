@@ -1,0 +1,13 @@
+@import "../main";
+@import "./Dashboard.scss";
+@import "../components/EditTrack.scss";
+@import "../components/EditCard.scss";
+
+.routine {
+    &-bg {
+        @include tintrack-bg-image();
+    }
+    &-wrapper {
+        @extend .dashboard-wrapper;
+    }
+}

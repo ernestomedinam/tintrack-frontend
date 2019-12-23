@@ -1,0 +1,16 @@
+@import "./DayCard";
+
+.edit {
+    &-card {
+        @extend .day-card;
+        &-header {
+            @extend .day-card-header;
+        }
+        &-title {
+            @extend .day-card-title;
+        }
+        &-body {
+            @extend .day-card-body;
+        }
+    }
+}
