@@ -2,12 +2,56 @@
 @import "./Dashboard.scss";
 @import "../components/EditTrack.scss";
 @import "../components/EditCard.scss";
+@import "../components/InfoBoard.scss";
+@import "../components/ScheduleDisplay.scss";
 
 .routine {
     &-bg {
         @include tintrack-bg-image();
+        padding: 0 !important;
     }
     &-wrapper {
         @extend .dashboard-wrapper;
+    }
+    &-tools {
+        color: rgba($color: #FFF, $alpha: 0.6);
+        display: grid;
+        grid-template-areas:
+            "title title title title"
+            "add-habit habits tasks add-task";
+        grid-template-rows: auto auto;
+        grid-template-columns: repeat(4, 1fr);
+        .title {
+            grid-area: title;
+            text-align: center;
+            padding: 0.5rem 1rem 0 1rem;
+        }
+        .add-task {
+            grid-area: add-task;
+        }
+        .legend {
+            display: none;
+        }
+        .add-habit, .habits, .tasks, .add-task {
+            cursor: pointer;
+            @include build-flex(row, nowrap);
+            margin: auto;
+            justify-content: center;
+            align-items: center;
+            padding: 0.5rem 0.5rem 1rem 0.5rem;
+            svg {
+                width: 24px;
+                height: 24px;
+            }
+            &:hover {
+                color: #FFF;
+            }
+            @include media-breakpoint-up(lg) {
+                .legend {
+                    display: inline-block;
+                    margin: auto 0.5rem;
+                }
+            }
+        }
     }
 }

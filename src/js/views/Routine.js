@@ -1,30 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import "../../sass/views/Routine.scss";
 import EditTrack from "../components/EditTrack";
+import { AppContext } from "../store/AppContext.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Routine = prop => {
+	const { store, actions } = useContext(AppContext);
 	return (
 		<Container fluid className="routine-bg">
 			<Container className="routine-wrapper">
-				<h1>Hello I-m routine View</h1>
+				<Container className="routine-tools bg-dark">
+					<div className="title">
+						<h4>{"Routine items"}</h4>
+					</div>
+					<div className="add-task text-center">
+						<span className="legend">{"add task"}</span>
+						<FontAwesomeIcon icon={["far", "plus-square"]} />
+					</div>
+				</Container>
 				<EditTrack
-					habits={[
-						{
-							id: 123,
-							name: "some habit",
-							toBeEnforced: true,
-							icon: "src/assets/icons/task-icons/smoking.svg"
-						}
-					]}
-					tasks={[
-						{
-							id: 234,
-							name: "some task",
-							startTime: "08:30",
-							icon: "src/assets/icons/task-icons/smoking.svg"
-						}
-					]}
+					habits={store.routine.habitCounters}
+					tasks={store.routine.plannedTasks}
 				/>
 			</Container>
 		</Container>

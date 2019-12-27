@@ -1,5 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Button from "react-bootstrap/Button";
+import InfoBoard from "./InfoBoard";
 
 const EditCard = ({ counter, task }) => {
 	return (
@@ -9,11 +11,21 @@ const EditCard = ({ counter, task }) => {
 					<div className="card-header-icon">
 						<img src={task.icon} />
 					</div>
+					<div className="card-header-info">
+						<InfoBoard counter={counter} task={task} />
+					</div>
 				</div>
 				<div className="edit-card-title">
 					<h5>{task.name}</h5>
 				</div>
-				<div className="edit-card-body">{"edit card..."}</div>
+				<div className="edit-card-body">
+					<p>{task.personalMessage}</p>
+				</div>
+				<div className="edit-card-actions">
+					<Button type="button" block variant="primary">
+						{counter ? "edit habit counter" : "edit planned task"}
+					</Button>
+				</div>
 			</div>
 		</div>
 	);
