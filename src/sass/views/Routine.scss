@@ -29,22 +29,34 @@
         .add-task {
             grid-area: add-task;
         }
+        .habits {
+            grid-area: habits;
+        }
+        .tasks {
+            grid-area: tasks;
+        }
+        .add-habit {
+            grid-area: add-habit;
+        }
         .legend {
             display: none;
         }
         .add-habit, .habits, .tasks, .add-task {
-            cursor: pointer;
             @include build-flex(row, nowrap);
             margin: auto;
             justify-content: center;
             align-items: center;
             padding: 0.5rem 0.5rem 1rem 0.5rem;
+            
+        }
+        .add-habit, .add-task {
+            cursor: pointer;
+            &:hover {
+                color: #FFF;
+            }
             svg {
                 width: 24px;
                 height: 24px;
-            }
-            &:hover {
-                color: #FFF;
             }
             @include media-breakpoint-up(lg) {
                 .legend {
