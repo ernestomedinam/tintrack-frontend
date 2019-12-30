@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import KpiBoard from "./KpiBoard";
 import Button from "react-bootstrap/Button";
+import TaskIcon from "./TaskIcon";
 
 const DayCard = ({ task, counter }) => {
 	return (
@@ -9,7 +10,7 @@ const DayCard = ({ task, counter }) => {
 			<div className="day-card m-0 p-0">
 				<div className="day-card-header">
 					<div className="card-header-icon">
-						<img src={task.icon} />
+						<TaskIcon icon={task.iconName} side={64} />
 					</div>
 					<div className="card-header-kpi">
 						{<KpiBoard kpiValues={task.kpiValues} />}
@@ -33,8 +34,7 @@ const DayCard = ({ task, counter }) => {
 								type="button"
 								block
 								disabled
-								variant="success"
-							>
+								variant="success">
 								{"done!"}
 							</Button>
 						) : task.status === "planned" ? (

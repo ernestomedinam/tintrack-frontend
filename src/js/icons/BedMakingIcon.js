@@ -7,14 +7,12 @@ const BedMakingIcon = ({ color }) => {
 			xmlns="http://www.w3.org/2000/svg"
 			width="100%"
 			height="100%"
-			viewBox="0 0 67.733332 67.733335"
-		>
+			viewBox="0 0 67.733332 67.733335">
 			<g
 				id="layer2"
 				style={{
 					display: "inline"
-				}}
-			>
+				}}>
 				<ellipse
 					style={{
 						fill: "none",
@@ -141,8 +139,7 @@ const BedMakingIcon = ({ color }) => {
 						strokeDasharray: "none",
 						strokeOpacity: 1
 					}}
-					transform="matrix(0.78067549,0,0,0.78067549,5.9331497,9.5127953)"
-				>
+					transform="matrix(0.78067549,0,0,0.78067549,5.9331497,9.5127953)">
 					<path
 						id="path1451"
 						d="M 0.86862596,31.651948 2.7395127,30.382416 39.55589,44.748153 l -0.06682,9.762892 -2.138157,1.729698"

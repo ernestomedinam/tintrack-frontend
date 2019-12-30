@@ -5,7 +5,6 @@ import {
 	ordinalInteger,
 	addDaysToDate
 } from "../utils/helpers.js";
-import "../utils/taskIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "../../sass/views/Dashboard.scss";
 import DayTrack from "../components/DayTrack";
@@ -13,7 +12,7 @@ import { AppContext } from "../store/AppContext";
 
 const Dashboard = props => {
 	const { store, actions } = useContext(AppContext);
-	const [viewedDay, setViewedDay] = useState();
+	const [viewedDay, setViewedDay] = useState("loading date information...");
 	useEffect(() => {
 		console.log("running dashboardDay effect");
 		if (store.dashboardDay) {
@@ -49,8 +48,7 @@ const Dashboard = props => {
 									-1
 								)
 							)
-						}
-					>
+						}>
 						<FontAwesomeIcon
 							icon={["far", "arrow-alt-circle-left"]}
 						/>
@@ -77,8 +75,7 @@ const Dashboard = props => {
 									1
 								)
 							)
-						}
-					>
+						}>
 						<span className="legend">{"tomorrow"}</span>
 						<FontAwesomeIcon
 							icon={["far", "arrow-alt-circle-right"]}

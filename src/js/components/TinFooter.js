@@ -30,8 +30,7 @@ const TinFooter = props => {
 										return (
 											<p
 												key={term.title + "-" + index}
-												className="text-justify"
-											>
+												className="text-justify">
 												{content}
 											</p>
 										);

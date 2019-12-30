@@ -10,8 +10,7 @@ const HomeCard = props => {
 					<h3 className="text-center mb-4">{props.card.title}</h3>
 					<Card.Img
 						className="m-auto"
-						src={props.card.icon}
-					></Card.Img>
+						src={props.card.icon}></Card.Img>
 					<Card.Text className="mt-4 text-center">
 						{props.card.description}
 					</Card.Text>

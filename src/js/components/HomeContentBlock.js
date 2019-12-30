@@ -13,8 +13,7 @@ const HomeContentBlock = props => {
 				{props.block.id === 3 && (
 					<Card
 						className="p-0 px-md-3 m-2 home-card"
-						key={"concept-card-" + props.block.id}
-					>
+						key={"concept-card-" + props.block.id}>
 						<h3 className="mb-3 mt-5 text-center">
 							{props.conceptsCard.title}
 						</h3>

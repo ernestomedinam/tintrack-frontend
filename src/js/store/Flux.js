@@ -22,6 +22,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						durationEstimate: 60,
 						status: "planned",
 						name: "Work out",
+						iconName: "weights",
 						icon: "src/assets/icons/task-icons/weights.svg",
 						personalMessage:
 							"Working out keeps my body stable, chemically and physically; steady body, steady mind",
@@ -57,6 +58,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						toBeEnforced: false,
 						name: "Smoke some cigarettes",
 						status: "under", // others are "around" and "over"
+						iconName: "smoking",
 						icon: "src/assets/icons/task-icons/smoking.svg",
 						personalMessage:
 							"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit.",
@@ -80,6 +82,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						toBeEnforced: true,
 						name: "Make my bed",
 						status: "around",
+						iconName: "bed-making",
 						icon: "src/assets/icons/task-icons/bed-making.svg",
 						personalMessage:
 							"Keeping my bed neat means it's always ready to provide me with a great laying down experience. It also ensures uniform temperature distribution for adequate sleeping.",
@@ -103,6 +106,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						toBeEnforced: true,
 						name: "Drink water bitch!",
 						status: "under",
+						iconName: "water-glass",
 						icon: "src/assets/icons/task-icons/water-glass.svg",
 						personalMessage: "I must remain hidrated. Or die.",
 						kpiValues: [

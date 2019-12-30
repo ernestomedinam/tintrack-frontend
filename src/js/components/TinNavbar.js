@@ -12,8 +12,7 @@ const TinNavbar = props => {
 			variant="dark"
 			bg="dark"
 			expand="md"
-			sticky="top"
-		>
+			sticky="top">
 			<Container>
 				<Navbar.Brand className="d-flex">
 					<img src={tintrackIcon} height="48" alt="tintrack logo" />
@@ -24,8 +23,7 @@ const TinNavbar = props => {
 				<Navbar.Toggle aria-controls="navbar-pills" />
 				<Navbar.Collapse
 					id="navbar-pills"
-					className="justify-content-end py-2"
-				>
+					className="justify-content-end py-2">
 					<Nav variant="pills" defaultActiveKey={Location.pathname}>
 						<Nav.Item className="mx-md-1">
 							<Nav.Link
@@ -33,8 +31,7 @@ const TinNavbar = props => {
 								as={NavLink}
 								exact
 								to="/"
-								eventKey="Home"
-							>
+								eventKey="Home">
 								Home
 							</Nav.Link>
 						</Nav.Item>
@@ -44,8 +41,7 @@ const TinNavbar = props => {
 								exact
 								to="/dashboard"
 								eventKey="Dashboard"
-								className="px-2 text-right"
-							>
+								className="px-2 text-right">
 								Dashboard
 							</Nav.Link>
 						</Nav.Item>
@@ -55,8 +51,7 @@ const TinNavbar = props => {
 								exact
 								to="/routine"
 								eventKey="Routine"
-								className="px-2 text-right"
-							>
+								className="px-2 text-right">
 								Routine
 							</Nav.Link>
 						</Nav.Item>

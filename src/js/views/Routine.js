@@ -35,30 +35,31 @@ const Routine = prop => {
 									<Badge
 										pill
 										variant="primary"
-										className="mr-2"
-									>
+										className="mx-2">
 										{store.routine.plannedTasks.length}
 									</Badge>
-									{"tasks"}
+									{store.routine.plannedTasks.length === 1
+										? "task"
+										: "tasks"}
 								</p>
 							</div>
 							<div className="habits text-center">
 								<p className="m-0">
-									{"habits"}
 									<Badge
 										pill
 										variant="primary"
-										className="ml-2"
-									>
+										className="mx-2">
 										{store.routine.habitCounters.length}
 									</Badge>
+									{store.routine.habitCounters.length === 1
+										? "habit"
+										: "habits"}
 								</p>
 							</div>
 							<div className="add-habit text-center">
 								<Link
 									to={match.url + "/habit"}
-									className="no-text-style"
-								>
+									className="no-text-style">
 									<FontAwesomeIcon
 										icon={["far", "plus-square"]}
 									/>

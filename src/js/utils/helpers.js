@@ -1,17 +1,17 @@
 export const returnMonthName = monthIndex => {
 	const monthNames = [
-		"january",
-		"february",
-		"march",
-		"april",
+		"jan.",
+		"feb.",
+		"mar.",
+		"apr.",
 		"may",
-		"june",
-		"july",
-		"august",
-		"september",
-		"october",
-		"november",
-		"december"
+		"jun.",
+		"jul.",
+		"aug.",
+		"sep.",
+		"oct.",
+		"nov.",
+		"dec."
 	];
 	return monthNames[monthIndex];
 };

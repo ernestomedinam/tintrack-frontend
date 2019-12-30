@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Container, Button, Form, Image, ButtonGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
-import taskIcons from "../utils/taskIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TaskIcon from "./TaskIcon";
 import { AppContext } from "../store/AppContext";
@@ -12,8 +11,7 @@ const HabitForm = ({ add, title }) => {
 	return (
 		<React.Fragment>
 			<Container
-				className={add ? "form-tools form-tools-add" : "form-tools"}
-			>
+				className={add ? "form-tools form-tools-add" : "form-tools"}>
 				<div className="form-title">
 					<h4>{title}</h4>
 				</div>
@@ -54,8 +52,7 @@ const HabitForm = ({ add, title }) => {
 							<div className="col-3 col-lg-2 form-goal-buttons">
 								<ButtonGroup
 									className="w-100"
-									aria-label="goal buttons"
-								>
+									aria-label="goal buttons">
 									<Button variant="dark">
 										<FontAwesomeIcon
 											className="my-auto"

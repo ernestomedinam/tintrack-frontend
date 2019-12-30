@@ -26,15 +26,13 @@ const Home = props => {
 						<Button
 							size="lg"
 							className="m-md-2 my-2 mx-0"
-							variant="primary"
-						>
+							variant="primary">
 							Sign me up!
 						</Button>
 						<Button
 							size="lg"
 							className="m-md-2 my-2 mx-0"
-							variant="success"
-						>
+							variant="success">
 							Log me in!
 						</Button>
 					</div>
