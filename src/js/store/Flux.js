@@ -202,6 +202,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				]
 			},
+			iconsInventory: {
+				taskIcons: ["smoking", "bed-making", "water-glass", "weights"]
+			},
 			demo: [
 				{
 					title: "First",

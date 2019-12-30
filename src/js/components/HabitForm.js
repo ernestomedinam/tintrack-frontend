@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Container, Button, Form, Image, ButtonGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
 import taskIcons from "../utils/taskIcons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import TaskIcon from "./TaskIcon";
+import { AppContext } from "../store/AppContext";
 
 const HabitForm = ({ add, title }) => {
-	const [selectedIcon, setSelectedIcon] = useState({ icon: null });
+	const { store, actions } = useContext(AppContext);
+	const [selectedIcon, setSelectedIcon] = useState("smoking");
 	return (
 		<React.Fragment>
 			<Container
@@ -68,14 +71,41 @@ const HabitForm = ({ add, title }) => {
 								</ButtonGroup>
 							</div>
 						</div>
+						<Form.Group>
+							<Form.Label>{"select an icon:"}</Form.Label>
+							<div className="icon-selector">
+								{store.iconsInventory.taskIcons.map(icon => {
+									return (
+										<TaskIcon
+											onClickHandler={(event, icon) => {
+												console.log(
+													"click received ",
+													icon
+												);
+												setSelectedIcon(icon);
+											}}
+											icon={icon}
+											key={icon}
+											side={64}
+											color={"#343A40"}
+											marked={icon === selectedIcon}
+										/>
+									);
+								})}
+							</div>
+						</Form.Group>
 
-						<div className="icon-selector">
-							{!selectedIcon ? (
-								<div className="default-icon"></div>
-							) : (
-								<Image src={taskIcons.smokingIcon} />
-							)}
-						</div>
+						{/* <TaskIcon
+							icon={"smoking"}
+							side={256}
+							color={"#343A40"}
+							marked
+						/>
+						<TaskIcon
+							icon={"bed-making"}
+							side={256}
+							color={"#343A40"}
+						/> */}
 					</Form>
 				</div>
 			</Container>
