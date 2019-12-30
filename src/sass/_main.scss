@@ -2,6 +2,14 @@
     margin: 0;
     padding: 0;
 }
+.no-text-style {
+    color: inherit;
+    text-decoration: inherit;
+    &:focus, &:hover, &:visited, &:link, &:active {
+        color: inherit;
+        text-decoration: inherit;
+    }
+}
 
 // declare variables and mixins; if enough of them are
 // declared, create a 'base' folder and files for them.
@@ -10,6 +18,7 @@
 $purple-tin: rgba($color: #7B87CC, $alpha: 1);
 $blue-tin: rgba($color: #009AFF, $alpha: 1);
 $background-tin: rgba($color: #468DB9, $alpha: 1);
+$white-tin: rgba($color: #FFF, $alpha: 0.6);
 
 // mixins
 // build flex containers

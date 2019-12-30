@@ -9,6 +9,9 @@ module.exports = {
     entry: [
         paths.appIndexJs
     ],
+    output: {
+        publicPath: "/"
+    },
     mode: "development",
     devtool: "source-map",
     plugins: [

@@ -1,0 +1,64 @@
+.form-tools {
+    color: $white-tin;
+    display: grid;
+    background-color: $dark;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas: 
+        "title title"
+        "save cancel";
+    // &-edit {
+    //     grid-template-columns: repeat(4, 1fr);
+    //     grid-template-areas: 
+    //         "title title title title"
+    //         "save empty empty cancel";
+    // }
+    // &-add {
+    //     grid-template-columns: repeat(2, 1fr);
+    //     grid-template-areas: 
+    //         "title title"
+    //         "save cancel";
+    // }
+    .form-title {
+        grid-area: title;
+        @include build-flex(row, nowrap);
+        justify-content: center;
+        padding: 0.5rem 1rem 0 1rem;
+    }
+    .save {
+        grid-area: save;
+    }
+    .cancel {
+        grid-area: cancel;
+    }
+    .save, .cancel {
+        @include build-flex(column, nowrap);
+        align-items: center;
+        padding: 0.5rem 1rem 1rem 1rem;
+    }
+    @include media-breakpoint-up(md) {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas: 
+        "save title title cancel";
+        .form-title, .save, .cancel {
+            padding: 0.5rem;
+        }
+    }
+}
+.form {
+    &-wrapper {
+        background-color: rgba($color: #F6C28B, $alpha: 1);
+        min-height: inherit;
+    }
+    &-goal-buttons {
+        @include build-flex(row, nowrap);
+        align-items: flex-end;
+        padding: 0 0 1rem 0 !important;
+        .add-to-goal, .subtract-from-goal {
+            text-align: center;
+        }
+        // .goal-button {
+        //     padding: 0.5rem 1rem 0.5rem 1rem !important;
+        // }
+    }
+}
