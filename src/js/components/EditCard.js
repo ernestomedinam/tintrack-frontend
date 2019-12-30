@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import InfoBoard from "./InfoBoard";
+import TaskIcon from "./TaskIcon";
 
 const EditCard = ({ counter, task }) => {
 	return (
@@ -9,7 +10,7 @@ const EditCard = ({ counter, task }) => {
 			<div className="edit-card m-0 p-0">
 				<div className="edit-card-header">
 					<div className="card-header-icon">
-						<img src={task.icon} />
+						<TaskIcon icon={task.iconName} side={64} />
 					</div>
 					<div className="card-header-info">
 						<InfoBoard counter={counter} task={task} />

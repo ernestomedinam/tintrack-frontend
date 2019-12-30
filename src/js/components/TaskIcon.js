@@ -8,9 +8,9 @@ import WeightsIcon from "../icons/WeightsIcon";
 const TaskIcon = ({
 	icon,
 	side = 24,
-	color = "#FFFFFF",
+	color = "#FFFFFF99",
 	marked,
-	onClickHandler
+	onClickHandler = () => {}
 }) => {
 	const matchComponent = () => {
 		switch (icon) {

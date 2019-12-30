@@ -129,7 +129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						startTime: "09:00",
 						durationEstimate: 60,
 						name: "Work out",
-						icon: "src/assets/icons/task-icons/weights.svg",
+						iconName: "weights",
 						personalMessage:
 							"Working out keeps my body stable, chemically and physically; steady body, steady mind",
 						alerts: [
@@ -175,7 +175,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 2,
 						toBeEnforced: false,
 						name: "Smoke some cigarettes",
-						icon: "src/assets/icons/task-icons/bed-making.svg",
+						iconName: "smoking",
 						personalMessage:
 							"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit.",
 						targetPeriod: "day",
@@ -185,7 +185,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 4,
 						toBeEnforced: true,
 						name: "Drink water bitch!",
-						icon: "src/assets/icons/task-icons/water-glass.svg",
+						iconName: "water-glass",
 						personalMessage: "I must remain hidrated. Or die.",
 						targetPeriod: "day",
 						targetValues: [0, 8]
@@ -194,7 +194,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						id: 5,
 						toBeEnforced: true,
 						name: "Make my bed",
-						icon: "src/assets/icons/task-icons/bed-making.svg",
+						iconName: "bed-making",
 						personalMessage:
 							"Keeping my bed neat means it's always ready to provide me with a great laying down experience. It also ensures uniform temperature distribution for adequate sleeping.",
 						targetPeriod: "month",
