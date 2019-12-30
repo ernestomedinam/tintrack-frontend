@@ -34,7 +34,8 @@ const DayCard = ({ task, counter }) => {
 								type="button"
 								block
 								disabled
-								variant="success">
+								variant="success"
+							>
 								{"done!"}
 							</Button>
 						) : task.status === "planned" ? (

@@ -7,19 +7,28 @@ import { AppContext } from "../store/AppContext";
 
 const HabitForm = ({ add, title }) => {
 	const { store, actions } = useContext(AppContext);
-	const [selectedIcon, setSelectedIcon] = useState("smoking");
+	const [selectedIcon, setSelectedIcon] = useState(null);
+	const [goal, setGoal] = useState(0);
+	const [name, setName] = useState(null);
+	const [message, setMessage] = useState(null);
+	const [period, setPeriod] = useState("daily");
 	return (
 		<React.Fragment>
 			<Container
-				className={add ? "form-tools form-tools-add" : "form-tools"}>
+				className={add ? "form-tools form-tools-add" : "form-tools"}
+			>
 				<div className="form-title">
-					<h4>{title}</h4>
+					<h4 className="p-0 my-auto">{title}</h4>
 				</div>
 				<div className="save text-center">
-					<Button variant="success">{"save"}</Button>
+					<Button block variant="success">
+						{"create"}
+					</Button>
 				</div>
 				<div className="cancel text-center">
-					<Button variant="danger">{"cancel"}</Button>
+					<Button block variant="danger">
+						{"cancel"}
+					</Button>
 				</div>
 			</Container>
 			<Container className="form-wrapper">
@@ -27,49 +36,79 @@ const HabitForm = ({ add, title }) => {
 					<Form>
 						<Form.Group>
 							<Form.Label>{"name"}</Form.Label>
-							<Form.Control placeholder="name for habit" />
+							<Form.Control
+								placeholder="name for habit"
+								value={name}
+								onChange={e => {
+									setName(e.target.value);
+								}}
+							/>
 						</Form.Group>
 						<Form.Group>
 							<Form.Label>{"personal message"}</Form.Label>
 							<Form.Control
 								as="textarea"
 								placeholder="why you want to enforce or quit this habit..."
+								value={message}
+								onChange={e => {
+									setMessage(e.target.value);
+								}}
 							/>
 						</Form.Group>
 						<div className="form-row">
 							<Form.Group className="col-6 col-lg-7">
 								<Form.Label>{"control period"}</Form.Label>
-								<Form.Control as="select">
-									<option>{"Daily"}</option>
-									<option>{"Weekly"}</option>
-									<option>{"Monthly"}</option>
+								<Form.Control
+									value={period}
+									as="select"
+									onChange={e => {
+										console.log("changed to ", e);
+										setPeriod(e.target.value);
+									}}
+								>
+									<option>{"daily"}</option>
+									<option>{"weekly"}</option>
+									<option>{"monthly"}</option>
 								</Form.Control>
 							</Form.Group>
 							<Form.Group className="col-3">
 								<Form.Label>{"goal"}</Form.Label>
-								<Form.Control disabled placeholder="0" />
+								<Form.Control disabled value={goal} />
 							</Form.Group>
 							<div className="col-3 col-lg-2 form-goal-buttons">
 								<ButtonGroup
 									className="w-100"
-									aria-label="goal buttons">
-									<Button variant="dark">
-										<FontAwesomeIcon
-											className="my-auto"
-											icon={["fas", "plus"]}
-										/>
-									</Button>
-									<Button variant="dark">
+									aria-label="goal buttons"
+								>
+									<Button
+										variant="dark"
+										onClick={e => {
+											if (goal > 0) {
+												setGoal(goal - 1);
+											}
+										}}
+									>
 										<FontAwesomeIcon
 											className="my-auto"
 											icon={["fas", "minus"]}
+										/>
+									</Button>
+									<Button
+										variant="dark"
+										onClick={e => {
+											setGoal(goal + 1);
+										}}
+									>
+										<FontAwesomeIcon
+											className="my-auto"
+											icon={["fas", "plus"]}
 										/>
 									</Button>
 								</ButtonGroup>
 							</div>
 						</div>
 						<Form.Group>
-							<Form.Label>{"select an icon:"}</Form.Label>
+							<Form.Label>{"icon for habit"}</Form.Label>
 							<div className="icon-selector">
 								{store.iconsInventory.taskIcons.map(icon => {
 									return (
@@ -91,18 +130,6 @@ const HabitForm = ({ add, title }) => {
 								})}
 							</div>
 						</Form.Group>
-
-						{/* <TaskIcon
-							icon={"smoking"}
-							side={256}
-							color={"#343A40"}
-							marked
-						/>
-						<TaskIcon
-							icon={"bed-making"}
-							side={256}
-							color={"#343A40"}
-						/> */}
 					</Form>
 				</div>
 			</Container>

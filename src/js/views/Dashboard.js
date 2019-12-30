@@ -48,7 +48,8 @@ const Dashboard = props => {
 									-1
 								)
 							)
-						}>
+						}
+					>
 						<FontAwesomeIcon
 							icon={["far", "arrow-alt-circle-left"]}
 						/>
@@ -75,7 +76,8 @@ const Dashboard = props => {
 									1
 								)
 							)
-						}>
+						}
+					>
 						<span className="legend">{"tomorrow"}</span>
 						<FontAwesomeIcon
 							icon={["far", "arrow-alt-circle-right"]}

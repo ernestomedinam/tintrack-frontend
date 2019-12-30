@@ -35,7 +35,8 @@ const Routine = prop => {
 									<Badge
 										pill
 										variant="primary"
-										className="mx-2">
+										className="mx-2"
+									>
 										{store.routine.plannedTasks.length}
 									</Badge>
 									{store.routine.plannedTasks.length === 1
@@ -48,7 +49,8 @@ const Routine = prop => {
 									<Badge
 										pill
 										variant="primary"
-										className="mx-2">
+										className="mx-2"
+									>
 										{store.routine.habitCounters.length}
 									</Badge>
 									{store.routine.habitCounters.length === 1
@@ -59,7 +61,8 @@ const Routine = prop => {
 							<div className="add-habit text-center">
 								<Link
 									to={match.url + "/habit"}
-									className="no-text-style">
+									className="no-text-style"
+								>
 									<FontAwesomeIcon
 										icon={["far", "plus-square"]}
 									/>

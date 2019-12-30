@@ -32,7 +32,8 @@ const ScheduleDisplay = ({ size, timesPerDay }) => {
 						size === "card"
 							? "schedule-container schedule-container-sm"
 							: "schedule-container schedule-container-lg"
-					}>
+					}
+				>
 					{timesPerDay.map((times, index) => {
 						return (
 							<div

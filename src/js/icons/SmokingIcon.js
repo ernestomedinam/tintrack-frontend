@@ -7,14 +7,16 @@ const SmokingIcon = ({ color }) => {
 			xmlns="http://www.w3.org/2000/svg"
 			width="100%"
 			height="100%"
-			viewBox="0 0 67.733337 67.733337">
+			viewBox="0 0 67.733337 67.733337"
+		>
 			<g id="layer1" transform="translate(-18.92455,22.491205)">
 				<g
 					id="g5188"
 					style={{
 						stroke: color,
 						strokeOpacity: 1
-					}}>
+					}}
+				>
 					<circle
 						r="32.820644"
 						cy="11.375452"
@@ -44,7 +46,8 @@ const SmokingIcon = ({ color }) => {
 							strokeOpacity: 1
 						}}
 						transform="matrix(0.73877172,0,0,0.73877172,28.629789,-17.700428)"
-						id="g1000">
+						id="g1000"
+					>
 						<path
 							style={{
 								fill: "none",

@@ -8,7 +8,8 @@ const WeightsIcon = ({ color }) => {
 			width="100%"
 			height="100%"
 			viewBox="0 0 67.733329 67.733333"
-			id="svg8">
+			id="svg8"
+		>
 			<g id="layer2" transform="translate(-72.495834,-86.60524)">
 				<g
 					id="g875"
@@ -22,7 +23,8 @@ const WeightsIcon = ({ color }) => {
 						strokeLinejoin: "round",
 						strokeMiterLimit: 4,
 						strokeDasharray: "none"
-					}}>
+					}}
+				>
 					<path
 						id="path831"
 						d="m 73.289583,117.08333 v 7.9375 h 5.291667 v -7.9375 z"
