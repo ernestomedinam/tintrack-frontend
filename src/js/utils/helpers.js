@@ -16,6 +16,15 @@ export const returnMonthName = monthIndex => {
 	return monthNames[monthIndex];
 };
 
+export const numberToDigits = number => {
+	let stringNumber = number.toString();
+	let digits = [];
+	for (let i = 0; i < stringNumber.length; i++) {
+		digits.push(parseInt(stringNumber[i]));
+	}
+	return digits;
+};
+
 export const ordinalInteger = number => {
 	var j = number % 10,
 		k = number % 100;

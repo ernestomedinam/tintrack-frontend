@@ -182,7 +182,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						iconName: "smoking",
 						personalMessage:
 							"I want to control my smoking desires. I do not want to be smoked by cigarettes I don't want. I want to control my habit.",
-						targetPeriod: "day",
+						targetPeriod: "daily",
 						targetValues: [1, 2]
 					},
 					{
@@ -191,7 +191,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						name: "Drink water bitch!",
 						iconName: "water-glass",
 						personalMessage: "I must remain hidrated. Or die.",
-						targetPeriod: "day",
+						targetPeriod: "daily",
 						targetValues: [0, 8]
 					},
 					{
@@ -201,13 +201,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 						iconName: "bed-making",
 						personalMessage:
 							"Keeping my bed neat means it's always ready to provide me with a great laying down experience. It also ensures uniform temperature distribution for adequate sleeping.",
-						targetPeriod: "month",
+						targetPeriod: "monthly",
 						targetValues: [3, 0]
 					}
 				]
 			},
 			iconsInventory: {
-				taskIcons: ["smoking", "bed-making", "water-glass", "weights"]
+				taskIcons: [
+					"default-habit",
+					"smoking",
+					"bed-making",
+					"water-glass",
+					"weights"
+				]
 			},
 			demo: [
 				{
@@ -243,6 +249,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 						year: objWithDate.year,
 						month: objWithDate.month,
 						day: objWithDate.day
+					}
+				});
+			},
+			fetchCreateHabit: newHabit => {
+				const store = getStore();
+				console.log("this should be fetching, now just updating store");
+				setStore({
+					routine: {
+						...store.routine,
+						habitCounters: [
+							...store.routine.habitCounters,
+							newHabit
+						]
 					}
 				});
 			},

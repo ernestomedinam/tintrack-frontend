@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import BedMakingIcon from "../icons/BedMakingIcon";
 import WaterGlassIcon from "../icons/WaterGlassIcon";
 import WeightsIcon from "../icons/WeightsIcon";
+import DefaultHabitIcon from "../icons/DefaultHabitIcon";
 
 const TaskIcon = ({
 	icon,
@@ -14,6 +15,12 @@ const TaskIcon = ({
 }) => {
 	const matchComponent = () => {
 		switch (icon) {
+			case "default-habit":
+				return marked ? (
+					<DefaultHabitIcon color={"#FFFFFF"} />
+				) : (
+					<DefaultHabitIcon color={color} />
+				);
 			case "smoking":
 				return marked ? (
 					<SmokingIcon color={"#FFFFFF"} />
