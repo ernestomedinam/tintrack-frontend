@@ -19,6 +19,9 @@ export const returnMonthName = monthIndex => {
 export const numberToDigits = number => {
 	let stringNumber = number.toString();
 	let digits = [];
+	if (stringNumber.length === 1) {
+		digits.push(0);
+	}
 	for (let i = 0; i < stringNumber.length; i++) {
 		digits.push(parseInt(stringNumber[i]));
 	}

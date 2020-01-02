@@ -60,16 +60,10 @@
         background-color: rgba($color: #F6C28B, $alpha: 1);
         min-height: inherit;
     }
-    &-goal-buttons {
+    &-qty-buttons {
         @include build-flex(row, nowrap);
         align-items: flex-start;
         padding-top: 2rem !important;
-        .add-to-goal, .subtract-from-goal {
-            text-align: center;
-        }
-        // .goal-button {
-        //     padding: 0.5rem 1rem 0.5rem 1rem !important;
-        // }
     }
     &-body {
         .icon-selector {

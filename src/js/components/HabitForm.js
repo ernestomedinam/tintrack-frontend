@@ -7,6 +7,9 @@ import { AppContext } from "../store/AppContext";
 import { validateString, validateNumber } from "../utils/validators";
 import { useHistory, Prompt } from "react-router-dom";
 import { numberToDigits } from "../utils/helpers";
+import FormInput from "./FormInput";
+import FormQtyButtons from "./FormQtyButtons";
+import IconSelector from "./IconSelector";
 
 const HabitForm = ({ add, title }) => {
 	const { store, actions } = useContext(AppContext);
@@ -61,28 +64,26 @@ const HabitForm = ({ add, title }) => {
 	const handleSubmit = event => {
 		event.preventDefault();
 		event.stopPropagation();
-		if (formIsReady() && add) {
-			// build habit object and fetch to create habit
-			let newHabitCounter = {
-				name: name.input.value,
-				personalMessage: message.input.value,
-				targetPeriod: period,
-				targetValues: numberToDigits(goal.input.value),
-				iconName: selectedIcon
-			};
+		// build habit object and fetch to create or edit habit
+		let newHabitCounter = {
+			name: name.input.value,
+			personalMessage: message.input.value,
+			targetPeriod: period,
+			targetValues: numberToDigits(goal.input.value),
+			iconName: selectedIcon
+		};
+		if (add) {
 			newHabitCounter["toBeEnforced"] = true;
 			newHabitCounter["id"] = 50 + Math.floor(Math.random() * 200);
 			console.log(
 				"great!, this is the new habit for the fetch post: ",
 				newHabitCounter
 			);
+			actions.fetchCreateHabit(newHabitCounter);
 			setFormState({
 				...formState,
 				success: true
 			});
-			// setConfirmLeave(false);
-			actions.fetchCreateHabit(newHabitCounter);
-			// history.replace("/routine", "habit created!");
 		}
 	};
 	const handleBeforeUnload = event => {
@@ -109,13 +110,13 @@ const HabitForm = ({ add, title }) => {
 			/>
 			{formState.success ? (
 				<Container className="outcome-message">
-					<h3 className="mx-2 mb-4">
+					<h3 className="mx-2 mb-4 mr-md-4 mt-md-4">
 						{formState.kind + " habit was successful!"}
 					</h3>
 					<Button
 						variant="success"
 						onClick={e =>
-							history.replace("/routine", "habit craeted!")
+							history.replace("/routine", "habit created!")
 						}
 					>
 						{"Back to routine"}
@@ -155,85 +156,30 @@ const HabitForm = ({ add, title }) => {
 					</Container>
 					<Container className="form-wrapper">
 						<div className="form-body px-md-4 px-lg-5 py-2">
-							<Form.Group>
-								<Form.Label>{"name"}</Form.Label>
-								<Form.Control
-									placeholder="name for habit"
-									value={name.input.value}
-									isValid={
-										!name.firstBlood
-											? name.input.isValid
-											: false
-									}
-									isInvalid={
-										!name.firstBlood
-											? !name.input.isValid
-											: false
-									}
-									onChange={e => {
-										setName({
-											...name,
-											input: {
-												...name.input,
-												value: e.target.value
-											}
-										});
-									}}
-									onBlur={e => {
-										setName({
-											input: validateString({
-												item: name.input.value.trim(),
-												minLength: 3,
-												maxLength: 80
-											}),
-											firstBlood: false
-										});
-									}}
-								/>
-								<Form.Control.Feedback type="invalid">
-									{name.input.error}
-								</Form.Control.Feedback>
-							</Form.Group>
-							<Form.Group>
-								<Form.Label>{"personal message"}</Form.Label>
-								<Form.Control
-									as="textarea"
-									placeholder="why you want to enforce or quit this habit..."
-									value={message.input.value}
-									isValid={
-										!message.firstBlood
-											? message.input.isValid
-											: false
-									}
-									isInvalid={
-										!message.firstBlood
-											? !message.input.isValid
-											: false
-									}
-									onChange={e => {
-										setMessage({
-											...message,
-											input: {
-												...message.input,
-												value: e.target.value
-											}
-										});
-									}}
-									onBlur={e => {
-										setMessage({
-											input: validateString({
-												item: message.input.value.trim(),
-												minLength: 10,
-												maxLength: 240
-											}),
-											firstBlood: false
-										});
-									}}
-								/>
-								<Form.Control.Feedback type="invalid">
-									{message.input.error}
-								</Form.Control.Feedback>
-							</Form.Group>
+							<FormInput
+								inputAs="input"
+								label="name"
+								placeholder="name for habit"
+								state={name}
+								setState={setName}
+								validate={{
+									minLength: 3,
+									maxLength: 20,
+									allowNumbers: true
+								}}
+							/>
+							<FormInput
+								inputAs="textarea"
+								label="personal message"
+								placeholder="why you want to enforce or quit this habit..."
+								state={message}
+								setState={setMessage}
+								validate={{
+									minLength: 10,
+									maxLength: 240,
+									allowNumbers: true
+								}}
+							/>
 							<div className="form-row">
 								<Form.Group className="col-6 col-lg-7">
 									<Form.Label>{"control period"}</Form.Label>
@@ -249,138 +195,37 @@ const HabitForm = ({ add, title }) => {
 										<option>{"monthly"}</option>
 									</Form.Control>
 								</Form.Group>
-								<Form.Group className="col-3">
-									<Form.Label>{"goal"}</Form.Label>
-									<Form.Control
-										placeholder="0"
-										value={goal.input.value}
-										isValid={
-											!goal.firstBlood
-												? goal.input.isValid
-												: false
-										}
-										isInvalid={
-											!goal.firstBlood
-												? !goal.input.isValid
-												: false
-										}
-										onChange={e => {
-											if (/^\d+$/.test(e.target.value)) {
-												setGoal({
-													...goal,
-													input: {
-														...goal.input,
-														value: e.target.value
-													}
-												});
-											}
-										}}
-										onBlur={e => {
-											if (
-												!isNaN(goal.input.value) &&
-												goal.input.value != ""
-											) {
-												setGoal({
-													input: validateNumber({
-														item: goal.input.value,
-														minQty: 1,
-														maxQty: 99
-													}),
-													firstBlood: false
-												});
-											}
+								<FormInput
+									className="col-3"
+									inputAs="quantity"
+									label="goal"
+									placeholder="0"
+									state={goal}
+									setState={setGoal}
+									validate={{
+										minQty: 1,
+										maxQty: 99
+									}}
+								/>
+								<div className="col-3 col-lg-2 form-qty-buttons">
+									<FormQtyButtons
+										state={goal}
+										setState={setGoal}
+										validate={{
+											minQty: 1,
+											maxQty: 99
 										}}
 									/>
-									<Form.Control.Feedback type="invalid">
-										{goal.input.error}
-									</Form.Control.Feedback>
-								</Form.Group>
-								<div className="col-3 col-lg-2 form-goal-buttons">
-									<ButtonGroup
-										className="w-100"
-										aria-label="goal buttons"
-									>
-										<Button
-											variant="dark"
-											onClick={e => {
-												if (
-													!isNaN(goal.input.value) &&
-													parseInt(goal.input.value) >
-														0
-												) {
-													setGoal({
-														input: validateNumber({
-															item:
-																parseInt(
-																	goal.input
-																		.value
-																) - 1,
-															minQty: 1,
-															maxQty: 99
-														}),
-														firstBlood: false
-													});
-												}
-											}}
-										>
-											<FontAwesomeIcon
-												className="my-auto"
-												icon={["fas", "minus"]}
-											/>
-										</Button>
-										<Button
-											variant="dark"
-											onClick={e => {
-												let item = 1;
-												if (!isNaN(goal.input.value)) {
-													item = parseInt(
-														goal.input.value + 1
-													);
-												}
-												setGoal({
-													input: validateNumber({
-														item,
-														minQty: 1,
-														maxQty: 99
-													}),
-													firstBlood: false
-												});
-											}}
-										>
-											<FontAwesomeIcon
-												className="my-auto"
-												icon={["fas", "plus"]}
-											/>
-										</Button>
-									</ButtonGroup>
 								</div>
 							</div>
-							<Form.Group>
-								<Form.Label>{"icon for habit"}</Form.Label>
-								<div className="icon-selector">
-									{store.iconsInventory.taskIcons.map(
-										icon => {
-											return (
-												<TaskIcon
-													onClickHandler={(
-														event,
-														icon
-													) => {
-														setSelectedIcon(icon);
-													}}
-													icon={icon}
-													key={icon}
-													side={64}
-													color={"#343A40"}
-													marked={
-														icon === selectedIcon
-													}
-												/>
-											);
-										}
-									)}
-								</div>
-							</Form.Group>
+							<IconSelector
+								icons="taskIcons"
+								label="icon for habit"
+								size={64}
+								color="#343A40"
+								state={selectedIcon}
+								setState={setSelectedIcon}
+							/>
 						</div>
 					</Container>
 				</Form>
