@@ -1,5 +1,4 @@
 @import "../main";
-@import "./Dashboard.scss";
 @import "../components/EditTrack.scss";
 @import "../components/EditCard.scss";
 @import "../components/InfoBoard.scss";
@@ -12,7 +11,7 @@
         padding: 0 !important;
     }
     &-wrapper {
-        @extend .dashboard-wrapper;
+        @extend .tin-wrapper;
     }
     &-tools {
         color: rgba($color: #FFF, $alpha: 0.6);

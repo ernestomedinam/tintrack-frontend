@@ -8,11 +8,7 @@
         @include tintrack-bg-image();
     }
     &-wrapper {
-        @include build-flex(column, wrap);
-        min-height: 68vh;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        // background-color: rgba($color: $blue-tin, $alpha: 0.3);
+        @extend .tin-wrapper;
     }
     &-tools {
         color: rgba($color: #FFF, $alpha: 0.6);

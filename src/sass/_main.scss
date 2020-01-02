@@ -69,6 +69,12 @@ $white-tin: rgba($color: #FFF, $alpha: 0.6);
     animation: load8 1s infinite linear;
     transition: opacity 0.3s;
 }
+.tin-wrapper {
+    @include build-flex(column, wrap);
+    min-height: 68vh;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
 
 // uncomment code ahead to edit boostrap styles
 // and variables, like changing theme colors.
