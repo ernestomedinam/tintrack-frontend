@@ -1,17 +1,25 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Container, Button, Form, Image, ButtonGroup } from "react-bootstrap";
+import {
+	Container,
+	Button,
+	Form,
+	Image,
+	ButtonGroup,
+	Row
+} from "react-bootstrap";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import TaskIcon from "./TaskIcon";
 import { AppContext } from "../store/AppContext";
 import { validateString, validateNumber } from "../utils/validators";
-import { useHistory, Prompt } from "react-router-dom";
-import { numberToDigits } from "../utils/helpers";
+import { useHistory, Prompt, useRouteMatch } from "react-router-dom";
+import { numberToDigits, digitsToNumber } from "../utils/helpers";
 import FormInput from "./FormInput";
 import FormQtyButtons from "./FormQtyButtons";
 import IconSelector from "./IconSelector";
 
 const HabitForm = ({ add, title }) => {
+	const match = useRouteMatch();
 	const { store, actions } = useContext(AppContext);
 	const history = useHistory();
 	const [name, setName] = useState({
@@ -40,11 +48,34 @@ const HabitForm = ({ add, title }) => {
 		firstBlood: true
 	});
 	const [selectedIcon, setSelectedIcon] = useState("default-habit");
+	const [toBeEnforced, setToBeEnforced] = useState(true);
 	const [formState, setFormState] = useState({
 		kind: "create",
 		success: false
 	});
-	const [confirmLeave, setConfirmLeave] = useState(true);
+	const [original, setOriginal] = useState({
+		name: "",
+		message: "",
+		period: "daily",
+		goal: "",
+		selectedIcon: "default-habit",
+		toBeEnforced: true
+	});
+	const formHasChanged = () => {
+		console.log("runnin form has changed");
+		if (
+			original.name === name.input.value &&
+			original.message === message.input.value &&
+			original.period === period &&
+			original.goal === goal.input.value &&
+			original.selectedIcon === selectedIcon &&
+			original.toBeEnforced === toBeEnforced
+		) {
+			return false;
+		} else {
+			return true;
+		}
+	};
 	const formIsReady = () => {
 		if (
 			name.input.value &&
@@ -70,16 +101,23 @@ const HabitForm = ({ add, title }) => {
 			personalMessage: message.input.value,
 			targetPeriod: period,
 			targetValues: numberToDigits(goal.input.value),
-			iconName: selectedIcon
+			iconName: selectedIcon,
+			toBeEnforced: toBeEnforced
 		};
 		if (add) {
-			newHabitCounter["toBeEnforced"] = true;
-			newHabitCounter["id"] = 50 + Math.floor(Math.random() * 200);
-			console.log(
-				"great!, this is the new habit for the fetch post: ",
-				newHabitCounter
-			);
 			actions.fetchCreateHabit(newHabitCounter);
+			setFormState({
+				...formState,
+				success: true
+			});
+		} else {
+			console.log(
+				"great!, this is edited habit information for fetch put: ",
+				newHabitCounter,
+				" and it's id to build url for API:",
+				match.params.id
+			);
+			actions.fetchEditHabit(newHabitCounter, match.params.id);
 			setFormState({
 				...formState,
 				success: true
@@ -93,19 +131,68 @@ const HabitForm = ({ add, title }) => {
 			event.returnValue = true;
 		}
 	};
+	// initial effects
 	useEffect(() => {
 		// initial effects
+		// if not add, must fetch habit info based on its id
+		const prepHabitForEdit = async habitId => {
+			console.log("running prep for edi");
+			let habit = await actions.fetchGetHabit(habitId);
+			console.log("start setting with: ", habit);
+			console.log("name is: ", habit.name);
+			setName({
+				...name,
+				input: {
+					...name.input,
+					value: habit.name,
+					isValid: true
+				}
+			});
+			setMessage({
+				...message,
+				input: {
+					...message.input,
+					value: habit.personalMessage,
+					isValid: true
+				}
+			});
+			setGoal({
+				...goal,
+				input: {
+					...goal.input,
+					value: digitsToNumber(habit.targetValues),
+					isValid: true
+				}
+			});
+			setPeriod(habit.targetPeriod);
+			setSelectedIcon(habit.iconName);
+			setToBeEnforced(habit.toBeEnforced);
+			setFormState({
+				...formState,
+				kind: "edit"
+			});
+			setOriginal({
+				name: habit.name,
+				message: habit.personalMessage,
+				period: habit.targetPeriod,
+				goal: digitsToNumber(habit.targetValues),
+				selectedIcon: habit.iconName,
+				toBeEnforced: habit.toBeEnforced
+			});
+		};
+		if (!add) {
+			prepHabitForEdit(match.params.id);
+		}
 		window.addEventListener("beforeunload", handleBeforeUnload);
-		// confirm add or edit and fill out starting state values accordingly
 		return () => {
 			console.log("unmounting");
 			window.removeEventListener("beforeunload", handleBeforeUnload);
 		};
-	}, [handleBeforeUnload]);
+	}, []);
 	return (
 		<React.Fragment>
 			<Prompt
-				when={!formState.success}
+				when={!formState.success && formHasChanged()}
 				message="changes not saved, please confirm you want to cancel."
 			/>
 			{formState.success ? (
@@ -137,9 +224,9 @@ const HabitForm = ({ add, title }) => {
 								block
 								variant="success"
 								type="submit"
-								disabled={!formIsReady()}
+								disabled={!formIsReady() || !formHasChanged()}
 							>
-								{"create"}
+								{add ? "create" : "save"}
 							</Button>
 						</div>
 						<div className="cancel text-center">
@@ -156,18 +243,41 @@ const HabitForm = ({ add, title }) => {
 					</Container>
 					<Container className="form-wrapper">
 						<div className="form-body px-md-4 px-lg-5 py-2">
-							<FormInput
-								inputAs="input"
-								label="name"
-								placeholder="name for habit"
-								state={name}
-								setState={setName}
-								validate={{
-									minLength: 3,
-									maxLength: 20,
-									allowNumbers: true
-								}}
-							/>
+							<Form.Row>
+								<FormInput
+									className="col-md-8"
+									inputAs="input"
+									label="name"
+									placeholder="name for habit"
+									state={name}
+									setState={setName}
+									validate={{
+										minLength: 3,
+										maxLength: 30,
+										allowNumbers: true
+									}}
+								/>
+								<Form.Group className="col-md-4 d-flex justify-content-around align-items-start pt-4">
+									<Form.Check
+										onClick={e => setToBeEnforced(true)}
+										custom
+										type="radio"
+										label="enforce"
+										name="radio-enforce"
+										id="radioEnforce"
+										checked={toBeEnforced}
+									/>
+									<Form.Check
+										onClick={e => setToBeEnforced(false)}
+										custom
+										type="radio"
+										label="quit"
+										name="radio-quit"
+										id="radioQuit"
+										checked={!toBeEnforced}
+									/>
+								</Form.Group>
+							</Form.Row>
 							<FormInput
 								inputAs="textarea"
 								label="personal message"

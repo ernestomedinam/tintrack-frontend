@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import InfoBoard from "./InfoBoard";
 import TaskIcon from "./TaskIcon";
+import { Link } from "react-router-dom";
 
 const EditCard = ({ counter, task }) => {
 	return (
@@ -23,9 +24,20 @@ const EditCard = ({ counter, task }) => {
 					<p>{task.personalMessage}</p>
 				</div>
 				<div className="edit-card-actions">
-					<Button type="button" block variant="primary">
-						{counter ? "edit habit counter" : "edit planned task"}
-					</Button>
+					<Link
+						to={location =>
+							`${location.pathname}/${
+								counter ? "habit" : "task"
+							}/${task.id}`
+						}
+						className="no-text-style w-100"
+					>
+						<Button type="button" block variant="primary">
+							{counter
+								? "edit habit counter"
+								: "edit planned task"}
+						</Button>
+					</Link>
 				</div>
 			</div>
 		</div>

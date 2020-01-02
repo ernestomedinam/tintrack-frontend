@@ -28,6 +28,14 @@ export const numberToDigits = number => {
 	return digits;
 };
 
+export const digitsToNumber = digits => {
+	let numberString = "";
+	for (let i = 0; i < digits.length; i++) {
+		numberString += digits[i].toString();
+	}
+	return parseInt(numberString);
+};
+
 export const ordinalInteger = number => {
 	var j = number % 10,
 		k = number % 100;

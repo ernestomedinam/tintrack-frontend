@@ -21,9 +21,12 @@ const Routine = prop => {
 		<Container fluid className="routine-bg">
 			<Container className="routine-wrapper">
 				<Switch>
-					<Route path={match.path + "/habit"}>
+					<Route exact path={match.path + "/habit"}>
 						<HabitForm add title="creating habit counter" />
 						{/* <HabitForm /> */}
+					</Route>
+					<Route path={match.path + "/habit/:id"}>
+						<HabitForm title="editing habit counter" />
 					</Route>
 					<Route exact path={match.path}>
 						<Container className="routine-tools bg-dark">

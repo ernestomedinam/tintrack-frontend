@@ -255,6 +255,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			fetchCreateHabit: newHabit => {
 				const store = getStore();
 				console.log("this should be fetching, now just updating store");
+				newHabit["id"] = 50 + Math.floor(Math.random() * 200);
 				setStore({
 					routine: {
 						...store.routine,
@@ -262,6 +263,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 							...store.routine.habitCounters,
 							newHabit
 						]
+					}
+				});
+			},
+			fetchGetHabit: async habitId => {
+				const store = getStore();
+				console.log(
+					"this should be fetching routine and then habit from store, or fetching directly from habit endpooint"
+				);
+				let filteredHabits = await store.routine.habitCounters.filter(
+					habit => {
+						return parseInt(habitId) == habit.id;
+					}
+				);
+				console.log(store.routine.habitCounters);
+				console.log("after filter: ", filteredHabits[0]);
+				return filteredHabits[0];
+			},
+			fetchEditHabit: async (updatedHabit, habitId) => {
+				const store = getStore();
+				console.log(
+					"this should be fetch put with habit id to API, instead updating store routine item"
+				);
+				let filteredHabits = await store.routine.habitCounters.filter(
+					habit => {
+						return parseInt(habitId) != habit.id;
+					}
+				);
+				updatedHabit["id"] = parseInt(habitId);
+				filteredHabits.push(updatedHabit);
+				setStore({
+					routine: {
+						...store.routine,
+						habitCounters: filteredHabits
 					}
 				});
 			},
