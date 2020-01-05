@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const ScheduleDisplay = ({ size, timesPerDay }) => {
+const ScheduleDisplay = ({ size, weekSched }) => {
 	const getClassNameForDay = times => {
 		if (times === 0) {
 			return "schedule-day";
@@ -13,6 +13,12 @@ const ScheduleDisplay = ({ size, timesPerDay }) => {
 			return "schedule-day schedule-day-full";
 		}
 	};
+	const timesPerDay = [];
+	for (let i = 0; i < 4; i++) {
+		for (let j = 0; j < 7; j++) {
+			timesPerDay.push(weekSched[i].days[j].length);
+		}
+	}
 	return (
 		<div className="schedule">
 			<div className="schedule-top-legend">
@@ -52,5 +58,5 @@ export default ScheduleDisplay;
 
 ScheduleDisplay.propTypes = {
 	size: PropTypes.string,
-	timesPerDay: PropTypes.arrayOf(PropTypes.number)
+	weekSched: PropTypes.arrayOf(PropTypes.object)
 };

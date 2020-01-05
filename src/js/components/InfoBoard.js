@@ -39,7 +39,7 @@ const InfoBoard = ({ counter, task }) => {
 					</div>
 				</React.Fragment>
 			) : (
-				<ScheduleDisplay size="card" timesPerDay={task.timesPerDay} />
+				<ScheduleDisplay size="card" weekSched={task.weekSched} />
 			)}
 		</React.Fragment>
 	);
