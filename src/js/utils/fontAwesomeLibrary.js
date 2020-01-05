@@ -5,7 +5,12 @@ import {
 	faPlusSquare,
 	faCalendarAlt
 } from "@fortawesome/free-regular-svg-icons";
-import { faSearch, faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import {
+	faSearch,
+	faPlus,
+	faMinus,
+	faTimes
+} from "@fortawesome/free-solid-svg-icons";
 
 library.add(
 	faArrowAltCircleRight,
@@ -14,5 +19,6 @@ library.add(
 	faSearch,
 	faCalendarAlt,
 	faPlus,
-	faMinus
+	faMinus,
+	faTimes
 );

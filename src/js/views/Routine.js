@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Badge } from "react-bootstrap";
 import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import HabitForm from "../components/HabitForm";
+import TaskForm from "../components/TaskForm";
 
 const Routine = prop => {
 	const match = useRouteMatch();
@@ -21,6 +22,9 @@ const Routine = prop => {
 		<Container fluid className="routine-bg">
 			<Container className="routine-wrapper">
 				<Switch>
+					<Route exatc path={match.path + "/task"}>
+						<TaskForm add title="creating planned task" />
+					</Route>
 					<Route exact path={match.path + "/habit"}>
 						<HabitForm add title="creating habit counter" />
 						{/* <HabitForm /> */}
@@ -75,10 +79,15 @@ const Routine = prop => {
 								</Link>
 							</div>
 							<div className="add-task text-center">
-								<span className="legend">{"add task"}</span>
-								<FontAwesomeIcon
-									icon={["far", "plus-square"]}
-								/>
+								<Link
+									to={match.url + "/task"}
+									className="no-text-style"
+								>
+									<span className="legend">{"add task"}</span>
+									<FontAwesomeIcon
+										icon={["far", "plus-square"]}
+									/>
+								</Link>
 							</div>
 						</Container>
 						<EditTrack

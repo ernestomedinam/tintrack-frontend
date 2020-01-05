@@ -5,6 +5,7 @@ import BedMakingIcon from "../icons/BedMakingIcon";
 import WaterGlassIcon from "../icons/WaterGlassIcon";
 import WeightsIcon from "../icons/WeightsIcon";
 import DefaultHabitIcon from "../icons/DefaultHabitIcon";
+import DefaultTaskIcon from "../icons/DefaultTaskIcon";
 
 const TaskIcon = ({
 	icon,
@@ -15,6 +16,12 @@ const TaskIcon = ({
 }) => {
 	const matchComponent = () => {
 		switch (icon) {
+			case "default-task":
+				return marked ? (
+					<DefaultTaskIcon color={"#FFFFFF"} />
+				) : (
+					<DefaultTaskIcon color={color} />
+				);
 			case "default-habit":
 				return marked ? (
 					<DefaultHabitIcon color={"#FFFFFF"} />

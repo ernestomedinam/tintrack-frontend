@@ -41,6 +41,7 @@
     "node-sass": "^4.13.0",
     "prettier": "^1.19.1",
     "prettier-webpack-plugin": "^1.2.0",
+    "react-bootstrap-time-picker": "^2.0.1",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",

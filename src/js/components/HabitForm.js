@@ -329,7 +329,7 @@ const HabitForm = ({ add, title }) => {
 								</div>
 							</div>
 							<IconSelector
-								icons="taskIcons"
+								icons="habitIcons"
 								label="icon for habit"
 								size={64}
 								color="#343A40"
