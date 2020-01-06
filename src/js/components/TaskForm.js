@@ -3,7 +3,12 @@ import { Container, Button, Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AppContext } from "../store/AppContext";
 import { useHistory, useRouteMatch, Prompt } from "react-router-dom";
-import { numberToDigits, digitsToNumber } from "../utils/helpers";
+import {
+	numberToDigits,
+	digitsToNumber,
+	toListWithoutId,
+	matchWeeksDaysTimes
+} from "../utils/helpers";
 import FormInput from "./FormInput";
 import FormQtyButtons from "./FormQtyButtons";
 import IconSelector from "./IconSelector";
@@ -32,7 +37,8 @@ const TaskForm = ({ add, title }) => {
 	const [selectedIcon, setSelectedIcon] = useState("default-task");
 	const [formState, setFormState] = useState({
 		kind: "create",
-		success: false
+		success: false,
+		hasChanged: false
 	});
 	const [weekSched, setWeekSched] = useState([
 		{
@@ -84,8 +90,114 @@ const TaskForm = ({ add, title }) => {
 			]
 		}
 	]);
+	const [original, setOriginal] = useState({
+		name: "",
+		message: "",
+		selectedIcon: "default-task",
+		weekSched: [
+			{
+				weekNumber: 1,
+				days: toListWithoutId(weekSched[0].days)
+			},
+			{
+				weekNumber: 2,
+				days: toListWithoutId(weekSched[1].days)
+			},
+			{
+				weekNumber: 3,
+				days: toListWithoutId(weekSched[2].days)
+			},
+			{
+				weekNumber: 4,
+				days: toListWithoutId(weekSched[3].days)
+			}
+		]
+	});
+	const handleIconChange = updatedState => {
+		setSelectedIcon(updatedState);
+		setFormState({
+			...formState,
+			hasChanged: formHasChanged()
+		});
+	};
+	const handleMessageChange = updatedState => {
+		setMessage(updatedState);
+		setFormState({
+			...formState,
+			hasChanged: formHasChanged()
+		});
+	};
+	const handleWeekSchedChange = updatedState => {
+		setWeekSched(updatedState);
+		setFormState({
+			...formState,
+			hasChanged: formHasChanged()
+		});
+	};
+	const handleNameChange = updatedState => {
+		setName(updatedState);
+		setFormState({
+			...formState,
+			hasChanged: formHasChanged()
+		});
+	};
+	const formHasChanged = () => {
+		const originalWeekSched = [];
+		const actualWeekSched = [];
+		for (let i = 0; i < 4; i++) {
+			originalWeekSched.push(original.weekSched[i].days);
+			actualWeekSched.push(toListWithoutId(weekSched[i].days));
+		}
+		const weekSchedSame = matchWeeksDaysTimes(
+			originalWeekSched,
+			actualWeekSched
+		);
+		if (
+			original.name === name.input.value &&
+			original.message === message.input.value &&
+			original.selectedIcon === selectedIcon &&
+			weekSchedSame
+		) {
+			console.log("returning false");
+			return false;
+		} else {
+			console.log("returning true");
+			return true;
+		}
+	};
+	const formIsReady = () => {
+		if (
+			name.input.value &&
+			!name.input.error &&
+			message.input.value &&
+			!message.input.error &&
+			selectedIcon != ""
+		) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+	const handleBeforeUnload = event => {
+		console.log("entered here");
+		if (!formState.success && formState.hasChanged) {
+			event.preventDefault();
+			event.returnValue = true;
+		}
+	};
+	useEffect(() => {
+		window.removeEventListener("beforeunload", handleBeforeUnload);
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		return () => {
+			window.removeEventListener("beforeunload", handleBeforeUnload);
+		};
+	}, [formState.success, formState.hasChanged]);
 	return (
 		<React.Fragment>
+			<Prompt
+				when={!formState.success && formState.hasChanged}
+				message="changes not saved, please confirm you want to cancel."
+			/>
 			{formState.success ? (
 				<Container className="outcome-message">
 					<h3 className="mx-2 mb-4 mr-md-4 mt-md-4">
@@ -115,7 +227,7 @@ const TaskForm = ({ add, title }) => {
 								block
 								variant="success"
 								type="submit"
-								// disabled={!formIsReady() || !formHasChanged()}
+								disabled={!formHasChanged || !formIsReady()}
 							>
 								{add ? "create" : "save"}
 							</Button>
@@ -139,7 +251,7 @@ const TaskForm = ({ add, title }) => {
 								label="name"
 								placeholder="name for habit"
 								state={name}
-								setState={setName}
+								setState={handleNameChange}
 								validate={{
 									minLength: 3,
 									maxLength: 30,
@@ -151,7 +263,7 @@ const TaskForm = ({ add, title }) => {
 								label="personal message"
 								placeholder="why you want to enforce or quit this habit..."
 								state={message}
-								setState={setMessage}
+								setState={handleMessageChange}
 								validate={{
 									minLength: 10,
 									maxLength: 240,
@@ -164,7 +276,7 @@ const TaskForm = ({ add, title }) => {
 								size={64}
 								color="#343A40"
 								state={selectedIcon}
-								setState={setSelectedIcon}
+								setState={handleIconChange}
 							/>
 							<Form.Label>
 								{"planned schedule 4-weeks month"}
@@ -175,7 +287,7 @@ const TaskForm = ({ add, title }) => {
 										<ScheduleWeek
 											weekNumber={week.weekNumber}
 											state={weekSched}
-											setState={setWeekSched}
+											setState={handleWeekSchedChange}
 											key={week.weekNumber}
 										/>
 									);

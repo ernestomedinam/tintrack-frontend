@@ -64,3 +64,32 @@ export const addDaysToDate = (objWithDate, daysToAdd) => {
 		day: modifiedDate.getDate()
 	};
 };
+
+export const toListWithoutId = ListObjectsWithId => {
+	let newList = [];
+	for (let listedDay of ListObjectsWithId) {
+		let newTimeList = [];
+		for (let listedTime of listedDay) {
+			newTimeList.push(listedTime.value);
+		}
+		newList.push(newTimeList.sort());
+	}
+	return newList;
+};
+
+export const matchWeeksDaysTimes = (listOfWeeksOne, listOfWeeksTwo) => {
+	for (let i = 0; i < 4; i++) {
+		for (let j = 0; j < 7; j++) {
+			if (listOfWeeksOne[i][j].length === listOfWeeksTwo[i][j].length) {
+				for (let k = 0; k < listOfWeeksOne[i][j].length; k++) {
+					if (listOfWeeksOne[i][j][k] != listOfWeeksTwo[i][j][k]) {
+						return false;
+					}
+				}
+			} else {
+				return false;
+			}
+		}
+	}
+	return true;
+};
