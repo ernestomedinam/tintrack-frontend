@@ -130,7 +130,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				plannedTasks: [
 					{
 						id: 10,
-						startTime: "09:00",
 						durationEstimate: 60,
 						name: "Work out",
 						iconName: "weights",
@@ -276,6 +275,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 						year: objWithDate.year,
 						month: objWithDate.month,
 						day: objWithDate.day
+					}
+				});
+			},
+			fetchCreateTask: newTask => {
+				const store = getStore();
+				console.log("this should be fetching to create a task");
+				newTask["alerts"] = [];
+				newTask["id"] = 50 + Math.floor(Math.random() * 200);
+				setStore({
+					routine: {
+						...store.routine,
+						plannedTasks: [...store.routine.plannedTasks, newTask]
 					}
 				});
 			},

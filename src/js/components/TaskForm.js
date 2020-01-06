@@ -185,6 +185,41 @@ const TaskForm = ({ add, title }) => {
 			event.returnValue = true;
 		}
 	};
+	const handleSubmit = event => {
+		event.preventDefault();
+		event.stopPropagation();
+		let newTask = {
+			name: name.input.value,
+			personalMessage: message.input.value,
+			iconName: selectedIcon,
+			weekSched: [
+				{
+					weekNumber: 1,
+					days: toListWithoutId(weekSched[0].days)
+				},
+				{
+					weekNumber: 2,
+					days: toListWithoutId(weekSched[1].days)
+				},
+				{
+					weekNumber: 3,
+					days: toListWithoutId(weekSched[2].days)
+				},
+				{
+					weekNumber: 4,
+					days: toListWithoutId(weekSched[3].days)
+				}
+			]
+		};
+		newTask["durationEstimate"] = 30;
+		if (add) {
+			actions.fetchCreateTask(newTask);
+		}
+		setFormState({
+			...formState,
+			success: true
+		});
+	};
 	useEffect(() => {
 		window.removeEventListener("beforeunload", handleBeforeUnload);
 		window.addEventListener("beforeunload", handleBeforeUnload);
@@ -213,7 +248,7 @@ const TaskForm = ({ add, title }) => {
 					</Button>
 				</Container>
 			) : (
-				<Form>
+				<Form onSubmit={handleSubmit}>
 					<Container
 						className={
 							add ? "form-tools form-tools-add" : "form-tools"
