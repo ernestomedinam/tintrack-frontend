@@ -4,13 +4,11 @@ import PropTypes from "prop-types";
 import { AppContext } from "../store/AppContext";
 import { useHistory, useRouteMatch, Prompt } from "react-router-dom";
 import {
-	numberToDigits,
-	digitsToNumber,
+	toListWithId,
 	toListWithoutId,
 	matchWeeksDaysTimes
 } from "../utils/helpers";
 import FormInput from "./FormInput";
-import FormQtyButtons from "./FormQtyButtons";
 import IconSelector from "./IconSelector";
 import ScheduleWeek from "./ScheduleWeek";
 
@@ -158,10 +156,8 @@ const TaskForm = ({ add, title }) => {
 			original.selectedIcon === selectedIcon &&
 			weekSchedSame
 		) {
-			console.log("returning false");
 			return false;
 		} else {
-			console.log("returning true");
 			return true;
 		}
 	};
@@ -179,7 +175,6 @@ const TaskForm = ({ add, title }) => {
 		}
 	};
 	const handleBeforeUnload = event => {
-		console.log("entered here");
 		if (!formState.success && formState.hasChanged) {
 			event.preventDefault();
 			event.returnValue = true;
@@ -214,12 +209,16 @@ const TaskForm = ({ add, title }) => {
 		newTask["durationEstimate"] = 30;
 		if (add) {
 			actions.fetchCreateTask(newTask);
+		} else {
+			actions.fetchEditTask(newTask, match.params.id);
 		}
 		setFormState({
 			...formState,
 			success: true
 		});
 	};
+	// effect for event beforeunload, handles refresh and weindow/tab
+	// closing with unsaved changes.
 	useEffect(() => {
 		window.removeEventListener("beforeunload", handleBeforeUnload);
 		window.addEventListener("beforeunload", handleBeforeUnload);
@@ -227,6 +226,61 @@ const TaskForm = ({ add, title }) => {
 			window.removeEventListener("beforeunload", handleBeforeUnload);
 		};
 	}, [formState.success, formState.hasChanged]);
+	// initial effects
+	useEffect(() => {
+		const prepareTaskForEdit = async taskId => {
+			let task = await actions.fetchGetTask(taskId);
+			setName({
+				...name,
+				input: {
+					...name.input,
+					value: task.name,
+					isValid: true
+				}
+			});
+			setMessage({
+				...message,
+				input: {
+					...message.input,
+					value: task.personalMessage,
+					isValid: true
+				}
+			});
+			setSelectedIcon(task.iconName);
+			setWeekSched([
+				{
+					weekNumber: 1,
+					days: toListWithId(task.weekSched[0].days)
+				},
+				{
+					weekNumber: 2,
+					days: toListWithId(task.weekSched[1].days)
+				},
+				{
+					weekNumber: 3,
+					days: toListWithId(task.weekSched[2].days)
+				},
+				{
+					weekNumber: 4,
+					days: toListWithId(task.weekSched[3].days)
+				}
+			]);
+			setFormState({
+				...formState,
+				kind: "edit"
+			});
+			setOriginal({
+				name: task.name,
+				message: task.personalMessage,
+				selectedIcon: task.iconName,
+				weekSched: task.weekSched
+			});
+		};
+		if (!add) {
+			prepareTaskForEdit(match.params.id);
+		}
+		return () => {};
+	}, []);
 	return (
 		<React.Fragment>
 			<Prompt

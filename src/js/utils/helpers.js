@@ -65,14 +65,29 @@ export const addDaysToDate = (objWithDate, daysToAdd) => {
 	};
 };
 
-export const toListWithoutId = ListObjectsWithId => {
+export const toListWithoutId = listObjectsWithId => {
 	let newList = [];
-	for (let listedDay of ListObjectsWithId) {
+	for (let listedDay of listObjectsWithId) {
 		let newTimeList = [];
 		for (let listedTime of listedDay) {
 			newTimeList.push(listedTime.value);
 		}
 		newList.push(newTimeList.sort());
+	}
+	return newList;
+};
+
+export const toListWithId = listOfLists => {
+	let newList = [];
+	for (let listedDay of listOfLists) {
+		let newTimeObjectList = [];
+		for (let listedTime of listedDay) {
+			newTimeObjectList.push({
+				id: Math.floor(Math.random() * 10000 + 500),
+				value: listedTime
+			});
+		}
+		newList.push(newTimeObjectList.sort());
 	}
 	return newList;
 };

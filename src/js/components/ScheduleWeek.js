@@ -57,14 +57,6 @@ const ScheduleWeek = ({ weekNumber, state, setState }) => {
 		});
 	};
 	const deleteTimeHolder = (weekNumber, dayIndex, idToDelete) => {
-		console.log(
-			"starting for: ",
-			weekNumber,
-			", ",
-			dayIndex,
-			" and ",
-			idToDelete
-		);
 		let newState = state;
 		let filteredTimes = state[weekNumber - 1].days[dayIndex].filter(day => {
 			return day.id != idToDelete;

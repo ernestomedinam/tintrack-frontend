@@ -13,7 +13,7 @@ const Routine = prop => {
 	const match = useRouteMatch();
 	const { store, actions } = useContext(AppContext);
 	useEffect(() => {
-		console.log(match.path);
+		// fetch routine to populate store.
 		return () => {
 			// cleanup
 		};
@@ -25,11 +25,13 @@ const Routine = prop => {
 					<Route exatc path={match.path + "/task"}>
 						<TaskForm add title="creating planned task" />
 					</Route>
+					<Route path={match.path + "/tasks/:id"}>
+						<TaskForm title="editing planned task" />
+					</Route>
 					<Route exact path={match.path + "/habit"}>
 						<HabitForm add title="creating habit counter" />
-						{/* <HabitForm /> */}
 					</Route>
-					<Route path={match.path + "/habit/:id"}>
+					<Route path={match.path + "/habits/:id"}>
 						<HabitForm title="editing habit counter" />
 					</Route>
 					<Route exact path={match.path}>

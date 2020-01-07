@@ -62,7 +62,6 @@ const HabitForm = ({ add, title }) => {
 		toBeEnforced: true
 	});
 	const formHasChanged = () => {
-		console.log("runnin form has changed");
 		if (
 			original.name === name.input.value &&
 			original.message === message.input.value &&
@@ -111,12 +110,6 @@ const HabitForm = ({ add, title }) => {
 				success: true
 			});
 		} else {
-			console.log(
-				"great!, this is edited habit information for fetch put: ",
-				newHabitCounter,
-				" and it's id to build url for API:",
-				match.params.id
-			);
 			actions.fetchEditHabit(newHabitCounter, match.params.id);
 			setFormState({
 				...formState,
@@ -126,7 +119,6 @@ const HabitForm = ({ add, title }) => {
 	};
 	const handleBeforeUnload = event => {
 		if (!formState.success) {
-			console.log("entered here: ", formState.success);
 			event.preventDefault();
 			event.returnValue = true;
 		}
@@ -136,10 +128,7 @@ const HabitForm = ({ add, title }) => {
 		// initial effects
 		// if not add, must fetch habit info based on its id
 		const prepHabitForEdit = async habitId => {
-			console.log("running prep for edi");
 			let habit = await actions.fetchGetHabit(habitId);
-			console.log("start setting with: ", habit);
-			console.log("name is: ", habit.name);
 			setName({
 				...name,
 				input: {
@@ -185,7 +174,6 @@ const HabitForm = ({ add, title }) => {
 		}
 		window.addEventListener("beforeunload", handleBeforeUnload);
 		return () => {
-			console.log("unmounting");
 			window.removeEventListener("beforeunload", handleBeforeUnload);
 		};
 	}, []);
@@ -259,7 +247,7 @@ const HabitForm = ({ add, title }) => {
 								/>
 								<Form.Group className="col-md-4 d-flex justify-content-around align-items-start pt-4">
 									<Form.Check
-										onClick={e => setToBeEnforced(true)}
+										onChange={e => setToBeEnforced(true)}
 										custom
 										type="radio"
 										label="enforce"
@@ -268,7 +256,7 @@ const HabitForm = ({ add, title }) => {
 										checked={toBeEnforced}
 									/>
 									<Form.Check
-										onClick={e => setToBeEnforced(false)}
+										onChange={e => setToBeEnforced(false)}
 										custom
 										type="radio"
 										label="quit"

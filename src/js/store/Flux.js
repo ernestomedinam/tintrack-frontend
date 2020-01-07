@@ -304,6 +304,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				});
 			},
+			fetchGetTask: async taskId => {
+				const store = getStore();
+				console.log(
+					"this should be fetching routine and then habit from store, or fetching directly from task endpoint"
+				);
+				let filteredTasks = await store.routine.plannedTasks.filter(
+					task => parseInt(taskId) == task.id
+				);
+				return filteredTasks[0];
+			},
 			fetchGetHabit: async habitId => {
 				const store = getStore();
 				console.log(
@@ -314,9 +324,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return parseInt(habitId) == habit.id;
 					}
 				);
-				console.log(store.routine.habitCounters);
-				console.log("after filter: ", filteredHabits[0]);
 				return filteredHabits[0];
+			},
+			fetchEditTask: async (updatedTask, taskId) => {
+				const store = getStore();
+				let filteredTasks = await store.routine.plannedTasks.filter(
+					task => parseInt(taskId) != task.id
+				);
+				updatedTask["alerts"] = [];
+				updatedTask["id"] = parseInt(taskId);
+				filteredTasks.push(updatedTask);
+				setStore({
+					routine: {
+						...store.routine,
+						plannedTasks: filteredTasks
+					}
+				});
 			},
 			fetchEditHabit: async (updatedHabit, habitId) => {
 				const store = getStore();

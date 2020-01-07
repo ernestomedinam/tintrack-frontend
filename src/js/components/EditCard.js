@@ -27,7 +27,7 @@ const EditCard = ({ counter, task }) => {
 					<Link
 						to={location =>
 							`${location.pathname}/${
-								counter ? "habit" : "task"
+								counter ? "habits" : "tasks"
 							}/${task.id}`
 						}
 						className="no-text-style w-100"
