@@ -360,6 +360,39 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				});
 			},
+			fetchDeleteRoutineItem: async (isHabit, itemId) => {
+				const store = getStore();
+				if (isHabit) {
+					console.log(
+						"this should be fetch delete habit to endpoint and fetch routine to update store"
+					);
+					setStore({
+						routine: {
+							...store.routine,
+							habitCounters: store.routine.habitCounters.filter(
+								habit => {
+									return habit.id != itemId;
+								}
+							)
+						}
+					});
+				} else {
+					console.log(
+						"this should be fetch delete task to endpoint and fetch routine to update store"
+					);
+					setStore({
+						routine: {
+							...store.routine,
+							plannedTasks: store.routine.plannedTasks.filter(
+								task => {
+									return task.id != itemId;
+								}
+							)
+						}
+					});
+				}
+				console.log("delete done!");
+			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},

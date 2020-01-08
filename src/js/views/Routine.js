@@ -1,10 +1,10 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import "../../sass/views/Routine.scss";
 import EditTrack from "../components/EditTrack";
 import { AppContext } from "../store/AppContext.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Badge } from "react-bootstrap";
+import { Badge, Button } from "react-bootstrap";
 import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import HabitForm from "../components/HabitForm";
 import TaskForm from "../components/TaskForm";
@@ -12,12 +12,123 @@ import TaskForm from "../components/TaskForm";
 const Routine = prop => {
 	const match = useRouteMatch();
 	const { store, actions } = useContext(AppContext);
+	const [showModal, setShowModal] = useState({
+		show: false,
+		kind: "",
+		params: {}
+	});
 	useEffect(() => {
 		// fetch routine to populate store.
 		return () => {
 			// cleanup
 		};
-	});
+	}, []);
+	const getModal = () => {
+		let modalOnDemand = <div>{"hello modal"}</div>;
+		if (showModal.show) {
+			// get habit or task
+			let item = {};
+			if (showModal.params.isHabit) {
+				const filteredHabits = store.routine.habitCounters.filter(
+					habit => {
+						return habit.id === parseInt(showModal.params.id);
+					}
+				);
+				item = filteredHabits[0];
+			} else {
+				const filteredTasks = store.routine.plannedTasks.filter(
+					task => {
+						return task.id === parseInt(showModal.params.id);
+					}
+				);
+				item = filteredTasks[0];
+			}
+			if (showModal.kind === "delete") {
+				modalOnDemand = buildModal(item);
+			} // else is going to be used for unmounting task/habit (pausing)
+		}
+		return modalOnDemand;
+	};
+	const buildModal = item => {
+		return (
+			item && (
+				<React.Fragment>
+					<div className="tin-modal">
+						<div className="tin-modal-title">
+							<h5>{"confirm deletion"}</h5>
+						</div>
+						<br />
+						<div className="tin-modal-body">
+							<div className="tin-modal-content">
+								<p>
+									{"please confirm you want to delete "}
+									<strong>{item.name}</strong>
+									{showModal.params.isHabit
+										? " habit "
+										: " task "}
+									{"from your routine schedule."}
+								</p>
+							</div>
+						</div>
+						<br />
+						<div className="tin-modal-actions">
+							<Button
+								variant="success"
+								onClick={async e => {
+									await actions.fetchDeleteRoutineItem(
+										showModal.params.isHabit,
+										showModal.params.id
+									);
+									console.log("setting show modal false");
+									setShowModal({
+										show: false,
+										kind: "",
+										params: {}
+									});
+								}}
+								className="m-2"
+							>
+								{"yes, delete it!"}
+							</Button>
+							<Button
+								variant="danger"
+								className="m-2"
+								onClick={e => {
+									setShowModal({
+										show: false,
+										kind: "",
+										params: {}
+									});
+								}}
+							>
+								{"wait, never mind"}
+							</Button>
+						</div>
+					</div>
+					<div
+						className="tin-modal-overlay"
+						onClick={e => {
+							setShowModal({
+								show: false,
+								kind: "",
+								params: {}
+							});
+						}}
+					></div>
+				</React.Fragment>
+			)
+		);
+	};
+	const handleDeleteItem = (isHabit, itemId) => {
+		setShowModal({
+			show: true,
+			kind: "delete",
+			params: {
+				id: itemId,
+				isHabit
+			}
+		});
+	};
 	return (
 		<Container fluid className="routine-bg">
 			<Container className="routine-wrapper">
@@ -95,7 +206,9 @@ const Routine = prop => {
 						<EditTrack
 							habits={store.routine.habitCounters}
 							tasks={store.routine.plannedTasks}
+							removeItem={handleDeleteItem}
 						/>
+						{showModal.show && getModal()}
 					</Route>
 				</Switch>
 			</Container>

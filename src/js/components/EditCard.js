@@ -5,7 +5,7 @@ import InfoBoard from "./InfoBoard";
 import TaskIcon from "./TaskIcon";
 import { Link } from "react-router-dom";
 
-const EditCard = ({ counter, task }) => {
+const EditCard = ({ counter, task, removeItem = () => {} }) => {
 	return (
 		<div className="col-md-6 col-lg-4 p-0 p-md-2 m-2 m-md-0 d-flex justify-content-center">
 			<div className="edit-card m-0 p-0">
@@ -23,9 +23,11 @@ const EditCard = ({ counter, task }) => {
 				<div className="edit-card-body">
 					<p>{task.personalMessage}</p>
 				</div>
-
 				<div className="edit-card-actions">
-					<span className="delete-button bg-danger">
+					<span
+						onClick={e => removeItem(counter, task.id)}
+						className="delete-button bg-danger"
+					>
 						<span className="delete-button-msg">
 							{counter ? "delete habit" : "delete task"}
 						</span>
@@ -54,5 +56,6 @@ export default EditCard;
 
 EditCard.propTypes = {
 	counter: PropTypes.bool,
-	task: PropTypes.object
+	task: PropTypes.object,
+	removeItem: PropTypes.func
 };
