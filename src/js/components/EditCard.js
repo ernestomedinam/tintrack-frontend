@@ -23,7 +23,13 @@ const EditCard = ({ counter, task }) => {
 				<div className="edit-card-body">
 					<p>{task.personalMessage}</p>
 				</div>
+
 				<div className="edit-card-actions">
+					<span className="delete-button bg-danger">
+						<span className="delete-button-msg">
+							{counter ? "delete habit" : "delete task"}
+						</span>
+					</span>
 					<Link
 						to={location =>
 							`${location.pathname}/${
@@ -40,12 +46,6 @@ const EditCard = ({ counter, task }) => {
 					</Link>
 				</div>
 			</div>
-
-			<span className="delete-button bg-danger">
-				<span className="delete-button-msg">
-					{counter ? "delete habit" : "delete task"}
-				</span>
-			</span>
 		</div>
 	);
 };

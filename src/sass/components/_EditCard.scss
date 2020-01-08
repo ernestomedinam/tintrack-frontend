@@ -23,6 +23,9 @@
         }
         &-actions {
             @extend .day-card-actions;
+            // adding position relative so delete button's
+            // absolute refers to this
+            position: relative;
         }
     }
 }

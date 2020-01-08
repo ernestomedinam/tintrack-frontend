@@ -103,7 +103,7 @@ $white-tin: rgba($color: #FFF, $alpha: 0.6);
     border: 2px solid white;
     border-radius: 50%;
     opacity: 1;
-    transform: translate(-2.5rem, -3.5rem);
+    transform: translate(-2.25rem, -3rem);
     @include media-breakpoint-up(md) {
         opacity: 0.3;
     }
@@ -118,7 +118,7 @@ $white-tin: rgba($color: #FFF, $alpha: 0.6);
     }
     &:hover {
         opacity: 1;
-        transform: translate(-2.5rem, -3.5rem);
+        transform: translate(-2.25rem, -3rem);
         .delete-button-msg {
             display: inline;
             transform: translate(-2rem, -3px);
