@@ -17,6 +17,9 @@
         }
         &-body {
             @extend .day-card-body;
+            // adding padding button for delete & unmount
+            // functions on edit task/habit cards
+            padding-bottom: 2rem;
         }
         &-actions {
             @extend .day-card-actions;

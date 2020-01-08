@@ -41,6 +41,23 @@ $white-tin: rgba($color: #FFF, $alpha: 0.6);
     background-position: center;
 }
 
+
+// uncomment code ahead to edit boostrap styles
+// and variables, like changing theme colors.
+// do not add code for this purpose under the @import
+// as it will not be taken into account.
+// also, if you add bootstrap scss here, you need to
+// comment bootstrap import on index.js, as it would
+// otherwise retain priority over this import.
+
+// change theme warning color from orange to primary blue
+// $theme-colors: (
+//     "warning": #0074D9
+// );
+
+// import boostrap scss
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
 // declare animations and utility classes that will be
 // used by many components and views; if enough of them
 // are declared, create a 'helpers' folder and files for
@@ -75,19 +92,51 @@ $white-tin: rgba($color: #FFF, $alpha: 0.6);
     padding-top: 2rem;
     padding-bottom: 2rem;
 }
-
-// uncomment code ahead to edit boostrap styles
-// and variables, like changing theme colors.
-// do not add code for this purpose under the @import
-// as it will not be taken into account.
-// also, if you add bootstrap scss here, you need to
-// comment bootstrap import on index.js, as it would
-// otherwise retain priority over this import.
-
-// change theme warning color from orange to primary blue
-// $theme-colors: (
-//     "warning": #0074D9
-// );
-
-// import boostrap scss
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+.delete-button {
+    position: absolute;
+    bottom: 0%;
+    left: 100%;
+    width: 24px;
+    height: 24px;
+    background-color: red;
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    opacity: 1;
+    transform: translate(-2.5rem, -3.5rem);
+    @include media-breakpoint-up(md) {
+        opacity: 0.3;
+    }
+    &-msg {
+        display: none;
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: max-content;
+        transform: translate(-2rem, -3px);
+    }
+    &:hover {
+        opacity: 1;
+        transform: translate(-2.5rem, -3.5rem);
+        .delete-button-msg {
+            display: inline;
+            transform: translate(-2rem, -3px);
+        }
+    }
+    &::before, &::after {
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        content: ' ';
+        height: 14px;
+        width: 3px;
+        background-color: white;
+    }
+    &::before {
+        transform: translate(9px, 3px) rotate(45deg);
+    }
+    &::after {
+        transform: translate(9px, 3px) rotate(-45deg);
+    }
+}

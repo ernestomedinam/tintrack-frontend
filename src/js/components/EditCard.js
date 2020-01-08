@@ -40,6 +40,12 @@ const EditCard = ({ counter, task }) => {
 					</Link>
 				</div>
 			</div>
+
+			<span className="delete-button bg-danger">
+				<span className="delete-button-msg">
+					{counter ? "delete habit" : "delete task"}
+				</span>
+			</span>
 		</div>
 	);
 };
