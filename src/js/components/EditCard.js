@@ -26,9 +26,9 @@ const EditCard = ({ counter, task, removeItem = () => {} }) => {
 				<div className="edit-card-actions">
 					<span
 						onClick={e => removeItem(counter, task.id)}
-						className="delete-button bg-danger"
+						className="del-button bg-danger"
 					>
-						<span className="delete-button-msg">
+						<span className="del-button-msg">
 							{counter ? "delete habit" : "delete task"}
 						</span>
 					</span>
