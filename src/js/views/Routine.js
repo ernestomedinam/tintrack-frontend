@@ -8,6 +8,7 @@ import { Badge, Button } from "react-bootstrap";
 import { Link, Route, Switch, useRouteMatch } from "react-router-dom";
 import HabitForm from "../components/HabitForm";
 import TaskForm from "../components/TaskForm";
+import TinModal from "../components/TinModal";
 
 const Routine = prop => {
 	const match = useRouteMatch();
@@ -23,101 +24,45 @@ const Routine = prop => {
 			// cleanup
 		};
 	}, []);
-	const getModal = () => {
-		let modalOnDemand = <div>{"hello modal"}</div>;
-		if (showModal.show) {
-			// get habit or task
-			let item = {};
-			if (showModal.params.isHabit) {
-				const filteredHabits = store.routine.habitCounters.filter(
-					habit => {
-						return habit.id === parseInt(showModal.params.id);
-					}
-				);
-				item = filteredHabits[0];
-			} else {
-				const filteredTasks = store.routine.plannedTasks.filter(
-					task => {
-						return task.id === parseInt(showModal.params.id);
-					}
-				);
-				item = filteredTasks[0];
-			}
-			if (showModal.kind === "delete") {
-				modalOnDemand = buildModal(item);
-			} // else is going to be used for unmounting task/habit (pausing)
+	const getModalContent = () => {
+		// get habit or task
+		let item = {};
+		if (showModal.params.isHabit) {
+			const filteredHabits = store.routine.habitCounters.filter(habit => {
+				return habit.id === parseInt(showModal.params.id);
+			});
+			item = filteredHabits[0];
+		} else {
+			const filteredTasks = store.routine.plannedTasks.filter(task => {
+				return task.id === parseInt(showModal.params.id);
+			});
+			item = filteredTasks[0];
 		}
-		return modalOnDemand;
-	};
-	const buildModal = item => {
-		return (
-			item && (
+		if (showModal.kind === "delete") {
+			return (
 				<React.Fragment>
-					<div className="tin-modal">
-						<div className="tin-modal-title">
-							<h5>{"confirm deletion"}</h5>
-						</div>
-						<br />
-						<div className="tin-modal-body">
-							<div className="tin-modal-content">
-								<p>
-									{"please confirm you want to delete "}
-									<strong>{item.name}</strong>
-									{showModal.params.isHabit
-										? " habit "
-										: " task "}
-									{"from your routine schedule."}
-								</p>
-							</div>
-						</div>
-						<br />
-						<div className="tin-modal-actions">
-							<Button
-								variant="success"
-								onClick={async e => {
-									await actions.fetchDeleteRoutineItem(
-										showModal.params.isHabit,
-										showModal.params.id
-									);
-									console.log("setting show modal false");
-									setShowModal({
-										show: false,
-										kind: "",
-										params: {}
-									});
-								}}
-								className="m-2"
-							>
-								{"yes, delete it!"}
-							</Button>
-							<Button
-								variant="danger"
-								className="m-2"
-								onClick={e => {
-									setShowModal({
-										show: false,
-										kind: "",
-										params: {}
-									});
-								}}
-							>
-								{"wait, never mind"}
-							</Button>
-						</div>
-					</div>
-					<div
-						className="tin-modal-overlay"
-						onClick={e => {
-							setShowModal({
-								show: false,
-								kind: "",
-								params: {}
-							});
-						}}
-					></div>
+					{item && (
+						<p>
+							{"please confirm you want to delete "}
+							<strong>{item.name}</strong>
+							{showModal.params.isHabit ? " habit " : " task "}
+							{"from your routine schedule."}
+						</p>
+					)}
 				</React.Fragment>
-			)
+			);
+		}
+	};
+	const deleteRoutineItem = async () => {
+		await actions.fetchDeleteRoutineItem(
+			showModal.params.isHabit,
+			showModal.params.id
 		);
+		setShowModal({
+			show: false,
+			kind: "",
+			params: {}
+		});
 	};
 	const handleDeleteItem = (isHabit, itemId) => {
 		setShowModal({
@@ -208,7 +153,44 @@ const Routine = prop => {
 							tasks={store.routine.plannedTasks}
 							removeItem={handleDeleteItem}
 						/>
-						{showModal.show && getModal()}
+						{showModal.show && (
+							<TinModal
+								title={
+									showModal.kind === "delete"
+										? "confirm deletion"
+										: "confirm unknown action"
+								}
+								content={getModalContent()}
+								okButton={
+									showModal.kind === "delete"
+										? "yes, delete it!"
+										: "ok, confirm"
+								}
+								cancelButton={
+									showModal.kind === "delete"
+										? "wait, nevermind"
+										: ""
+								}
+								handleOk={
+									showModal.kind === "delete" &&
+									deleteRoutineItem
+								}
+								handleCancel={e => {
+									setShowModal({
+										show: false,
+										kind: "",
+										params: {}
+									});
+								}}
+								handleOuterClick={e => {
+									setShowModal({
+										show: false,
+										kind: "",
+										params: {}
+									});
+								}}
+							/>
+						)}
 					</Route>
 				</Switch>
 			</Container>
