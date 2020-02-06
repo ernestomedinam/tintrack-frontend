@@ -217,7 +217,7 @@ const ScheduleWeek = ({ weekNumber, state, setState }) => {
 								weekTimes: [
 									...weekdaysControl.weekTimes,
 									{
-										value: "08:00",
+										value: 28800,
 										id: Math.floor(
 											Math.random() * 10000 + 500
 										)
