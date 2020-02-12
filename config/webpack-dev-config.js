@@ -12,9 +12,6 @@ module.exports = {
     output: {
         publicPath: "/"
     },
-    devServer: {
-        disableHostCheck: true
-    },
     mode: "development",
     devtool: "source-map",
     plugins: [
