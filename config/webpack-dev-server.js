@@ -13,6 +13,7 @@ const options = {
     open: true,
     contentBase: [paths.appAssets, paths.appPublic],
     watchContentBase: true,
+    disableHostCheck: true,
     historyApiFallback: true,
     after() {
         console.log(
