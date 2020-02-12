@@ -6,13 +6,13 @@ const webpack = require("webpack");
 const paths = require("./paths.js");
 
 module.exports = {
-    entry: [paths.appIndexJs],
+    entry: paths.appIndexJs,
     output: {
         filename: 'bundle.js',
-        path: paths.appBuild,
+        path: paths.appPublic,
         publicPath: "/"
     },
-    mode: "development",
+    mode: "production",
     plugins: [
         new webpack.ProvidePlugin({
             $: 'jquery',
@@ -23,8 +23,8 @@ module.exports = {
             Dropdown: "exports-loader?Dropdown!bootstrap/js/dist/dropdown"
         }),
         new HtmlWebpackPlugin({
-            favicon: './src/assets/img/favicon.ico',
-            template: paths.appHtml
+            favicon: paths.appFavIcon,
+            template: paths.appTemplate
         }),
         new PrettierPlugin({
             parser: "babel",
@@ -44,25 +44,34 @@ module.exports = {
                 // look for js, jsx files
                 test: /\.(js|jsx)$/,
                 // in the src directory
-                include: path.resolve(paths.appSrcJs),
+                include: path.resolve(paths.appJavaScripSource),
                 // exclude node_modules
                 exclude: /(node_modules)/,
-                use: {
-                    // babel for transpiling js files
-                    loader: "babel-loader",
-                    options: {
-                        presets: [
-                            "@babel/preset-env",
-                            "@babel/preset-react"
-                        ]
+                use: [
+                    {
+                        // babel for transpiling js files
+                        loader: "babel-loader",
+                        options: {
+                            presets: [
+                                "@babel/preset-env",
+                                "@babel/preset-react"
+                            ]
+                        }
+                    },
+                    {
+                        // eslint for code linting
+                        loader: "eslint-loader",
+                        options: {
+                            enforce: "pre"
+                        }
                     }
-                }
+                ]
             },
             {
                 // look for css, scss files
                 test: /\.(css|scss)$/,
                 // in the src directory
-                include: path.resolve(paths.appStyles),
+                include: [paths.appStyles, /(node_modules)/],
                 use: [
                     {
                         loader: "style-loader",
@@ -70,9 +79,10 @@ module.exports = {
                     {
                         loader: "css-loader",
                         options: {
-                            importLoaders: 1,
-                            modules: true,
-                            localIdentName: "[name]__[local]__[hash:base64:5]"
+                            modules: {
+                                localIdentName: "[local]"
+                            },
+                            importLoaders: 1
                         }
                     },
                     {
@@ -84,26 +94,26 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|svg|jpg)$/,
+                // handle image files
+                test: /\.(png|svg|jpeg|jpg|gif)$/,
                 use: [
                     {
                         loader: "file-loader",
                         options: {
-                            name: '[path][name].[ext]'
+                            name: "[path][name].[ext]"
                         }
                     }
-                ],
+                ]
+            },
+            {
+                // handle font files
+                test: /\.woff($|\?)|\.woff2($|\?)\.ttf($|\?)\.eot($|\?)/,
+                use: [
+                    {
+                        loader: "file-loader"
+                    }
+                ]
             }
         ]
-    },
-    resolve: {
-        // file extensions
-        extensions: [".js", ".jsx", ".scss"],
-        modules: ["node_modules"],
-        // aliases to shorten paths
-        alias: {
-            Components: path.resolve(paths.appSrcJs, "components"),
-            Utils: path.resolve(paths.appSrcJs, "utils")
-        }
     },
 };
