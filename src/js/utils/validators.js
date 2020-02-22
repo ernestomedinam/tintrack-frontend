@@ -76,3 +76,23 @@ export const validateNumber = ({
 		error: ""
 	};
 };
+
+export const validateEmailSyntax = ({ item, maxLength = 250 }) => {
+	let re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	console.log("item: ", item);
+	let value = String(item).toLowerCase();
+	console.log("value: ", value);
+	console.log("type: ", typeof value);
+	let isValid = false;
+	let error = "";
+	if (re.test(value)) {
+		isValid = true;
+	} else {
+		error = "email syntax is not valid!";
+	}
+	return {
+		value,
+		isValid,
+		error
+	};
+};

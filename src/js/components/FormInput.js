@@ -1,7 +1,11 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
 import PropTypes from "prop-types";
-import { validateString, validateNumber } from "../utils/validators";
+import {
+	validateString,
+	validateNumber,
+	validateEmailSyntax
+} from "../utils/validators";
 
 const FormInput = ({
 	inputAs,
@@ -16,9 +20,11 @@ const FormInput = ({
 		switch (inputAs) {
 			case "input":
 			case "textarea":
+			case "password":
 				return (
 					<Form.Control
-						as={inputAs}
+						as={inputAs == "password" ? "input" : inputAs}
+						type={inputAs == "password" ? "password" : "text"}
 						placeholder={placeholder}
 						value={state.input.value}
 						isValid={
@@ -85,6 +91,39 @@ const FormInput = ({
 									firstBlood: false
 								});
 							}
+						}}
+					/>
+				);
+			case "email":
+				return (
+					<Form.Control
+						as="input"
+						type={inputAs}
+						placeholder={placeholder}
+						value={state.input.value}
+						isValid={
+							!state.firstBlood ? state.input.isValid : false
+						}
+						isInvalid={
+							!state.firstBlood ? !state.input.isValid : false
+						}
+						onChange={e => {
+							setState({
+								...state,
+								input: {
+									...state.input,
+									value: e.target.value
+								}
+							});
+						}}
+						onBlur={e => {
+							setState({
+								input: validateEmailSyntax({
+									item: state.input.value.trim(),
+									maxLength: validate.maxLength || 250
+								}),
+								firstBlood: false
+							});
 						}}
 					/>
 				);

@@ -59,6 +59,10 @@
     &-wrapper {
         background-color: rgba($color: #F6C28B, $alpha: 1);
         min-height: inherit;
+        &-auth {
+            margin-top: 3rem;
+            @include build_flex(row, wrap);
+        }
     }
     &-qty-buttons {
         @include build-flex(row, nowrap);
@@ -77,4 +81,5 @@
             border-radius:0.25rem;
         }
     }
+    
 }
