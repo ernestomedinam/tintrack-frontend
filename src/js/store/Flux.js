@@ -1,6 +1,23 @@
+const TINTRACK_API_URL =
+	"https://3000-ee8dbb88-7a01-4efb-9883-5ba9a7403291.ws-us02.gitpod.io";
+const ENDPOINT = {
+	register: "/auth/register",
+	login: "/auth/login",
+	me: "/api/me",
+	habits: "/habits",
+	tasks: "/tasks",
+	schedules: "/schedules"
+};
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			me: {
+				name: "",
+				email: "",
+				memberSince: null,
+				ranking: "",
+				isAuthenticated: false
+			},
 			userIsAnon: false,
 			userIsLoggedIn: true,
 			currentDate: {
