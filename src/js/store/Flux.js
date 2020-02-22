@@ -1,8 +1,8 @@
-const TINTRACK_API_URL =
-	"https://3000-ee8dbb88-7a01-4efb-9883-5ba9a7403291.ws-us02.gitpod.io";
+const TINTRACK_API_URL = "http://192.168.1.12:8000";
 const ENDPOINT = {
+	hello: "/hello",
 	register: "/auth/register",
-	login: "/auth/login",
+	login: "/api/login",
 	me: "/api/me",
 	habits: "/habits",
 	tasks: "/tasks",
@@ -11,6 +11,7 @@ const ENDPOINT = {
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			apiIsUp: false,
 			me: {
 				name: "",
 				email: "",
@@ -294,6 +295,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 						day: objWithDate.day
 					}
 				});
+			},
+			fetchCheckApi: async () => {
+				let url = TINTRACK_API_URL + ENDPOINT.hello;
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: "GET"
+				});
+				console.log("this is response: ", response.statusText);
+				if (response.ok) {
+					console.log("status code: ", response.status);
+					setStore({
+						apiIsUp: true
+					});
+				} else {
+					console.log("status code: ", response.status);
+					setStore({
+						apiIsUp: false
+					});
+				}
 			},
 			fetchCreateTask: newTask => {
 				const store = getStore();

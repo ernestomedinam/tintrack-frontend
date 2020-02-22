@@ -19,6 +19,8 @@ const injectAppContext = PassedComponent => {
 		useEffect(() => {
 			// run effects on [variable] change
 			state.actions.getCurrentDateObj();
+			// check is api is up on first mount
+			state.actions.fetchCheckApi();
 			return () => {
 				// clean up before unmounting
 			};

@@ -4,7 +4,7 @@ const paths = require("./paths.js");
 const config = require("./webpack-dev-config.js");
 
 const port = 3000;
-const host = "localhost";
+const host = "0.0.0.0";
 
 const options = {
     host: host,
