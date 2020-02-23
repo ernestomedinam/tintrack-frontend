@@ -30,9 +30,21 @@ const Home = props => {
 						{jumbotronTitle()}
 					</h1>
 					{showLogin ? (
-						<LoginForm setState={setShowLogin} />
+						<LoginForm
+							goBackHandler={e => setShowLogin(false)}
+							goRegisterHandler={e => {
+								setShowLogin(false);
+								setShowRegister(true);
+							}}
+						/>
 					) : showRegister ? (
-						<RegisterForm />
+						<RegisterForm
+							goBackHandler={e => setShowRegister(false)}
+							goLoginHandler={e => {
+								setShowLogin(true);
+								setShowRegister(false);
+							}}
+						/>
 					) : (
 						<React.Fragment>
 							<p>

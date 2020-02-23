@@ -96,3 +96,13 @@ export const validateEmailSyntax = ({ item, maxLength = 250 }) => {
 		error
 	};
 };
+
+export const validateDate = ({ item, rule }) => {
+	console.log("this is item received: ", typeof item);
+	let ruleResult = rule(item);
+	return {
+		value: item,
+		isValid: ruleResult.isValid,
+		error: ruleResult.error
+	};
+};
