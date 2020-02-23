@@ -42,6 +42,28 @@ const TinNavbar = props => {
 							<Nav.Link
 								as={NavLink}
 								exact
+								to="/register"
+								eventKey="Register"
+								className="px-2 text-right"
+							>
+								Sign up
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item className="mx-md-1">
+							<Nav.Link
+								as={NavLink}
+								exact
+								to="/login"
+								eventKey="Login"
+								className="px-2 text-right"
+							>
+								Log in
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item className="mx-md-1">
+							<Nav.Link
+								as={NavLink}
+								exact
 								to="/dashboard"
 								eventKey="Dashboard"
 								className="px-2 text-right"

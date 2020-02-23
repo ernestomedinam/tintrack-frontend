@@ -12,6 +12,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			apiIsUp: false,
+			authAlert: {
+				title: "",
+				variant: ""
+			},
 			me: {
 				name: "",
 				email: "",
@@ -273,6 +277,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			createAuthAlert: (title, variant) => {
+				setStore({
+					authAlert: {
+						title,
+						variant
+					}
+				});
+			},
+			dismissAuthAlert: () => {
+				setStore({
+					authAlert: {
+						title: "",
+						variant: ""
+					}
+				});
+			},
+			setMeEmail: email => {
+				const store = getStore();
+				setStore({
+					me: {
+						...store.me,
+						email
+					}
+				});
+			},
 			getCurrentDateObj: () => {
 				let currentDate = new Date();
 				let currentDateObj = {
@@ -316,6 +345,26 @@ const getState = ({ getStore, getActions, setStore }) => {
 						apiIsUp: false
 					});
 				}
+			},
+			fetchRegisterUser: async (requestBody, setLoading) => {
+				console.log("registering user");
+				let url = TINTRACK_API_URL + ENDPOINT.register;
+				let result = false;
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: "POST",
+					body: JSON.stringify(requestBody)
+				});
+				console.log("response: ", response);
+				if (response.ok) {
+					console.log("response is ok: ", response.status);
+					result = true;
+				} else {
+					console.log("response is not ok: ", response.statusText);
+				}
+				return result;
 			},
 			fetchCreateTask: newTask => {
 				const store = getStore();

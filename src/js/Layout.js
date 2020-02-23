@@ -8,6 +8,8 @@ import TinFooter from "./components/TinFooter.js";
 import Dashboard from "./views/Dashboard";
 import footerContent from "./utils/footerContent.js";
 import "./utils/fontAwesomeLibrary";
+import Login from "./views/Login.js";
+import Register from "./views/Register.js";
 
 export const Layout = props => {
 	return (
@@ -16,12 +18,10 @@ export const Layout = props => {
 				<TinNavbar />
 				<Switch>
 					<Route exact path="/" component={Home} />
+					<Route path="/login" component={Login} />
+					<Route path="/register" component={Register} />
 					<Route path="/dashboard" component={Dashboard} />
 					<Route path="/routine" component={Routine} />
-					{/* 
-						<Route path="/dashboard" component={Dashboard} />
-						<Route path="/routine" component={Routine} />
-						<TinFooter /> */}
 				</Switch>
 				<TinFooter content={footerContent} />
 			</BrowserRouter>

@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Form, Container, Button } from "react-bootstrap";
 import FormInput from "./FormInput";
+import { AppContext } from "../store/AppContext";
 import PropTypes from "prop-types";
 
 const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
+	const { store, actions } = useContext(AppContext);
 	const [email, setEmail] = useState({
 		input: {
-			value: "",
+			value: store.me.email || "",
 			isValid: false,
 			error: ""
 		},
@@ -65,14 +67,16 @@ const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 				>
 					{"I'm not registered!"}
 				</Button>
-				<Button
-					variant="danger"
-					size="lg"
-					className="m-md-2 my-2 mx-0"
-					onClick={goBackHandler}
-				>
-					{"Back"}
-				</Button>
+				{goBackHandler && (
+					<Button
+						variant="danger"
+						size="lg"
+						className="m-md-2 my-2 mx-0"
+						onClick={goBackHandler}
+					>
+						{"Back"}
+					</Button>
+				)}
 			</div>
 		</Form>
 	);

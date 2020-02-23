@@ -47,7 +47,7 @@ const Home = props => {
 						/>
 					) : (
 						<React.Fragment>
-							<p>
+							<p className="mt-3">
 								Start tracking your habits and occupations in
 								order to take control and feel better, regulate
 								your body, stabilize your emotions, gain
