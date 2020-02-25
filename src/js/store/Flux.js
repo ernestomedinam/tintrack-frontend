@@ -345,10 +345,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "GET",
 					credentials: "include"
 				});
-				console.log(
-					"this is me response.statusText: ",
-					response.statusText
-				);
 				if (response.ok) {
 					meObject = await response.json();
 					setStore({
@@ -378,8 +374,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					credentials: "include",
 					body: JSON.stringify(creds)
 				});
-				console.log("this is response: ", response);
-				console.log("this response.statusText: ", response.statusText);
 				if (response.ok) {
 					// login was successfull, cookies must be on browser
 					// by now. try to get me data from me endpoint
@@ -403,8 +397,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 			getScheduleForDate: async dateObject => {
-				const store = getStore();
-				console.log("taking call to get schedule day", dateObject);
+				// console.log("taking call to get schedule day", dateObject);
 				let url = TINTRACK_API_URL + ENDPOINT.schedules;
 				let monthString = month => {
 					if (month < 10) {
@@ -437,7 +430,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					url += "/" + UTCDiff;
 				}
-				console.log("this is url to fetch: ", url);
+				// console.log("this is url to fetch: ", url);
 				let response = await fetch(url, {
 					headers: {
 						"Content-Type": "application/json"
@@ -445,11 +438,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "GET",
 					credentials: "include"
 				});
-				let cloneRes = response.clone();
 				if (response.ok) {
-					console.log("received dashboardDay? ", response.status);
+					// console.log("received dashboardDay? ", response.status);
 					let dashboardDay = await response.json();
-					console.log(dashboardDay);
+					// console.log(dashboardDay);
 					setStore({
 						dashboardDay
 					});
@@ -468,15 +460,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 					},
 					method: "GET"
 				});
-				console.log("this is response: ", response.statusText);
 				if (response.ok) {
-					console.log("status code: ", response.status);
 					setStore({
 						apiIsUp: true
 					});
 					return true;
 				} else {
-					console.log("status code: ", response.status);
+					console.log(
+						"failure on api check, status code: ",
+						response.status
+					);
 					setStore({
 						apiIsUp: false
 					});
@@ -494,9 +487,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "POST",
 					body: JSON.stringify(requestBody)
 				});
-				console.log("response: ", response);
 				if (response.ok) {
-					console.log("response is ok: ", response.status);
 					result = true;
 				} else {
 					console.log("response is not ok: ", response.statusText);
