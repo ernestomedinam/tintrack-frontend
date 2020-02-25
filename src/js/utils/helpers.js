@@ -54,13 +54,15 @@ export const ordinalInteger = number => {
 export const addDaysToDate = (objWithDate, daysToAdd) => {
 	let modifiedDate = new Date(
 		objWithDate.year,
-		objWithDate.month,
+		objWithDate.month - 1,
 		objWithDate.day
 	);
+	console.log("modifiedDate before: ", modifiedDate);
 	modifiedDate.setDate(modifiedDate.getDate() + daysToAdd);
+	console.log("modifiedDate after: ", modifiedDate);
 	return {
 		year: modifiedDate.getFullYear(),
-		month: modifiedDate.getMonth(),
+		month: modifiedDate.getMonth() + 1,
 		day: modifiedDate.getDate()
 	};
 };

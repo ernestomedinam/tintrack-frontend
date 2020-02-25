@@ -29,12 +29,25 @@ const Dashboard = props => {
 		}
 	};
 	useEffect(() => {
+		// runs on first dashboard mount
+		console.log("mounting dashboard...");
+		let today = new Date();
+		actions.getScheduleForDate({
+			year: today.getFullYear(),
+			month: today.getMonth() + 1,
+			day: today.getDate()
+		});
+		return () => {
+			// cleanup
+		};
+	}, []);
+	useEffect(() => {
 		console.log("running dashboardDay effect");
 		if (store.dashboardDay) {
 			setViewedDay(
 				store.dashboardDay.dayName +
 					", " +
-					returnMonthName(store.dashboardDay.month) +
+					returnMonthName(store.dashboardDay.month - 1) +
 					" " +
 					ordinalInteger(store.dashboardDay.day) +
 					" " +
@@ -70,7 +83,10 @@ const Dashboard = props => {
 						/>
 						<span className="legend">{"yesterday"}</span>
 					</div>
-					<div className="search text-center">
+					<div
+						className="search text-center"
+						onClick={e => history.push("/routine")}
+					>
 						<FontAwesomeIcon icon={["far", "calendar-alt"]} />
 						<span className="legend">{"search for date"}</span>
 					</div>

@@ -5,9 +5,9 @@ const ENDPOINT = {
 	login: "/api/login",
 	logout: "/api/logout",
 	me: "/api/me",
-	habits: "/habits",
-	tasks: "/tasks",
-	schedules: "/schedules"
+	habits: "/api/habits",
+	tasks: "/api/tasks",
+	schedules: "/api/schedules"
 };
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -402,17 +402,63 @@ const getState = ({ getStore, getActions, setStore }) => {
 					currentDate: currentDateObj
 				});
 			},
-			getScheduleForDate: objWithDate => {
+			getScheduleForDate: async dateObject => {
 				const store = getStore();
-				console.log("taking call to get schedule day", objWithDate);
-				setStore({
-					dashboardDay: {
-						...store.dashboardDay,
-						year: objWithDate.year,
-						month: objWithDate.month,
-						day: objWithDate.day
+				console.log("taking call to get schedule day", dateObject);
+				let url = TINTRACK_API_URL + ENDPOINT.schedules;
+				let monthString = month => {
+					if (month < 10) {
+						return "0" + month.toString();
+					} else {
+						return month.toString();
 					}
+				};
+				let dayString = day => {
+					if (day < 10) {
+						return "0" + day.toString();
+					} else {
+						return day.toString();
+					}
+				};
+				let dateString =
+					dateObject.year +
+					"-" +
+					monthString(dateObject.month) +
+					"-" +
+					dayString(dateObject.day);
+				url += "/" + dateString;
+				// get UTC diff to send in url
+				let today = new Date(Date.now());
+				let UTCDiff = today.getTimezoneOffset() / 60;
+				if (UTCDiff >= 0) {
+					// positive diff is earlier times, time behind
+					// time behind is hours less, send negative UTCDiff
+					url += "/-" + UTCDiff;
+				} else {
+					url += "/" + UTCDiff;
+				}
+				console.log("this is url to fetch: ", url);
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: "GET",
+					credentials: "include"
 				});
+				let cloneRes = response.clone();
+				if (response.ok) {
+					console.log("received dashboardDay? ", response.status);
+					let dashboardDay = await response.json();
+					console.log(dashboardDay);
+					setStore({
+						dashboardDay
+					});
+				} else {
+					console.log("something failed with fetch");
+					console.log(response.status);
+				}
+
+				return true;
 			},
 			fetchCheckApi: async () => {
 				let url = TINTRACK_API_URL + ENDPOINT.hello;
