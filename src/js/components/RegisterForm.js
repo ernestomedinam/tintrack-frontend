@@ -47,6 +47,18 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 		},
 		firstBlood: true
 	});
+	const formIsReady = () => {
+		if (
+			name.input.isValid &&
+			email.input.isValid &&
+			password.input.isValid &&
+			dateOfBirth.input.isValid
+		) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 	const handleSubmit = e => {
 		e.preventDefault();
 		e.stopPropagation();
@@ -60,8 +72,8 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 			);
 			actions.createAuthAlert("Registration successfull...", "success");
 			actions.setMeEmail(email.input.value);
-			// push to /api/login
-			history.push("/login");
+			// replace for /api/login
+			history.replace("/login");
 		};
 		let dobYear = dateOfBirth.input.value.getFullYear();
 		let dobMonth = dateOfBirth.input.value.getMonth() + 1;
@@ -206,6 +218,7 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 						<Button
 							variant="success"
 							type="submit"
+							disabled={!formIsReady()}
 							size="lg"
 							className="m-md-2 my-2 mx-0"
 						>

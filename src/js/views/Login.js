@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container, Jumbotron, Toast, Alert } from "react-bootstrap";
 import PropTypes from "prop-types";
 import LoginForm from "../components/LoginForm";
@@ -8,7 +8,17 @@ import { useHistory } from "react-router-dom";
 const Login = props => {
 	const history = useHistory();
 	const { store, actions } = useContext(AppContext);
-	const [show, setShow] = useState(true);
+	useEffect(() => {
+		if (store.authAlert.title) {
+			console.log("qeueing dismissal");
+			setTimeout(() => {
+				actions.dismissAuthAlert();
+			}, 5000);
+		}
+		return () => {
+			// cleanup
+		};
+	}, [store.authAlert]); // only on first load...
 	return (
 		<Container fluid="true" className="home-bg-image h-100">
 			<Container className="p-0 mb-5">

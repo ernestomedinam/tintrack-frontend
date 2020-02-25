@@ -3,9 +3,12 @@ import { Form, Container, Button } from "react-bootstrap";
 import FormInput from "./FormInput";
 import { AppContext } from "../store/AppContext";
 import PropTypes from "prop-types";
+import { useHistory, useLocation } from "react-router-dom";
 
 const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 	const { store, actions } = useContext(AppContext);
+	let history = useHistory();
+	let location = useLocation();
 	const [email, setEmail] = useState({
 		input: {
 			value: store.me.email || "",
@@ -22,8 +25,38 @@ const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 		},
 		firstBlood: true
 	});
+	const formIsReady = () => {
+		if (email.input.isValid && password.input.isValid) {
+			return true;
+		} else {
+			return false;
+		}
+	};
+	const handleSubmit = async e => {
+		e.preventDefault();
+		e.stopPropagation();
+		let success = await actions.fetchLogUserIn({
+			email: email.input.value,
+			password: password.input.value
+		});
+		// if success log in was successful and
+		// we know who user is... otherwise, show alerts...
+		if (success) {
+			// redirect user
+			console.log("now supposed to redirect");
+			history.push("/dashboard");
+		} else {
+			actions.createAuthAlert(
+				"Sorry, friend! Credentials you provided do not match our records; check your info and try again...",
+				"warning"
+			);
+			if (location.pathname != "/login") {
+				history.push("/login");
+			}
+		}
+	};
 	return (
-		<Form onSubmit={e => e.preventDefault()}>
+		<Form onSubmit={handleSubmit}>
 			<div className="form-wrapper-auth">
 				<div className="col-md-6">
 					<FormInput
@@ -53,6 +86,7 @@ const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 			<div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-end mt-3">
 				<Button
 					variant="success"
+					disabled={!formIsReady()}
 					type="submit"
 					size="lg"
 					className="m-md-2 my-2 mx-0"

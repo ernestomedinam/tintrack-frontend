@@ -3,6 +3,7 @@ const ENDPOINT = {
 	hello: "/hello",
 	register: "/auth/register",
 	login: "/api/login",
+	logout: "/api/logout",
 	me: "/api/me",
 	habits: "/habits",
 	tasks: "/tasks",
@@ -16,6 +17,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				title: "",
 				variant: ""
 			},
+			authLoading: true,
 			me: {
 				name: "",
 				email: "",
@@ -23,8 +25,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				ranking: "",
 				isAuthenticated: false
 			},
-			userIsAnon: false,
-			userIsLoggedIn: true,
 			currentDate: {
 				year: null,
 				month: null,
@@ -293,6 +293,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				});
 			},
+			setAuthLoading: loading => {
+				setStore({
+					authLoading: loading
+				});
+			},
 			setMeEmail: email => {
 				const store = getStore();
 				setStore({
@@ -301,6 +306,90 @@ const getState = ({ getStore, getActions, setStore }) => {
 						email
 					}
 				});
+			},
+			fetchLogUserOut: async () => {
+				let url = TINTRACK_API_URL + ENDPOINT.logout;
+				const store = getStore();
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: "POST",
+					credentials: "include",
+					body: {}
+				});
+				if (response.ok) {
+					console.log("user successfully logged out");
+					setStore({
+						me: {
+							name: "",
+							email: "",
+							membersSince: null,
+							ranking: "",
+							isAuthenticated: false
+						}
+					});
+					return true;
+				} else {
+					console.log("something failed logging out");
+					return false;
+				}
+			},
+			fetchMeData: async () => {
+				let url = TINTRACK_API_URL + ENDPOINT.me;
+				let meObject = null;
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: "GET",
+					credentials: "include"
+				});
+				console.log(
+					"this is me response.statusText: ",
+					response.statusText
+				);
+				if (response.ok) {
+					meObject = await response.json();
+					setStore({
+						me: meObject
+					});
+					return true;
+				} else {
+					console.log(
+						"could not get me information because: ",
+						response
+					);
+					return false;
+				}
+			},
+			fetchLogUserIn: async creds => {
+				// log user in and, if response is ok, store
+				// string on cookie for future fetch headers
+				// and return success...
+				// if log in unsuccessfull, return !success...
+				let url = TINTRACK_API_URL + ENDPOINT.login;
+				const actions = getActions();
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json"
+					},
+					method: "POST",
+					credentials: "include",
+					body: JSON.stringify(creds)
+				});
+				console.log("this is response: ", response);
+				console.log("this response.statusText: ", response.statusText);
+				if (response.ok) {
+					// login was successfull, cookies must be on browser
+					// by now. try to get me data from me endpoint
+					return actions.fetchMeData();
+				} else {
+					// login was unsuccessfull for many causes, all
+					// resume on same alert, invalid creds..
+					console.log("invalid creds..");
+					return false;
+				}
 			},
 			getCurrentDateObj: () => {
 				let currentDate = new Date();
@@ -339,11 +428,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({
 						apiIsUp: true
 					});
+					return true;
 				} else {
 					console.log("status code: ", response.status);
 					setStore({
 						apiIsUp: false
 					});
+					return false;
 				}
 			},
 			fetchRegisterUser: async (requestBody, setLoading) => {

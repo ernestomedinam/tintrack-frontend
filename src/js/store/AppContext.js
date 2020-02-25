@@ -19,8 +19,19 @@ const injectAppContext = PassedComponent => {
 		useEffect(() => {
 			// run effects on [variable] change
 			state.actions.getCurrentDateObj();
-			// check is api is up on first mount
-			state.actions.fetchCheckApi();
+			const checkApiAndMe = async () => {
+				// check is api is up on first mount
+				let apiIsUp = await state.actions.fetchCheckApi();
+				if (apiIsUp) {
+					// check if me endpoint responds with 200
+					await state.actions.fetchMeData();
+					state.actions.setAuthLoading(false);
+				}
+			};
+			setTimeout(() => {
+				checkApiAndMe();
+			}, 3000);
+
 			return () => {
 				// clean up before unmounting
 			};
