@@ -14,7 +14,8 @@ const FormInput = ({
 	state,
 	setState,
 	validate,
-	className = ""
+	className = "",
+	setAutoFocus = false
 }) => {
 	const matchInput = () => {
 		switch (inputAs) {
@@ -53,6 +54,7 @@ const FormInput = ({
 								firstBlood: false
 							});
 						}}
+						autoFocus={setAutoFocus}
 					/>
 				);
 			case "quantity":
@@ -92,6 +94,7 @@ const FormInput = ({
 								});
 							}
 						}}
+						autoFocus={setAutoFocus}
 					/>
 				);
 			case "email":
@@ -125,6 +128,7 @@ const FormInput = ({
 								firstBlood: false
 							});
 						}}
+						autoFocus={setAutoFocus}
 					/>
 				);
 			default:
@@ -152,5 +156,6 @@ FormInput.propTypes = {
 	state: PropTypes.object,
 	setState: PropTypes.func,
 	validate: PropTypes.object,
-	className: PropTypes.string
+	className: PropTypes.string,
+	setAutoFocus: PropTypes.bool
 };

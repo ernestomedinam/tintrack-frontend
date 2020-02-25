@@ -25,7 +25,7 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 	});
 	const [dateOfBirth, setDateOfBirth] = useState({
 		input: {
-			value: maxYearsAgo.setFullYear(maxYearsAgo.getFullYear() - 18),
+			value: "",
 			isValid: false,
 			error: ""
 		},
@@ -47,6 +47,28 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 		},
 		firstBlood: true
 	});
+	const dateOfBirthRules = dateObject => {
+		let criticDate = new Date();
+		criticDate.setFullYear(criticDate.getFullYear() - 18);
+		if (dateObject) {
+			if (criticDate >= dateObject) {
+				return {
+					isValid: true,
+					error: ""
+				};
+			} else {
+				return {
+					isValid: false,
+					error: "must be 18 or older :("
+				};
+			}
+		} else {
+			return {
+				isValid: false,
+				error: "must choose a date..."
+			};
+		}
+	};
 	const formIsReady = () => {
 		if (
 			name.input.isValid &&
@@ -59,12 +81,21 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 			return false;
 		}
 	};
+	const formIsFilled = () => {
+		if (
+			name.input.value &&
+			email.input.value &&
+			password.input.value &&
+			dateOfBirth.input.value
+		) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 	const handleSubmit = e => {
 		e.preventDefault();
 		e.stopPropagation();
-		setLoading({
-			showLoading: true
-		});
 		const registerUser = async (requestBody, setLoading) => {
 			let success = await actions.fetchRegisterUser(
 				requestBody,
@@ -75,28 +106,35 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 			// replace for /api/login
 			history.replace("/login");
 		};
-		let dobYear = dateOfBirth.input.value.getFullYear();
-		let dobMonth = dateOfBirth.input.value.getMonth() + 1;
-		let dobDay = dateOfBirth.input.value.getDate();
-		if (dobMonth < 10) {
-			dobMonth = "0" + dobMonth.toString();
+		if (formIsReady()) {
+			setLoading({
+				showLoading: true
+			});
+			let dobYear = dateOfBirth.input.value.getFullYear();
+			let dobMonth = dateOfBirth.input.value.getMonth() + 1;
+			let dobDay = dateOfBirth.input.value.getDate();
+			if (dobMonth < 10) {
+				dobMonth = "0" + dobMonth.toString();
+			} else {
+				dobMonth = dobMonth.toString();
+			}
+			if (dobDay < 10) {
+				dobDay = "0" + dobDay.toString();
+			} else {
+				dobDay = dobDay.toString();
+			}
+			let birthDate = dobYear.toString() + "-" + dobMonth + "-" + dobDay;
+			let requestBody = {
+				name: name.input.value,
+				email: email.input.value,
+				dateOfBirth: birthDate,
+				password: password.input.value
+			};
+			registerUser(requestBody, setLoading);
+			console.log("now execute this");
 		} else {
-			dobMonth = dobMonth.toString();
+			console.log("form not ready...");
 		}
-		if (dobDay < 10) {
-			dobDay = "0" + dobDay.toString();
-		} else {
-			dobDay = dobDay.toString();
-		}
-		let birthDate = dobYear.toString() + "-" + dobMonth + "-" + dobDay;
-		let requestBody = {
-			name: name.input.value,
-			email: email.input.value,
-			dateOfBirth: birthDate,
-			password: password
-		};
-		registerUser(requestBody, setLoading);
-		console.log("now execute this");
 	};
 	return (
 		<Form onSubmit={e => handleSubmit(e)}>
@@ -143,28 +181,7 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 											setDateOfBirth({
 												input: validateDate({
 													item: selectedDate,
-													rule: dateObject => {
-														let criticDate = new Date();
-														criticDate.setFullYear(
-															criticDate.getFullYear() -
-																18
-														);
-														if (
-															criticDate >=
-															dateObject
-														) {
-															return {
-																isValid: true,
-																error: ""
-															};
-														} else {
-															return {
-																isValid: false,
-																error:
-																	"must be 18 or older :("
-															};
-														}
-													}
+													rule: dateOfBirthRules
 												}),
 												firstBlood: false
 											});
@@ -218,7 +235,7 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 						<Button
 							variant="success"
 							type="submit"
-							disabled={!formIsReady()}
+							disabled={!formIsFilled()}
 							size="lg"
 							className="m-md-2 my-2 mx-0"
 						>

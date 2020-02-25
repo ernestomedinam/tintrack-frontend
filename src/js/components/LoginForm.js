@@ -25,6 +25,13 @@ const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 		},
 		firstBlood: true
 	});
+	const formIsFilled = () => {
+		if (email.input.value && password.input.value) {
+			return true;
+		} else {
+			return false;
+		}
+	};
 	const formIsReady = () => {
 		if (email.input.isValid && password.input.isValid) {
 			return true;
@@ -35,24 +42,28 @@ const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 	const handleSubmit = async e => {
 		e.preventDefault();
 		e.stopPropagation();
-		let success = await actions.fetchLogUserIn({
-			email: email.input.value,
-			password: password.input.value
-		});
-		// if success log in was successful and
-		// we know who user is... otherwise, show alerts...
-		if (success) {
-			// redirect user
-			console.log("now supposed to redirect");
-			history.push("/dashboard");
-		} else {
-			actions.createAuthAlert(
-				"Sorry, friend! Credentials you provided do not match our records; check your info and try again...",
-				"warning"
-			);
-			if (location.pathname != "/login") {
-				history.push("/login");
+		if (formIsReady()) {
+			let success = await actions.fetchLogUserIn({
+				email: email.input.value,
+				password: password.input.value
+			});
+			// if success log in was successful and
+			// we know who user is... otherwise, show alerts...
+			if (success) {
+				// redirect user
+				console.log("now supposed to redirect");
+				history.push("/dashboard");
+			} else {
+				actions.createAuthAlert(
+					"Sorry, friend! Credentials you provided do not match our records; check your info and try again...",
+					"warning"
+				);
+				if (location.pathname != "/login") {
+					history.push("/login");
+				}
 			}
+		} else {
+			console.log("form is not ready");
 		}
 	};
 	return (
@@ -60,6 +71,7 @@ const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 			<div className="form-wrapper-auth">
 				<div className="col-md-6">
 					<FormInput
+						setAutoFocus={true}
 						inputAs="email"
 						label="email"
 						placeholder="your_email@domain.com"
@@ -86,7 +98,7 @@ const LoginForm = ({ goBackHandler, goRegisterHandler }) => {
 			<div className="d-flex flex-column flex-md-row justify-content-center justify-content-md-end mt-3">
 				<Button
 					variant="success"
-					disabled={!formIsReady()}
+					disabled={!formIsFilled()}
 					type="submit"
 					size="lg"
 					className="m-md-2 my-2 mx-0"
