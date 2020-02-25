@@ -28,6 +28,45 @@ const Dashboard = props => {
 			);
 		}
 	};
+	const disableTomorrow = dateObject => {
+		let requestedDate = new Date(
+			dateObject.year,
+			dateObject.month - 1,
+			dateObject.day
+		);
+		let today = new Date();
+		let disable = false;
+		switch (store.me.ranking) {
+			case "starter":
+				break;
+			case "enrolled":
+				today.setDate(today.getDate() + 7);
+				break;
+			case "experienced":
+				today.setDate(today.getDate() + 14);
+				break;
+			case "veteran":
+				today.setDate(today.getDate() + 28);
+		}
+		if (requestedDate > today) {
+			disable = true;
+		}
+		return disable;
+	};
+	const disableYesterday = dateObject => {
+		let requestedDate = new Date(
+			dateObject.year,
+			dateObject.month - 1,
+			dateObject.day
+		);
+		let memberSince = new Date(store.me.memberSince);
+		if (requestedDate < memberSince) {
+			// date is off limits
+			return true;
+		} else {
+			return false;
+		}
+	};
 	useEffect(() => {
 		// runs on first dashboard mount
 		console.log("mounting dashboard...");
@@ -65,18 +104,31 @@ const Dashboard = props => {
 					</div>
 					<div
 						className="prev text-center"
-						onClick={() =>
-							actions.getScheduleForDate(
-								addDaysToDate(
-									{
-										year: store.dashboardDay.year,
-										month: store.dashboardDay.month,
-										day: store.dashboardDay.day
-									},
-									-1
+						onClick={() => {
+							if (
+								!disableYesterday(
+									addDaysToDate(
+										{
+											year: store.dashboardDay.year,
+											month: store.dashboardDay.month,
+											day: store.dashboardDay.day
+										},
+										-1
+									)
 								)
-							)
-						}
+							) {
+								actions.getScheduleForDate(
+									addDaysToDate(
+										{
+											year: store.dashboardDay.year,
+											month: store.dashboardDay.month,
+											day: store.dashboardDay.day
+										},
+										-1
+									)
+								);
+							} // write else alert...
+						}}
 					>
 						<FontAwesomeIcon
 							icon={["far", "arrow-alt-circle-left"]}
@@ -105,18 +157,31 @@ const Dashboard = props => {
 					</div>
 					<div
 						className="next text-center"
-						onClick={() =>
-							actions.getScheduleForDate(
-								addDaysToDate(
-									{
-										year: store.dashboardDay.year,
-										month: store.dashboardDay.month,
-										day: store.dashboardDay.day
-									},
-									1
+						onClick={() => {
+							if (
+								!disableTomorrow(
+									addDaysToDate(
+										{
+											year: store.dashboardDay.year,
+											month: store.dashboardDay.month,
+											day: store.dashboardDay.day
+										},
+										1
+									)
 								)
-							)
-						}
+							) {
+								actions.getScheduleForDate(
+									addDaysToDate(
+										{
+											year: store.dashboardDay.year,
+											month: store.dashboardDay.month,
+											day: store.dashboardDay.day
+										},
+										1
+									)
+								);
+							}
+						}}
 					>
 						<span className="legend">{"tomorrow"}</span>
 						<FontAwesomeIcon

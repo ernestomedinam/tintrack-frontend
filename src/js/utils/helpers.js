@@ -57,9 +57,7 @@ export const addDaysToDate = (objWithDate, daysToAdd) => {
 		objWithDate.month - 1,
 		objWithDate.day
 	);
-	console.log("modifiedDate before: ", modifiedDate);
 	modifiedDate.setDate(modifiedDate.getDate() + daysToAdd);
-	console.log("modifiedDate after: ", modifiedDate);
 	return {
 		year: modifiedDate.getFullYear(),
 		month: modifiedDate.getMonth() + 1,
