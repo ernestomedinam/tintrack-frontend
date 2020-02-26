@@ -20,7 +20,7 @@ const DayCard = ({ task, counter }) => {
 					<h5>{task.name}</h5>
 					{task.startTime && (
 						<p className="card-start-time text-right">
-							{task.startTime}
+							{task.isAny ? "anytime" : task.startTime}
 						</p>
 					)}
 				</div>

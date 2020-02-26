@@ -360,7 +360,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 			fetchGetHabit: async habitId => {
 				let url = TINTRACK_API_URL + ENDPOINT.habits;
 				url += "/" + habitId;
-				console.log("fetching to get habit");
 				let response = await fetch(url, {
 					headers: {
 						"Content-Type": "applications/json"
@@ -504,7 +503,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const actions = getActions();
 				let tasks = await actions.fetchGetTasks();
 				let habits = await actions.fetchGetHabits();
-				console.log("here is result: ", tasks, " - ", habits);
 				if (tasks.success && habits.success) {
 					setStore({
 						routine: {
