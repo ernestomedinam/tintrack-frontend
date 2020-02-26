@@ -13,6 +13,7 @@ import TinModal from "../components/TinModal";
 const Routine = prop => {
 	const match = useRouteMatch();
 	const { store, actions } = useContext(AppContext);
+	const [routineLoaded, setRoutineLoaded] = useState(false);
 	const [showModal, setShowModal] = useState({
 		show: false,
 		kind: "",
@@ -28,12 +29,12 @@ const Routine = prop => {
 		// get habit or task
 		let item = {};
 		if (showModal.params.isHabit) {
-			const filteredHabits = store.routine.habitCounters.filter(habit => {
+			const filteredHabits = store.routine.habits.filter(habit => {
 				return habit.id === parseInt(showModal.params.id);
 			});
 			item = filteredHabits[0];
 		} else {
-			const filteredTasks = store.routine.plannedTasks.filter(task => {
+			const filteredTasks = store.routine.tasks.filter(task => {
 				return task.id === parseInt(showModal.params.id);
 			});
 			item = filteredTasks[0];
@@ -74,6 +75,22 @@ const Routine = prop => {
 			}
 		});
 	};
+	useEffect(() => {
+		const checkRoutine = async () => {
+			console.log("trying to fetch");
+			let gotRoutine = await actions.fetchGetRoutine();
+			setRoutineLoaded(gotRoutine);
+		};
+		// running on first mount
+		console.log("running on routine first mount");
+		// check if there is routine in store
+		if (!routineLoaded) {
+			checkRoutine();
+		}
+		return () => {
+			// cleanup
+		};
+	}, []);
 	return (
 		<Container fluid className="routine-bg">
 			<Container className="routine-wrapper">
@@ -102,9 +119,9 @@ const Routine = prop => {
 										variant="primary"
 										className="mx-2"
 									>
-										{store.routine.plannedTasks.length}
+										{store.routine.tasks.length}
 									</Badge>
-									{store.routine.plannedTasks.length === 1
+									{store.routine.tasks.length === 1
 										? "task"
 										: "tasks"}
 								</p>
@@ -116,9 +133,9 @@ const Routine = prop => {
 										variant="primary"
 										className="mx-2"
 									>
-										{store.routine.habitCounters.length}
+										{store.routine.habits.length}
 									</Badge>
-									{store.routine.habitCounters.length === 1
+									{store.routine.habits.length === 1
 										? "habit"
 										: "habits"}
 								</p>
@@ -149,8 +166,8 @@ const Routine = prop => {
 							</div>
 						</Container>
 						<EditTrack
-							habits={store.routine.habitCounters}
-							tasks={store.routine.plannedTasks}
+							habits={store.routine.habits}
+							tasks={store.routine.tasks}
 							removeItem={handleDeleteItem}
 						/>
 						{showModal.show && (

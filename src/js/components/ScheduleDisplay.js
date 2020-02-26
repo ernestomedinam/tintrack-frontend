@@ -23,7 +23,7 @@ const ScheduleDisplay = ({ size, weekSched }) => {
 		<div className="schedule">
 			<div className="schedule-top-legend">
 				<div className="schedule-weekdays">
-					{["s", "m", "t", "w", "t", "f", "s"].map((day, index) => {
+					{["m", "t", "w", "t", "f", "s", "s"].map((day, index) => {
 						return (
 							<div key={index} className="weekday">
 								{day}

@@ -82,7 +82,12 @@ const Dashboard = props => {
 	}, []);
 	useEffect(() => {
 		console.log("running dashboardDay effect");
-		if (store.dashboardDay) {
+		if (
+			store.dashboardDay.dayName &&
+			store.dashboardDay.year &&
+			store.dashboardDay.month &&
+			store.dashboardDay.day
+		) {
 			setViewedDay(
 				store.dashboardDay.dayName +
 					", " +
