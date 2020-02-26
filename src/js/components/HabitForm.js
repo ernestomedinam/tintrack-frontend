@@ -91,7 +91,7 @@ const HabitForm = ({ add, title }) => {
 			return false;
 		}
 	};
-	const handleSubmit = event => {
+	const handleSubmit = async event => {
 		event.preventDefault();
 		event.stopPropagation();
 		// build habit object and fetch to create or edit habit
@@ -99,22 +99,31 @@ const HabitForm = ({ add, title }) => {
 			name: name.input.value,
 			personalMessage: message.input.value,
 			targetPeriod: period,
-			targetValues: numberToDigits(goal.input.value),
+			targetValue: goal.input.value,
 			iconName: selectedIcon,
 			toBeEnforced: toBeEnforced
 		};
 		if (add) {
-			actions.fetchCreateHabit(newHabitCounter);
-			setFormState({
-				...formState,
-				success: true
-			});
+			let habitCreated = await actions.fetchCreateHabit(newHabitCounter);
+			if (habitCreated) {
+				setFormState({
+					...formState,
+					success: true
+				});
+				await actions.fetchGetRoutine();
+			}
 		} else {
-			actions.fetchEditHabit(newHabitCounter, match.params.id);
-			setFormState({
-				...formState,
-				success: true
-			});
+			let habitEdited = await actions.fetchEditHabit(
+				newHabitCounter,
+				match.params.id
+			);
+			if (habitEdited) {
+				setFormState({
+					...formState,
+					success: true
+				});
+				await actions.fetchGetRoutine();
+			}
 		}
 	};
 	const handleBeforeUnload = event => {
@@ -129,45 +138,47 @@ const HabitForm = ({ add, title }) => {
 		// if not add, must fetch habit info based on its id
 		const prepHabitForEdit = async habitId => {
 			let habit = await actions.fetchGetHabit(habitId);
-			setName({
-				...name,
-				input: {
-					...name.input,
-					value: habit.name,
-					isValid: true
-				}
-			});
-			setMessage({
-				...message,
-				input: {
-					...message.input,
-					value: habit.personalMessage,
-					isValid: true
-				}
-			});
-			setGoal({
-				...goal,
-				input: {
-					...goal.input,
-					value: digitsToNumber(habit.targetValues),
-					isValid: true
-				}
-			});
-			setPeriod(habit.targetPeriod);
-			setSelectedIcon(habit.iconName);
-			setToBeEnforced(habit.toBeEnforced);
-			setFormState({
-				...formState,
-				kind: "edit"
-			});
-			setOriginal({
-				name: habit.name,
-				message: habit.personalMessage,
-				period: habit.targetPeriod,
-				goal: digitsToNumber(habit.targetValues),
-				selectedIcon: habit.iconName,
-				toBeEnforced: habit.toBeEnforced
-			});
+			if (habit) {
+				setName({
+					...name,
+					input: {
+						...name.input,
+						value: habit.name,
+						isValid: true
+					}
+				});
+				setMessage({
+					...message,
+					input: {
+						...message.input,
+						value: habit.personalMessage,
+						isValid: true
+					}
+				});
+				setGoal({
+					...goal,
+					input: {
+						...goal.input,
+						value: digitsToNumber(habit.targetValues),
+						isValid: true
+					}
+				});
+				setPeriod(habit.targetPeriod);
+				setSelectedIcon(habit.iconName);
+				setToBeEnforced(habit.toBeEnforced);
+				setFormState({
+					...formState,
+					kind: "edit"
+				});
+				setOriginal({
+					name: habit.name,
+					message: habit.personalMessage,
+					period: habit.targetPeriod,
+					goal: digitsToNumber(habit.targetValues),
+					selectedIcon: habit.iconName,
+					toBeEnforced: habit.toBeEnforced
+				});
+			}
 		};
 		if (!add) {
 			prepHabitForEdit(match.params.id);

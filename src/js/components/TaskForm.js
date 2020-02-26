@@ -180,7 +180,7 @@ const TaskForm = ({ add, title }) => {
 			event.returnValue = true;
 		}
 	};
-	const handleSubmit = event => {
+	const handleSubmit = async event => {
 		event.preventDefault();
 		event.stopPropagation();
 		let newTask = {
@@ -208,14 +208,27 @@ const TaskForm = ({ add, title }) => {
 		};
 		newTask["durationEstimate"] = 30;
 		if (add) {
-			actions.fetchCreateTask(newTask);
+			let taskCreated = await actions.fetchCreateTask(newTask);
+			if (taskCreated) {
+				setFormState({
+					...formState,
+					success: true
+				});
+				await actions.fetchGetRoutine();
+			}
 		} else {
-			actions.fetchEditTask(newTask, match.params.id);
+			let taskEdited = await actions.fetchEditTask(
+				newTask,
+				match.params.id
+			);
+			if (taskEdited) {
+				setFormState({
+					...formState,
+					success: true
+				});
+				await actions.fetchGetRoutine();
+			}
 		}
-		setFormState({
-			...formState,
-			success: true
-		});
 	};
 	// effect for event beforeunload, handles refresh and weindow/tab
 	// closing with unsaved changes.

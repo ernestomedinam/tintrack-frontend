@@ -1,3 +1,5 @@
+import { getCsrfFromCookie } from "../utils/helpers";
+
 const TINTRACK_API_URL = "http://192.168.1.7:8000";
 const ENDPOINT = {
 	hello: "/hello",
@@ -290,87 +292,132 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 				return result;
 			},
-			fetchCreateTask: newTask => {
+			fetchCreateTask: async newTask => {
 				const store = getStore();
-				console.log("this should be fetching to create a task");
-				newTask["alerts"] = [];
-				newTask["id"] = 50 + Math.floor(Math.random() * 200);
-				setStore({
-					routine: {
-						...store.routine,
-						plannedTasks: [...store.routine.plannedTasks, newTask]
-					}
+				let url = TINTRACK_API_URL + ENDPOINT.tasks;
+				let csrfToken = getCsrfFromCookie("csrf_access_token");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRF-TOKEN": csrfToken
+					},
+					method: "POST",
+					credentials: "include",
+					body: JSON.stringify(newTask)
 				});
+				if (response.ok) {
+					return true;
+				} else {
+					let error = await response.json();
+					console.log(error);
+					console.log("something went wrong creating task...");
+					return false;
+				}
 			},
-			fetchCreateHabit: newHabit => {
-				const store = getStore();
-				console.log("this should be fetching, now just updating store");
-				newHabit["id"] = 50 + Math.floor(Math.random() * 200);
-				setStore({
-					routine: {
-						...store.routine,
-						habitCounters: [
-							...store.routine.habitCounters,
-							newHabit
-						]
-					}
+			fetchCreateHabit: async newHabit => {
+				console.log("this is newHabit: ", JSON.stringify(newHabit));
+				let url = TINTRACK_API_URL + ENDPOINT.habits;
+				let csrfToken = getCsrfFromCookie("csrf_access_token");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRF-TOKEN": csrfToken
+					},
+					method: "POST",
+					credentials: "include",
+					body: JSON.stringify(newHabit)
 				});
+				if (response.ok) {
+					return true;
+				} else {
+					let error = await response.json();
+					console.log(error);
+					console.log("something wrong creating habit...");
+					console.log(response.status);
+					return false;
+				}
 			},
 			fetchGetTask: async taskId => {
-				const store = getStore();
-				console.log(
-					"this should be fetching routine and then habit from store, or fetching directly from task endpoint"
-				);
-				let filteredTasks = await store.routine.plannedTasks.filter(
-					task => parseInt(taskId) == task.id
-				);
-				return filteredTasks[0];
+				let url = TINTRACK_API_URL + ENDPOINT.tasks;
+				url += "/" + taskId;
+				console.log("fetching to get task");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "applications/json"
+					},
+					method: "GET",
+					credentials: "include"
+				});
+				let task = {};
+				if (response.ok) {
+					task = await response.json();
+					return task;
+				} else {
+					console.log("problem fetching task");
+					return null;
+				}
 			},
 			fetchGetHabit: async habitId => {
-				const store = getStore();
-				console.log(
-					"this should be fetching routine and then habit from store, or fetching directly from habit endpooint"
-				);
-				let filteredHabits = await store.routine.habitCounters.filter(
-					habit => {
-						return parseInt(habitId) == habit.id;
-					}
-				);
-				return filteredHabits[0];
+				let url = TINTRACK_API_URL + ENDPOINT.habits;
+				url += "/" + habitId;
+				console.log("fetching to get habit");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "applications/json"
+					},
+					method: "GET",
+					credentials: "include"
+				});
+				let habit = {};
+				if (response.ok) {
+					habit = await response.json();
+					return habit;
+				} else {
+					console.log("problem fetching habit...");
+					return null;
+				}
 			},
 			fetchEditTask: async (updatedTask, taskId) => {
-				const store = getStore();
-				let filteredTasks = await store.routine.plannedTasks.filter(
-					task => parseInt(taskId) != task.id
-				);
-				updatedTask["alerts"] = [];
-				updatedTask["id"] = parseInt(taskId);
-				filteredTasks.push(updatedTask);
-				setStore({
-					routine: {
-						...store.routine,
-						plannedTasks: filteredTasks
-					}
+				let url = TINTRACK_API_URL + ENDPOINT.tasks;
+				url += "/" + taskId;
+				let csrfToken = getCsrfFromCookie("csrf_access_token");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRF-TOKEN": csrfToken
+					},
+					method: "PUT",
+					credentials: "include",
+					body: JSON.stringify(updatedTask)
 				});
+				if (response.ok) {
+					return true;
+				} else {
+					console.log("problems updating task");
+					return false;
+				}
 			},
 			fetchEditHabit: async (updatedHabit, habitId) => {
-				const store = getStore();
-				console.log(
-					"this should be fetch put with habit id to API, instead updating store routine item"
-				);
-				let filteredHabits = await store.routine.habitCounters.filter(
-					habit => {
-						return parseInt(habitId) != habit.id;
-					}
-				);
-				updatedHabit["id"] = parseInt(habitId);
-				filteredHabits.push(updatedHabit);
-				setStore({
-					routine: {
-						...store.routine,
-						habitCounters: filteredHabits
-					}
+				let url = TINTRACK_API_URL + ENDPOINT.habits;
+				url += "/" + habitId;
+				let csrfToken = getCsrfFromCookie("csrf_access_token");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRF-TOKEN": csrfToken
+					},
+					method: "PUT",
+					credentials: "include",
+					body: JSON.stringify(updatedHabit)
 				});
+				if (response.ok) {
+					return true;
+				} else {
+					let error = await response.json();
+					console.log(error);
+					console.log("problem updating habit...");
+					return false;
+				}
 			},
 			fetchDeleteRoutineItem: async (isHabit, itemId) => {
 				const store = getStore();

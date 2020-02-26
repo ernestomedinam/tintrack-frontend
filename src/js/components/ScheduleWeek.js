@@ -15,10 +15,6 @@ const ScheduleWeek = ({ weekNumber, state, setState }) => {
 		],
 		days: [
 			{
-				label: "sunday",
-				control: "full"
-			},
-			{
 				label: "monday",
 				control: "full"
 			},
@@ -31,7 +27,7 @@ const ScheduleWeek = ({ weekNumber, state, setState }) => {
 				control: "full"
 			},
 			{
-				label: "thursday",
+				label: "thrusday",
 				control: "full"
 			},
 			{
@@ -40,6 +36,10 @@ const ScheduleWeek = ({ weekNumber, state, setState }) => {
 			},
 			{
 				label: "saturday",
+				control: "full"
+			},
+			{
+				label: "sunday",
 				control: "full"
 			}
 		]
