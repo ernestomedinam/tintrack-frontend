@@ -9,7 +9,9 @@ const ENDPOINT = {
 	me: "/api/me",
 	habits: "/api/habits",
 	tasks: "/api/tasks",
-	schedules: "/api/schedules"
+	schedules: "/api/schedules",
+	habitCounters: "/api/habit-counters",
+	plannedTasks: "api/planned-tasks"
 };
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -514,6 +516,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					return false;
 				}
+			},
+			fetchHabitCounterAdd: async habitId => {
+				let url = TINTRACK_API_URL + ENDPOINT.habitCounters;
+				url += "/" + habitId;
+				console.log("this is url to fetch:", url);
+				return true;
 			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
