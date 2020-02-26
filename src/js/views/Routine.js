@@ -55,15 +55,18 @@ const Routine = prop => {
 		}
 	};
 	const deleteRoutineItem = async () => {
-		await actions.fetchDeleteRoutineItem(
+		let success = await actions.fetchDeleteRoutineItem(
 			showModal.params.isHabit,
 			showModal.params.id
 		);
-		setShowModal({
-			show: false,
-			kind: "",
-			params: {}
-		});
+		if (success) {
+			await actions.fetchGetRoutine();
+			setShowModal({
+				show: false,
+				kind: "",
+				params: {}
+			});
+		}
 	};
 	const handleDeleteItem = (isHabit, itemId) => {
 		setShowModal({

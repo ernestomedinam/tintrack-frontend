@@ -1,6 +1,6 @@
 import { getCsrfFromCookie } from "../utils/helpers";
 
-const TINTRACK_API_URL = "http://192.168.1.7:8000";
+const TINTRACK_API_URL = "http://192.168.1.5:8000";
 const ENDPOINT = {
 	hello: "/hello",
 	register: "/auth/register",
@@ -420,37 +420,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			fetchDeleteRoutineItem: async (isHabit, itemId) => {
-				const store = getStore();
+				let url = TINTRACK_API_URL;
 				if (isHabit) {
-					console.log(
-						"this should be fetch delete habit to endpoint and fetch routine to update store"
-					);
-					setStore({
-						routine: {
-							...store.routine,
-							habitCounters: store.routine.habitCounters.filter(
-								habit => {
-									return habit.id != itemId;
-								}
-							)
-						}
-					});
+					// delete on habit endpoint
+					url += ENDPOINT.habits;
 				} else {
-					console.log(
-						"this should be fetch delete task to endpoint and fetch routine to update store"
-					);
-					setStore({
-						routine: {
-							...store.routine,
-							plannedTasks: store.routine.plannedTasks.filter(
-								task => {
-									return task.id != itemId;
-								}
-							)
-						}
-					});
+					// delete on task endpoint
+					url += ENDPOINT.tasks;
 				}
-				console.log("delete done!");
+				url += "/" + itemId;
+				let csrfToken = getCsrfFromCookie("csrf_access_token");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRF-TOKEN": csrfToken
+					},
+					method: "DELETE",
+					credentials: "include"
+				});
+				if (response.ok) {
+					return true;
+				} else {
+					let error = await response.json();
+					console.log("something wrong deleting item: ", error);
+					return false;
+				}
 			},
 			fetchGetTasks: async () => {
 				// fetchs to api to get user tasks, returns
