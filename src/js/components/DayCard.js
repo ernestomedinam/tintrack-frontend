@@ -65,7 +65,7 @@ const DayCard = ({ task, counter }) => {
 								<Button
 									type="button"
 									block
-									variant="outline-success"
+									variant="success"
 									onClick={handleHabitAdd}
 								>
 									{"I did it"}
@@ -74,7 +74,7 @@ const DayCard = ({ task, counter }) => {
 									type="button"
 									className="mt-0"
 									block
-									variant="outline-danger"
+									variant="danger"
 									onClick={e => {
 										setMarkingDone(false);
 									}}
@@ -86,28 +86,34 @@ const DayCard = ({ task, counter }) => {
 					) : (
 						<React.Fragment>
 							<div className="day-card-body">
-								<p>{"How did you feel before doing this?"}</p>
+								<p className="mb-1">
+									{"How did you feel before doing this?"}
+								</p>
 								<IconSelector
 									icons={"feelingIcons"}
 									size={32}
 									color={"#AEB0B3"}
 									state={feelingBefore}
 									setState={setFeelingBefore}
+									className={"feeling-selector"}
 								/>
-								<p>{"And what about after?"}</p>
+								<p className="mb-1">
+									{"And what about after?"}
+								</p>
 								<IconSelector
 									icons={"feelingIcons"}
 									size={32}
 									color={"#AEB0B3"}
-									state={feelingBefore}
-									setState={setFeelingBefore}
+									state={feelingAfter}
+									setState={setFeelingAfter}
+									className={"feeling-selector"}
 								/>
 							</div>
 							<div className="day-card-actions">
 								<Button
 									type="button"
 									block
-									variant="outline-success"
+									variant="success"
 									onClick={handleTaskDone}
 								>
 									{"I did it"}
@@ -116,7 +122,7 @@ const DayCard = ({ task, counter }) => {
 									type="button"
 									className="mt-0"
 									block
-									variant="outline-danger"
+									variant="danger"
 									onClick={e => {
 										setMarkingDone(false);
 									}}

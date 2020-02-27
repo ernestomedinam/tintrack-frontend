@@ -157,7 +157,7 @@ const Dashboard = props => {
 							});
 						}}
 					>
-						<span className="legend">{"add new task"}</span>
+						<span className="legend">{"add activity"}</span>
 						<FontAwesomeIcon icon={["far", "plus-square"]} />
 					</div>
 					<div

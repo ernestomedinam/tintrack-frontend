@@ -62,7 +62,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"water-glass",
 					"weights"
 				],
-				feelingIcons: ["sadder", "sad"]
+				feelingIcons: [
+					"sadder",
+					"sad",
+					"indifferent",
+					"happy",
+					"happier"
+				]
 			},
 			demo: [
 				{

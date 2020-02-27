@@ -8,6 +8,9 @@ import DefaultHabitIcon from "../icons/DefaultHabitIcon";
 import DefaultTaskIcon from "../icons/DefaultTaskIcon";
 import SadderIcon from "../icons/SadderIcon";
 import SadIcon from "../icons/SadIcon";
+import IndifferentIcon from "../icons/IndifferentIcon";
+import HappyIcon from "../icons/HappyIcon";
+import HappierIcon from "../icons/HappierIcon";
 
 const TaskIcon = ({
 	icon,
@@ -65,6 +68,24 @@ const TaskIcon = ({
 					<SadIcon color={"#FFC107"} />
 				) : (
 					<SadIcon color={color} />
+				);
+			case "indifferent":
+				return marked ? (
+					<IndifferentIcon color={"#FFC107"} />
+				) : (
+					<IndifferentIcon color={color} />
+				);
+			case "happy":
+				return marked ? (
+					<HappyIcon color={"#FFC107"} />
+				) : (
+					<HappyIcon color={color} />
+				);
+			case "happier":
+				return marked ? (
+					<HappierIcon color={"#FFC107"} />
+				) : (
+					<HappierIcon color={color} />
 				);
 			default:
 				return <h2>no such icon</h2>;
