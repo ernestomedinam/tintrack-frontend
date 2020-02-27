@@ -5,25 +5,28 @@ import Button from "react-bootstrap/Button";
 import TaskIcon from "./TaskIcon";
 import { digitsToNumber } from "../utils/helpers";
 import { AppContext } from "../store/AppContext";
+import Loader from "./Loader";
 
 const DayCard = ({ task, counter }) => {
 	const [markingDone, setMarkingDone] = useState(false);
-	const [showLoader, setShowLoader] = useState(false);
 	const { store, actions } = useContext(AppContext);
 	const handleHabitAdd = async e => {
 		console.log("gonna add 1 to habitCounter count");
-		// build and show final message
-		//setShowLoader(true);
 		// fetch to habitCounter endpoint
 		let success = await actions.fetchHabitCounterAdd(task.id);
-		//if (success) {
-		// add 1 successfull
-		//setShowLoader(false);
-		//} else {
-
-		//}
+		if (success) {
+			// add 1 successfull
+			let refresh = await actions.getScheduleForDate({
+				year: store.dashboardDay.year,
+				month: store.dashboardDay.month,
+				day: store.dashboardDay.day
+			});
+			setMarkingDone(false);
+			console.log("just removed marking done");
+		} else {
+			console.log("unsuccessfull, try again");
+		}
 		console.log("added one? ", success);
-		return true;
 	};
 	const handleTaskDone = e => {
 		console.log("gonna mark this task as done");

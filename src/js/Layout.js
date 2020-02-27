@@ -11,6 +11,7 @@ import "./utils/fontAwesomeLibrary";
 import Login from "./views/Login.js";
 import Register from "./views/Register.js";
 import { Container } from "react-bootstrap";
+import Loader from "./components/Loader.js";
 
 export const Layout = props => {
 	const { store, actions } = useContext(AppContext);
@@ -21,12 +22,7 @@ export const Layout = props => {
 				{store.authLoading ? (
 					<Container fluid="true" className="home-bg-image h-100">
 						<Container className="p-0 mb-5">
-							<div className="component-loader-wrapper">
-								<div className="component-loader">
-									<div className="component-loader-box"></div>
-									<div className="component-loader-hill"></div>
-								</div>
-							</div>
+							<Loader message={"please wait"} />
 						</Container>
 					</Container>
 				) : (

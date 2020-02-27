@@ -126,18 +126,27 @@ $white-tin: rgba($color: #FFF, $alpha: 0.6);
 }
 .component-loader {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     margin-top: -2.7em;
     margin-left: -2.7em;
     width: 5.4em;
     height: 5.4em;
     background-color: transparent;
+    .light {
+        color: $light !important;
+        border-color: $light !important;
+    }
+    &-message {
+        @include build-flex(column, nowrap);
+        align-items: center;
+        color: $dark;
+    }
     &-wrapper {
         position: relative;
         @include build-flex(column, nowrap);
-        justify-content: center;
-        height: 10em;
+        justify-content: flex-end;
+        height: 20em;
         width: 100%;
         margin-top: 2rem;
     }

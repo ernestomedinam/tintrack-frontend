@@ -245,12 +245,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({
 						dashboardDay
 					});
+					return true;
 				} else {
 					console.log("something failed with fetch");
 					console.log(response.status);
+					return false;
 				}
-
-				return true;
 			},
 			fetchCheckApi: async () => {
 				let url = TINTRACK_API_URL + ENDPOINT.hello;
@@ -520,8 +520,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 			fetchHabitCounterAdd: async habitId => {
 				let url = TINTRACK_API_URL + ENDPOINT.habitCounters;
 				url += "/" + habitId;
-				console.log("this is url to fetch:", url);
-				return true;
+				let csrfToken = getCsrfFromCookie("csrf_access_token");
+				let response = await fetch(url, {
+					headers: {
+						"Content-Type": "application/json",
+						"X-CSRF-TOKEN": csrfToken
+					},
+					method: "PATCH",
+					credentials: "include"
+				});
+				if (response.ok) {
+					return true;
+				} else {
+					let error = await response.json();
+					console.log(error);
+					console.log("something wrong adding one to habit counter");
+					return false;
+				}
 			},
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");

@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import { validateDate } from "../utils/validators";
 import { AppContext } from "../store/AppContext";
 import { useHistory } from "react-router-dom";
+import Loader from "./Loader";
 
 const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 	const maxYearsAgo = new Date();
@@ -139,12 +140,7 @@ const RegisterForm = ({ goBackHandler, goLoginHandler }) => {
 	return (
 		<Form onSubmit={e => handleSubmit(e)}>
 			{loading.showLoading ? (
-				<div className="component-loader-wrapper">
-					<div className="component-loader">
-						<div className="component-loader-box"></div>
-						<div className="component-loader-hill"></div>
-					</div>
-				</div>
+				<Loader message={"please wait..."} />
 			) : (
 				<React.Fragment>
 					<div className="form-wrapper-auth">
