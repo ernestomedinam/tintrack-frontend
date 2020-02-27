@@ -17,7 +17,7 @@ const IconSelector = ({
 	const items = store.iconsInventory[icons];
 	return (
 		<Form.Group className={className}>
-			<Form.Label>{label}</Form.Label>
+			{label && <Form.Label>{label}</Form.Label>}
 			<div className="icon-selector">
 				{items.map(icon => {
 					return (

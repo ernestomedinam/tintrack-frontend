@@ -61,7 +61,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					"bed-making",
 					"water-glass",
 					"weights"
-				]
+				],
+				feelingIcons: ["sadder", "sad"]
 			},
 			demo: [
 				{

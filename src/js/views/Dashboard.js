@@ -145,7 +145,7 @@ const Dashboard = props => {
 						onClick={e => history.push("/routine")}
 					>
 						<FontAwesomeIcon icon={["far", "calendar-alt"]} />
-						<span className="legend">{"search for date"}</span>
+						<span className="legend">{"routine planning"}</span>
 					</div>
 					<div
 						className="add text-center"

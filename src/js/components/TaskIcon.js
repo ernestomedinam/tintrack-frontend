@@ -6,6 +6,8 @@ import WaterGlassIcon from "../icons/WaterGlassIcon";
 import WeightsIcon from "../icons/WeightsIcon";
 import DefaultHabitIcon from "../icons/DefaultHabitIcon";
 import DefaultTaskIcon from "../icons/DefaultTaskIcon";
+import SadderIcon from "../icons/SadderIcon";
+import SadIcon from "../icons/SadIcon";
 
 const TaskIcon = ({
 	icon,
@@ -51,6 +53,18 @@ const TaskIcon = ({
 					<WeightsIcon color={"#FFFFFF"} />
 				) : (
 					<WeightsIcon color={color} />
+				);
+			case "sadder":
+				return marked ? (
+					<SadderIcon color={"#FFC107"} />
+				) : (
+					<SadderIcon color={color} />
+				);
+			case "sad":
+				return marked ? (
+					<SadIcon color={"#FFC107"} />
+				) : (
+					<SadIcon color={color} />
 				);
 			default:
 				return <h2>no such icon</h2>;

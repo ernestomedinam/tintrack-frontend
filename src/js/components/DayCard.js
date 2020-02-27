@@ -6,10 +6,13 @@ import TaskIcon from "./TaskIcon";
 import { digitsToNumber } from "../utils/helpers";
 import { AppContext } from "../store/AppContext";
 import Loader from "./Loader";
+import IconSelector from "./IconSelector";
 
 const DayCard = ({ task, counter }) => {
 	const [markingDone, setMarkingDone] = useState(false);
 	const { store, actions } = useContext(AppContext);
+	const [feelingBefore, setFeelingBefore] = useState("");
+	const [feelingAfter, setFeelingAfter] = useState("");
 	const handleHabitAdd = async e => {
 		console.log("gonna add 1 to habitCounter count");
 		// fetch to habitCounter endpoint
@@ -81,7 +84,47 @@ const DayCard = ({ task, counter }) => {
 							</div>
 						</React.Fragment>
 					) : (
-						<p>{"marking task done"}</p>
+						<React.Fragment>
+							<div className="day-card-body">
+								<p>{"How did you feel before doing this?"}</p>
+								<IconSelector
+									icons={"feelingIcons"}
+									size={32}
+									color={"#AEB0B3"}
+									state={feelingBefore}
+									setState={setFeelingBefore}
+								/>
+								<p>{"And what about after?"}</p>
+								<IconSelector
+									icons={"feelingIcons"}
+									size={32}
+									color={"#AEB0B3"}
+									state={feelingBefore}
+									setState={setFeelingBefore}
+								/>
+							</div>
+							<div className="day-card-actions">
+								<Button
+									type="button"
+									block
+									variant="outline-success"
+									onClick={handleTaskDone}
+								>
+									{"I did it"}
+								</Button>
+								<Button
+									type="button"
+									className="mt-0"
+									block
+									variant="outline-danger"
+									onClick={e => {
+										setMarkingDone(false);
+									}}
+								>
+									{"Nevermind..."}
+								</Button>
+							</div>
+						</React.Fragment>
 					)
 				) : (
 					<React.Fragment>
