@@ -11,7 +11,7 @@ const ENDPOINT = {
 	tasks: "/api/tasks",
 	schedules: "/api/schedules",
 	habitCounters: "/api/habit-counters",
-	plannedTasks: "api/planned-tasks"
+	plannedTasks: "/api/planned-tasks"
 };
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
@@ -524,16 +524,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return false;
 				}
 			},
-			fetchHabitCounterAdd: async habitId => {
-				let url = TINTRACK_API_URL + ENDPOINT.habitCounters;
-				url += "/" + habitId;
+			fetchAddOccurrence: async (introspective, itemId, counter) => {
+				let url = TINTRACK_API_URL;
+				if (counter) {
+					url += ENDPOINT.habitCounters + "/" + itemId;
+				} else {
+					url += ENDPOINT.plannedTasks + "/" + itemId;
+				}
 				let csrfToken = getCsrfFromCookie("csrf_access_token");
+				console.log(JSON.stringify(introspective));
 				let response = await fetch(url, {
 					headers: {
 						"Content-Type": "application/json",
 						"X-CSRF-TOKEN": csrfToken
 					},
-					method: "PATCH",
+					method: "POST",
+					body: JSON.stringify(introspective),
 					credentials: "include"
 				});
 				if (response.ok) {
@@ -541,7 +547,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} else {
 					let error = await response.json();
 					console.log(error);
-					console.log("something wrong adding one to habit counter");
+					console.log("something wrong adding occurrence");
 					return false;
 				}
 			},

@@ -7,33 +7,41 @@ import { digitsToNumber } from "../utils/helpers";
 import { AppContext } from "../store/AppContext";
 import Loader from "./Loader";
 import IconSelector from "./IconSelector";
+import { FeelingEnum } from "../utils/enums";
 
 const DayCard = ({ task, counter }) => {
 	const [markingDone, setMarkingDone] = useState(false);
 	const { store, actions } = useContext(AppContext);
 	const [feelingBefore, setFeelingBefore] = useState("");
 	const [feelingAfter, setFeelingAfter] = useState("");
-	const handleHabitAdd = async e => {
+	const handleAdd = async e => {
 		console.log("gonna add 1 to habitCounter count");
 		// fetch to habitCounter endpoint
-		let success = await actions.fetchHabitCounterAdd(task.id);
-		if (success) {
-			// add 1 successfull
-			let refresh = await actions.getScheduleForDate({
-				year: store.dashboardDay.year,
-				month: store.dashboardDay.month,
-				day: store.dashboardDay.day
-			});
-			setMarkingDone(false);
-			console.log("just removed marking done");
-		} else {
-			console.log("unsuccessfull, try again");
+		// build request body
+		if (feelingBefore && feelingAfter) {
+			let introspective = {
+				asFeltBefore: FeelingEnum.getFeelingValue(feelingBefore),
+				asFeltAfterwards: FeelingEnum.getFeelingValue(feelingAfter)
+			};
+			let success = await actions.fetchAddOccurrence(
+				introspective,
+				task.id,
+				counter
+			);
+			if (success) {
+				// add 1 successfull
+				await actions.getScheduleForDate({
+					year: store.dashboardDay.year,
+					month: store.dashboardDay.month,
+					day: store.dashboardDay.day
+				});
+				setFeelingBefore("");
+				setFeelingAfter("");
+				setMarkingDone(false);
+			} else {
+				console.log("unsuccessfull, try again");
+			}
 		}
-		console.log("added one? ", success);
-	};
-	const handleTaskDone = e => {
-		console.log("gonna mark this task as done");
-		return true;
 	};
 
 	return (
@@ -59,34 +67,7 @@ const DayCard = ({ task, counter }) => {
 					counter ? (
 						<React.Fragment>
 							<div className="day-card-body">
-								<p>{"Please confirm this habit occured."}</p>
-							</div>
-							<div className="day-card-actions">
-								<Button
-									type="button"
-									block
-									variant="success"
-									onClick={handleHabitAdd}
-								>
-									{"I did it"}
-								</Button>
-								<Button
-									type="button"
-									className="mt-0"
-									block
-									variant="danger"
-									onClick={e => {
-										setMarkingDone(false);
-									}}
-								>
-									{"Nevermind..."}
-								</Button>
-							</div>
-						</React.Fragment>
-					) : (
-						<React.Fragment>
-							<div className="day-card-body">
-								<p className="mb-1">
+								<p className="mb-1 mt-2">
 									{"How did you feel before doing this?"}
 								</p>
 								<IconSelector
@@ -113,8 +94,9 @@ const DayCard = ({ task, counter }) => {
 								<Button
 									type="button"
 									block
-									variant="success"
-									onClick={handleTaskDone}
+									disabled={!feelingBefore || !feelingAfter}
+									variant="outline-light"
+									onClick={handleAdd}
 								>
 									{"I did it"}
 								</Button>
@@ -122,7 +104,56 @@ const DayCard = ({ task, counter }) => {
 									type="button"
 									className="mt-0"
 									block
-									variant="danger"
+									variant="outline-light"
+									onClick={e => {
+										setMarkingDone(false);
+									}}
+								>
+									{"Nevermind..."}
+								</Button>
+							</div>
+						</React.Fragment>
+					) : (
+						<React.Fragment>
+							<div className="day-card-body">
+								<p className="mb-1 mt-2">
+									{"How did you feel before doing this?"}
+								</p>
+								<IconSelector
+									icons={"feelingIcons"}
+									size={32}
+									color={"#AEB0B3"}
+									state={feelingBefore}
+									setState={setFeelingBefore}
+									className={"feeling-selector"}
+								/>
+								<p className="mb-1">
+									{"And what about after?"}
+								</p>
+								<IconSelector
+									icons={"feelingIcons"}
+									size={32}
+									color={"#AEB0B3"}
+									state={feelingAfter}
+									setState={setFeelingAfter}
+									className={"feeling-selector"}
+								/>
+							</div>
+							<div className="day-card-actions">
+								<Button
+									type="button"
+									block
+									disabled={!feelingBefore || !feelingAfter}
+									variant="outline-light"
+									onClick={handleAdd}
+								>
+									{"I did it"}
+								</Button>
+								<Button
+									type="button"
+									className="mt-0"
+									block
+									variant="outline-light"
 									onClick={e => {
 										setMarkingDone(false);
 									}}
