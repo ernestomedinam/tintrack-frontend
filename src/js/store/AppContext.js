@@ -26,11 +26,12 @@ const injectAppContext = PassedComponent => {
 					// check if me endpoint responds with 200
 					await state.actions.fetchMeData();
 					state.actions.setAuthLoading(false);
+				} else {
+					console.log("allowing use, no api...");
+					state.actions.setAuthLoading(false);
 				}
 			};
-			setTimeout(() => {
-				checkApiAndMe();
-			}, 3000);
+			checkApiAndMe();
 
 			return () => {
 				// clean up before unmounting

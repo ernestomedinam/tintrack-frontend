@@ -261,12 +261,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 			fetchCheckApi: async () => {
 				let url = TINTRACK_API_URL + ENDPOINT.hello;
-				let response = await fetch(url, {
-					headers: {
-						"Content-Type": "application/json"
-					},
-					method: "GET"
-				});
+				let response = null;
+				try {
+					response = await fetch(url, {
+						headers: {
+							"Content-Type": "application/json"
+						},
+						method: "GET"
+					});
+				} catch {
+					console.log("api is not up...");
+					return false;
+				}
 				if (response.ok) {
 					setStore({
 						apiIsUp: true
