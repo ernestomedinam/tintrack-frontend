@@ -14,6 +14,7 @@ const options = {
     contentBase: [paths.appAssets, paths.appPublic],
     watchContentBase: true,
     historyApiFallback: true,
+    disableHostCheck: true,
     after() {
         console.log(
             "Hello, my friend! Dev server is running on:",
