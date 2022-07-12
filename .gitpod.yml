@@ -2,4 +2,7 @@ ports:
   - port: 3000
     onOpen: open-browser
 tasks:
-  - init: npm install
+  - init: >
+      nvm install 14; 
+      nvm use 14;
+      npm install;

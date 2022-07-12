@@ -1,6 +1,8 @@
 import { getCsrfFromCookie } from "../utils/helpers";
 
-const TINTRACK_API_URL = "http://192.168.1.15:8000";
+// const TINTRACK_API_URL = "http://192.168.1.15:8000";
+const TINTRACK_API_URL =
+	"https://8000-ernestomedi-tintrackbac-axvshkevnbl.ws-us53.gitpod.io";
 const ENDPOINT = {
 	hello: "/hello",
 	register: "/auth/register",
